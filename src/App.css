@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 20px;
+  font-family: "Lexend", serif;
+  font-optical-sizing: auto;
+}
+body {
+  padding: 5px;
+  -webkit-user-select: none; /* Safari, Chrome */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+.hero{
+  background-image: url(https://www.kumarijob.com/soft-assets/images/frontend/hero-background.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(128, 128, 128, 0.2); /* Background of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3477c1; /* Color when the handle is hovered */
+}
+
+/* ::-webkit-scrollbar-thumb:hover {
+  background: #3477c1; /* Color of the scrollbar handle */
+*/
+select {
+  padding: 2.5px;
+  background-color: #f9fafb;
+  outline: none;
+}
+select option {
+  font-size: 20px;
+}
+input, textarea{
+  background-color: #f9fafb;
+  outline: none;
+}
+.sidebar-links li button {
+  font-size: 1.25rem;
+}
+.animated-box {
+  margin-right: 7.5px;
+  animation: scaleAnimation 2s infinite; /* Apply animation */
+}
+
+/* Define the keyframes for scaling */
+@keyframes scaleAnimation {
+  0% {
+    transform: scale(1); /* Original size */
+  }
+  50% {
+    transform: scale(1.5); /* Increase size */
+  }
+  100% {
+    transform: scale(1); /* Back to original size */
+  }
+}
+
+@media screen and (width<800px) {
+  * {
+    font-size: 16px;
+  }
+}
