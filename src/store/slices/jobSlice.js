@@ -124,7 +124,7 @@ export const fetchJobs =
       }
       link += queryParams.join("&");
       const response = await axios.get(link, { withCredentials: true });
-      dispatch(jobSlice.actions.successForAllJobs(response.data.jobs.reverse()));
+      dispatch(jobSlice.actions.successForAllJobs(response.data.jobs));
       dispatch(jobSlice.actions.clearAllErrors());
     } catch (error) {
       dispatch(jobSlice.actions.failureForAllJobs(error.response.data.message));

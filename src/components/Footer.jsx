@@ -17,21 +17,10 @@ const Footer = () => {
     return;
   }
   return (
-    <>
-      <footer className="flex flex-col w-full border-t-2 border-t-black gap-5 justify-between mt-5 py-5 h-auto md:flex-row md:gap-0 ">
-        <div className="flex flex-col gap-1">
-          <img
-            src="/KaamSetu.png"
-            className="h-[75px] w-[100px] md:h-[100px] md:w-[125px]"
-          />
-          <p className="md:w-[300px] w-[250px] text-justify">
-            <span className="font-[500] text-xl">KaamSetu</span> is a
-            Nepal-based job portal that connects job seekers with employers,
-            simplifying the job search and hiring process.
-          </p>
-        </div>
+    <div className="bg-img pt-10" >
+      <div className="flex flex-col w-full border-t-2 border-gray-100 gap-5 py-5 justify-between h-auto md:flex-row md:gap-0 ">
         <div className="flex flex-col gap-8">
-          <h4 className="text-xl">Support</h4>
+          <h4 className="text-xl font-medium">Support</h4>
           <ul>
             <li className="flex items-center gap-2">
               <MdOutlineLocationOn />
@@ -48,25 +37,37 @@ const Footer = () => {
           </ul>
         </div>
 
+            {isAuthenticated && (
         <div className="flex flex-col gap-8">
-          <h4 className="text-xl">Quick Links</h4>
+          <h4 className="text-xl font-medium">Quick Links</h4>
           <ul>
+              <>
             <li>
               <Link to={"/"} className="underline">
                 Home
               </Link>
             </li>
-            {isAuthenticated && (
               <li>
                 <Link to={"/dashboard"} className="underline">
                   Dashboard
                 </Link>
               </li>
-            )}
+              <li>
+                <Link to={"/jobs"} className="underline">
+                  Find Jobs
+                </Link>
+              </li>
+              <li>
+                <Link to={"/sendmessage"} className="underline">
+                  Send Message
+                </Link>
+              </li>
+              </>
           </ul>
         </div>
+            )}
         <div className="flex flex-col gap-8">
-          <h4 className="text-xl">Follow Us</h4>
+          <h4 className="text-xl font-medium">Follow Us</h4>
           <ul>
             <li>
               <Link to={"/"} className="flex items-center gap-2">
@@ -102,11 +103,11 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-      </footer>
-      <div className="flex  pb-5 text-gray-500 justify-center w-100 text-center">
+      </div>
+      <div className="flex  pb-5 text-gray-500 justify-center w-full text-center">
         &copy; CopyRight 2024. All Rights Reserved By Prasan Poudel.
       </div>
-    </>
+    </div>
   );
 };
 

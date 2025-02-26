@@ -7,21 +7,41 @@ import {
 import { toast } from "react-toastify";
 import { getUser } from "../store/slices/userSlice";
 import { Link } from "react-router-dom";
+import jobCategoryArray from "../data/jobCategoryArray";
+import cities from "../data/cities";
+import ImageUploader from "./ImageUploader";
+import FileUploader from "./FileUploader";
+import ResumeViewer from "./ResumeViewer";
 
 const UpdateProfile = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top of the page
   }, []);
+
   const { user } = useSelector((state) => state.user);
+
+  const [isDemoAccount, setIsDemoAccount] = useState(false);
+  useEffect(() => {
+    setIsDemoAccount(
+      user?.name === "Demo Employer" || user?.name === "Demo Job Seeker"
+    );
+  }, [user]);
+
+  if (isDemoAccount) {
+    console.log("It is a Demo Account");
+  }
   const { loading, error, isUpdated } = useSelector(
     (state) => state.updateProfile
   );
-
   const dispatch = useDispatch();
   const [name, setName] = useState(user && user.name);
   const [email, setEmail] = useState(user && user.email);
   const [phone, setPhone] = useState(user && user.phone);
   const [address, setAddress] = useState(user && user.address);
+  const [profilePicture, setProfilePicture] = useState(
+    user?.profilePicture?.url || null
+  );
+  const [resume, setResume] = useState(user?.resume?.url || null);
   const [firstChoice, setFirstChoice] = useState(
     user && user.jobChoices?.firstChoice
   );
@@ -31,10 +51,8 @@ const UpdateProfile = () => {
   const [thirdChoice, setThirdChoice] = useState(
     user && user.jobChoices?.thirdChoice
   );
-  const [resume, setResume] = useState(null);
-  const [resumePreview, setResumePreview] = useState(user && user.resume?.url);
-
-  const handleUpdateProfile = () => {
+  const handleUpdateProfile = (e) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
@@ -44,6 +62,9 @@ const UpdateProfile = () => {
       formData.append("firstChoice", firstChoice);
       formData.append("secondChoice", secondChoice);
       formData.append("thirdChoice", thirdChoice);
+    }
+    if (profilePicture) {
+      formData.append("profilePicture", profilePicture);
     }
     if (resume) {
       formData.append("resume", resume);
@@ -58,46 +79,120 @@ const UpdateProfile = () => {
     }
     if (isUpdated) {
       toast.success("Profile Updated.");
-      dispatch(getUser());
       dispatch(clearAllUpdateProfileErrors());
+      window.scrollTo(0, 0); // Scroll to the top of the page
+      dispatch(getUser());
     }
   }, [dispatch, loading, error, isUpdated, user]);
+  const profilePictureHandler = (file) => {
+    setProfilePicture(file);
+  };
+  const resumeHandler = (file) => {
+    setResume(file);
+  };
+  const [filteredSuggestionsForLocation, setFilteredSuggestionsForLocation] =
+    useState([]);
+  const [
+    filteredSuggestionsForFirstChoice,
+    setFilteredSuggestionsForFirstChoice,
+  ] = useState([]);
+  const [
+    filteredSuggestionsForSecondChoice,
+    setFilteredSuggestionsForSecondChoice,
+  ] = useState([]);
+  const [
+    filteredSuggestionsForThirdChoice,
+    setFilteredSuggestionsForThirdChoice,
+  ] = useState([]);
+  const handleAddressChange = (e) => {
+    const input =
+      e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
+    setAddress(input);
 
-  const resumeHandler = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setResumePreview(reader.result);
-      setResume(file);
-    };
+    if (input.length > 0) {
+      const filtered = cities.filter(
+        (city) => city.toLowerCase().startsWith(input.toLowerCase()) // Ensure it starts with input
+      );
+      setFilteredSuggestionsForLocation(filtered);
+    } else {
+      setFilteredSuggestionsForLocation([]); // Hide suggestions when input is empty
+    }
+  };
+  const handleFirstChoiceChange = (e) => {
+    const input =
+      e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
+    setFirstChoice(input);
+
+    if (input.length > 0) {
+      const filtered = jobCategoryArray.filter(
+        (job) => job.toLowerCase().startsWith(input.toLowerCase()) // Ensure it starts with input
+      );
+      setFilteredSuggestionsForFirstChoice(filtered);
+    } else {
+      setFilteredSuggestionsForFirstChoice([]); // Hide suggestions when input is empty
+    }
+  };
+  const handleSecondChoiceChange = (e) => {
+    const input =
+      e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
+    setSecondChoice(input);
+
+    if (input.length > 0) {
+      const filtered = jobCategoryArray.filter(
+        (job) => job.toLowerCase().startsWith(input.toLowerCase()) // Ensure it starts with input
+      );
+      setFilteredSuggestionsForSecondChoice(filtered);
+    } else {
+      setFilteredSuggestionsForSecondChoice([]); // Hide suggestions when input is empty
+    }
   };
 
-  const jobChoicesArray = [
-    "Not Given",
-    "Software Development",
-    "Web Development",
-    "Cybersecurity",
-    "Data Science",
-    "Artificial Intelligence",
-    "DevOps",
-    "Mobile App Development",
-    "Database Administration",
-    "Network Administration",
-    "UI/UX Design",
-    "Game Development",
-    "Machine Learning",
-    "IT Project Management",
-    "IT Support and Helpdesk",
-    "Systems Administration",
-    "IT Consulting",
-  ];
+  const handleThirdChoiceChange = (e) => {
+    const input =
+      e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
+    setThirdChoice(input);
+
+    if (input.length > 0) {
+      const filtered = jobCategoryArray.filter(
+        (job) => job.toLowerCase().startsWith(input.toLowerCase()) // Ensure it starts with input
+      );
+      setFilteredSuggestionsForThirdChoice(filtered);
+    } else {
+      setFilteredSuggestionsForThirdChoice([]); // Hide suggestions when input is empty
+    }
+  };
+  const handleAddressBlur = () => {
+    setTimeout(() => setFilteredSuggestionsForLocation([]), 200);
+  };
+
+  const handleFirstChoiceBlur = () => {
+    setTimeout(() => setFilteredSuggestionsForFirstChoice([]), 200);
+  };
+
+  const handleSecondChoiceBlur = () => {
+    setTimeout(() => setFilteredSuggestionsForSecondChoice([]), 200);
+  };
+
+  const handleThirdChoiceBlur = () => {
+    setTimeout(() => setFilteredSuggestionsForThirdChoice([]), 200);
+  };
 
   return (
-    <div className="flex flex-col md:w-[80%] w-full">
-      <div className="flex flex-col gap-4">
+    <form
+      onSubmit={handleUpdateProfile}
+      className="grid gap-4 w-full md:w-[80%]"
+    >
+      <div className="flex flex-col gap-2">
+        <label className="text-xl font-medium">Profile Picture</label>
+        <ImageUploader
+          onImageUpload={profilePictureHandler}
+          profilePicturePreview={profilePicture}
+        />
+        <p className="text-sm">*Click on profile picture to change</p>
+      </div>
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
-          <label className="text-xl">Name</label>
+          <label className="text-xl font-medium">Name</label>
           <input
             type="text"
             value={name}
@@ -106,7 +201,7 @@ const UpdateProfile = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xl">Email Address</label>
+          <label className="text-xl font-medium">Email Address</label>
           <input
             type="email"
             value={email}
@@ -115,7 +210,7 @@ const UpdateProfile = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xl">Phone Number</label>
+          <label className="text-xl font-medium">Phone Number</label>
           <input
             type="number"
             value={phone}
@@ -124,96 +219,181 @@ const UpdateProfile = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xl">Address</label>
-          <input
-            type="text"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            className="w-full border-2 border-black pl-2 "
-          />
-        </div>
-
-        {user && user.role === "Job Seeker" && (
-          <>
-            <div className="flex flex-col gap-2">
-              <label className="text-xl">My Job Choices</label>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "15px",
+          <label className="text-xl font-medium">Address</label>
+          <div className="w-full border-2 border-black rounded-md flex items-center bg-white pl-2">
+            <div className="relative w-full">
+              <input
+                onBlur={handleAddressBlur}
+                type="text"
+                value={address}
+                onChange={handleAddressChange}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowRight" || e.key === "Tab") {
+                    e.preventDefault();
+                    if (filteredSuggestionsForLocation.length > 0) {
+                      setAddress(filteredSuggestionsForLocation[0]);
+                      setFilteredSuggestionsForLocation([]);
+                    }
+                  }
                 }}
-              >
-                <select
-                  value={firstChoice}
-                  onChange={(e) => setFirstChoice(e.target.value)}
-                  className="w-full border-2 border-black pl-2 "
-                >
-                  {jobChoicesArray.map((element, index) => {
-                    return (
-                      <option value={element} key={index}>
-                        {element}
-                      </option>
-                    );
-                  })}
-                </select>
-                <select
-                  value={secondChoice}
-                  onChange={(e) => setSecondChoice(e.target.value)}
-                  className="w-full border-2 border-black pl-2 "
-                >
-                  {jobChoicesArray.map((element, index) => {
-                    return (
-                      <option value={element} key={index}>
-                        {element}
-                      </option>
-                    );
-                  })}
-                </select>
-                <select
-                  value={thirdChoice}
-                  onChange={(e) => setThirdChoice(e.target.value)}
-                  className="w-full border-2 border-black pl-2 "
-                >
-                  {jobChoicesArray.map((element, index) => {
-                    return (
-                      <option value={element} key={index}>
-                        {element}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
+                className="w-full outline-none bg-transparent text-black placeholder:text-gray-500"
+              />
+              {filteredSuggestionsForLocation.length > 0 &&
+                address.length > 0 && (
+                  <span className="absolute left-0 top-[12px]">
+                    {address}
+                    <span className="text-gray-500">
+                      {filteredSuggestionsForLocation[0].slice(address.length)}
+                    </span>
+                  </span>
+                )}
             </div>
-            {user && user.resume && user.role === "Job Seeker" && (
-              <div className="flex flex-col gap-2">
-                <label className="text-xl">Current Resume</label>
-                <Link
-                  to={user.resume && user.resume.url}
-                  target="_blank"
-                  className="bg-sky-600 hover:cursor-pointer text-center text-white px-2 py-1  w-full"
-                >
-                  View Resume
-                </Link>
-              </div>
-            )}
-            <div className="flex flex-col gap-2">
-              <label className="text-xl">Change Resume</label>
-              <input type="file" onChange={resumeHandler} />
-            </div>
-          </>
-        )}
-        <div>
-          <button
-            onClick={handleUpdateProfile}
-            disabled={loading}
-            className="bg-sky-600 rounded w-full hover:cursor-pointer text-center text-white py-2 "
-          >
-            Save Changes
-          </button>
+          </div>
         </div>
       </div>
-    </div>
+      {user && user.role === "Job Seeker" && (
+        <>
+          <div className="flex flex-col gap-2">
+            <label className="text-xl font-medium">My Job Choices</label>
+            <div className="flex flex-col gap-2">
+              <div className="w-full border-2 border-black rounded-md flex items-center bg-white pl-2">
+                <div className="relative w-full">
+                  <input
+                    onBlur={handleFirstChoiceBlur}
+                    type="text"
+                    value={firstChoice}
+                    onChange={handleFirstChoiceChange}
+                    onKeyDown={(e) => {
+                      if (e.key === "ArrowRight" || e.key === "Tab") {
+                        e.preventDefault();
+                        if (filteredSuggestionsForFirstChoice.length > 0) {
+                          setFirstChoice(filteredSuggestionsForFirstChoice[0]);
+                          setFilteredSuggestionsForFirstChoice([]);
+                        }
+                      }
+                    }}
+                    className="w-full outline-none bg-transparent text-black placeholder:text-gray-500"
+                  />
+                  {filteredSuggestionsForFirstChoice.length > 0 &&
+                    jobCategoryArray.length > 0 && (
+                      <span className="absolute left-0 top-[12px]">
+                        {firstChoice}
+                        <span className="text-gray-500">
+                          {filteredSuggestionsForFirstChoice[0].slice(
+                            firstChoice.length
+                          )}
+                        </span>
+                      </span>
+                    )}
+                </div>
+              </div>
+              <div className="w-full border-2 border-black rounded-md flex items-center bg-white pl-2">
+                <div className="relative w-full">
+                  <input
+                    onBlur={handleSecondChoiceBlur}
+                    type="text"
+                    value={secondChoice}
+                    onChange={handleSecondChoiceChange}
+                    onKeyDown={(e) => {
+                      if (e.key === "ArrowRight" || e.key === "Tab") {
+                        e.preventDefault();
+                        if (filteredSuggestionsForSecondChoice.length > 0) {
+                          setSecondChoice(
+                            filteredSuggestionsForSecondChoice[0]
+                          );
+                          setFilteredSuggestionsForSecondChoice([]);
+                        }
+                      }
+                    }}
+                    className="w-full outline-none bg-transparent text-black placeholder:text-gray-500"
+                  />
+                  {filteredSuggestionsForSecondChoice.length > 0 &&
+                    jobCategoryArray.length > 0 && (
+                      <span className="absolute left-0 top-[12px]">
+                        {secondChoice}
+                        <span className="text-gray-500">
+                          {filteredSuggestionsForSecondChoice[0].slice(
+                            secondChoice.length
+                          )}
+                        </span>
+                      </span>
+                    )}
+                </div>
+              </div>
+              <div className="w-full border-2 border-black rounded-md flex items-center bg-white pl-2">
+                <div className="relative w-full">
+                  <input
+                    onBlur={handleThirdChoiceBlur}
+                    type="text"
+                    value={thirdChoice}
+                    onChange={handleThirdChoiceChange}
+                    onKeyDown={(e) => {
+                      if (e.key === "ArrowRight" || e.key === "Tab") {
+                        e.preventDefault();
+                        if (filteredSuggestionsForThirdChoice.length > 0) {
+                          setThirdChoice(filteredSuggestionsForThirdChoice[0]);
+                          setFilteredSuggestionsForThirdChoice([]);
+                        }
+                      }
+                    }}
+                    className="w-full outline-none bg-transparent text-black placeholder:text-gray-500"
+                  />
+                  {filteredSuggestionsForThirdChoice.length > 0 &&
+                    jobCategoryArray.length > 0 && (
+                      <span className="absolute left-0 top-[12px]">
+                        {thirdChoice}
+                        <span className="text-gray-500">
+                          {filteredSuggestionsForThirdChoice[0].slice(
+                            thirdChoice.length
+                          )}
+                        </span>
+                      </span>
+                    )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {user && user.resume && user.role === "Job Seeker" && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-2">
+                <label className="text-xl font-medium">Change Resume</label>
+                <FileUploader onFileUpload={resumeHandler} />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-xl font-medium">Current Resume</label>
+                <ResumeViewer resume={resume} />
+                <Link
+                  to={resume}
+                  target="_blank"
+                  className="underline text-center text-white p-2 rounded-md bg-gray-500"
+                >
+                  Open File In New Tab
+                </Link>
+              </div>
+            </div>
+          )}
+        </>
+      )}
+      {!isDemoAccount ? (
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-sky-600 hover:bg-sky-600 text-xl rounded-md w-full hover:cursor-pointer text-center text-white  md:px-2 px-1   py-2"
+        >
+          Update Profile
+        </button>
+      ) : (
+        <div
+          onClick={() => {
+            toast.info("Demo Account Isn't Allowed To Update Profile");
+          }}
+          className="bg-sky-600 hover:bg-sky-600 text-xl rounded-md w-full hover:cursor-pointer text-center text-white  md:px-2 px-1   py-2"
+        >
+          Update Profile
+        </div>
+      )}
+    </form>
   );
 };
 

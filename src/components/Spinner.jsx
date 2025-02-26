@@ -13,7 +13,7 @@ const Spinner = () => {
           alignItems: "center",
         }}
       >
-        <ScaleLoader height={25} width={5} color="#3477c1" />
+        <ScaleLoader height={25} width={5} color="#0284c7" />
       </section>
     </>
   );

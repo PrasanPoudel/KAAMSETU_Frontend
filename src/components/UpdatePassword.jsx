@@ -12,6 +12,16 @@ const UpdatePassword = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top of the page
   }, []);
+
+  const { user } = useSelector((state) => state.user);
+   const [isDemoAccount, setIsDemoAccount] = useState(false);
+    useEffect(() => {
+      setIsDemoAccount(user?.name === "Demo Employer" || user?.name === "Demo Job Seeker");
+    }, [user]);
+  
+    if (isDemoAccount) {
+      console.log("It is a Demo Account");
+    }
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -47,80 +57,92 @@ const UpdatePassword = () => {
   }, [dispatch, loading, error, isUpdated]);
 
   return (
-    <div className="flex flex-col md:w-[80%] w-full gap-4">
-      {/* Old Password */}
-      <label className="text-xl">Current Password</label>
-      <div className="flex border-2 justify-between bg-white">
+    <div className="flex flex-col w-full gap-4 md:w-[80%]">
+      {/* Current Password */}
+      <label className="text-xl font-medium">Current Password</label>
+      <div className="flex rounded-md px-2 border-2 border-black items-center justify-between bg-white">
         <input
           type={showOldPassword ? "text" : "password"}
           value={oldPassword}
           onChange={(e) => setOldPassword(e.target.value)}
-          className="pl-2 w-full border-2 border-black border-r-0"
+          className="pl-2 w-full"
         />
         {showOldPassword ? (
           <IoEyeOutline
-            className="text-3xl p-1 text-white bg-sky-600"
+            className="text-4xl"
             onClick={() => setShowOldPassword(!showOldPassword)}
           />
         ) : (
           <IoEyeOffOutline
-            className="text-3xl p-1 text-white bg-sky-600"
+            className="text-4xl"
             onClick={() => setShowOldPassword(!showOldPassword)}
           />
         )}
       </div>
 
       {/* New Password */}
-      <label className="text-xl">New Password</label>
-      <div className="flex justify-between bg-white">
+      <label className="text-xl font-medium">New Password</label>
+      <div className="flex rounded-md px-2 border-2 border-black items-center justify-between bg-white">
         <input
           type={showNewPassword ? "text" : "password"}
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
-          className="pl-2 w-full border-2 border-black border-r-0"
+          className="pl-2 w-full"
         />
         {showNewPassword ? (
           <IoEyeOutline
-            className="text-3xl p-1 text-white bg-sky-600"
+            className="text-4xl"
             onClick={() => setShowNewPassword(!showNewPassword)}
           />
         ) : (
           <IoEyeOffOutline
-            className="text-3xl p-1 text-white bg-sky-600"
+            className="text-4xl"
             onClick={() => setShowNewPassword(!showNewPassword)}
           />
         )}
       </div>
 
       {/* Confirm Password */}
-      <label className="text-xl">Confirm Password</label>
-      <div className="flex justify-between bg-white">
+      <label className="text-xl font-medium">Confirm Password</label>
+      <div className="flex rounded-md px-2 border-2 border-black items-center justify-between">
         <input
           type={showConfirmPassword ? "text" : "password"}
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="pl-2 border-2 w-full border-black border-r-0"
+          className="pl-2 w-full"
         />
         {showConfirmPassword ? (
           <IoEyeOutline
-            className="text-3xl p-1 text-white bg-sky-600"
+            className="text-4xl"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
           />
         ) : (
           <IoEyeOffOutline
-            className="text-3xl p-1 text-white bg-sky-600"
+            className="text-4xl"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
           />
         )}
       </div>
 
+     {!isDemoAccount ? (
       <button
-        className="bg-sky-600 rounded w-full hover:cursor-pointer text-center text-white py-2"
-        onClick={handleUpdatePassword}
-        disabled={loading}
-      >
-        Update Password
-      </button>
+      className=" text-xl rounded-md w-full hover:cursor-pointer text-center bg-sky-600 hover:bg-sky-700 text-white  md:px-2 px-1   py-2"
+      onClick={handleUpdatePassword}
+      disabled={loading}
+    >
+      Update Password
+    </button>
+     ) : (
+      <div
+      className=" text-xl rounded-md w-full hover:cursor-pointer text-center bg-sky-600 hover:bg-sky-700 text-white  md:px-2 px-1   py-2"
+      onClick={()=>{
+        toast.info("Demo Account Cannot Update Password")
+      }}
+    >
+      Update Password
+    </div>
+     )}
+      
     </div>
   );
 };

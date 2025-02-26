@@ -11,9 +11,6 @@ import Spinner from "./Spinner";
 import { Link } from "react-router-dom";
 
 const Applications = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top of the page
-  }, []);
   const { applications, loading, error, message } = useSelector(
     (state) => state.applications
   );
@@ -45,65 +42,95 @@ const Applications = () => {
           You have not received any application from job seekers
         </h1>
       ) : (
-        <>
-          <div className="flex flex-col gap-8">
-            {applications.map((element) => {
-              return (
-                <div
-                  className="flex flex-col gap-4 rounded-lg bg-gray-50 p-2 w-full md:w-[500px] "
-                  key={element._id}
-                >
-                  <div>
-                    <label className="text-xl">Job Title: </label>
-                    <p className="text-gray-500">{element.jobInfo.jobTitle}</p>
-                  </div>
-                  <div>
-                    <label className="text-xl">Applicant's Name: </label>
-                    <p className="text-gray-500">
-                      {element.jobSeekerInfo.name}
-                    </p>
-                  </div>
-                  <div>
-                    <label className="text-xl">Applicant's Email:</label>
-                    <p className="text-gray-500">
-                      {element.jobSeekerInfo.email}
-                    </p>
-                  </div>
-                  <div>
-                    <label className="text-xl">Applicant's Phone: </label>
-                    <p className="text-gray-500">
-                      {element.jobSeekerInfo.phone}
-                    </p>
-                  </div>
-                  <div>
-                    <label className="text-xl">Applicant's Address: </label>
-                    <p className="text-gray-500">
-                      {element.jobSeekerInfo.address}
-                    </p>
-                  </div>
-                  <div className="flex justify-end gap-2">
-                    <Link
-                      to={
-                        element.jobSeekerInfo &&
-                        element.jobSeekerInfo.resume.url
-                      }
-                      className=" bg-sky-600 rounded hover:cursor-pointer text-white px-2 py-1  "
-                      target="_blank"
+        <div className="w-full">
+          <p className="text-xl mb-5">
+            <span className="text-3xl text-sky-600">
+              {" "}
+              {applications.length}{" "}
+            </span>
+            {applications.length > 1 ? "peoples" : "person"} have applied for
+            jobs posted by you
+          </p>
+          <div className="overflow-auto p-2 max-w-full">
+            <table className="w-full border-collapse overflow-hidden rounded-md">
+              <thead className="bg-sky-600 hover:bg-sky-700 text-white">
+                <tr>
+                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                    S/N
+                  </th>
+                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                    Job's Title
+                  </th>
+                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                    Applicant's Name
+                  </th>
+                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                    Applicant's Email
+                  </th>
+                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                    Applicant's Phone Number
+                  </th>
+                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                    Applicant's Address
+                  </th>
+                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                    Applicant's Resume
+                  </th>
+                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                    Click To Delete
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {applications.map((element, index) => {
+                  return (
+                    <tr
+                      key={element._id}
+                      className="border-b-2 border-white bg-gray-200"
                     >
-                      View Resume
-                    </Link>
-                    <button
-                      className="bg-red-500 rounded text-white px-2 py-1 hover:cursor-pointer  "
-                      onClick={() => handleDeleteApplication(element._id)}
-                    >
-                      Delete Application
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+                      <td className="p-2 border-2 border-white">{index + 1}</td>
+                      <td className="p-2 border-2 border-white text-sm">
+                        {element.jobInfo.jobTitle}
+                      </td>
+                      <td className="p-2 border-2 border-white text-sm">
+                        {element.jobSeekerInfo.name}
+                      </td>
+                      <td className="p-2 border-2 border-white text-sm">
+                        {element.jobSeekerInfo.email}
+                      </td>
+                      <td className="p-2 border-2 border-white text-sm">
+                        {element.jobSeekerInfo.phone}
+                      </td>
+                      <td className="p-2 border-2 border-white text-sm">
+                        {element.jobSeekerInfo.address}
+                      </td>
+                      <td className="p-2 border  bg-sky-600 hover:bg-sky-700">
+                        <Link
+                          to={
+                            element.jobSeekerInfo &&
+                            element.jobSeekerInfo.resume.url
+                          }
+                          className="text-white text-sm underline"
+                          target="_blank"
+                        >
+                          View Resume
+                        </Link>
+                      </td>
+                      <td className="p-2 border  bg-red-500 hover:bg-red-600">
+                        <button
+                          className="text-white text-sm"
+                          onClick={() => handleDeleteApplication(element._id)}
+                        >
+                          Delete Application
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
-        </>
+        </div>
       )}
     </>
   );

@@ -6,17 +6,15 @@ import { toast } from "react-toastify";
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import { IoIosInformationCircleOutline } from "react-icons/io";
-import Home from "../pages/Home";
+import Home from "./Jobs";
 import SpinnerHomePage from "../components/SpinnerHomePage";
+import KaamSetu from "../images/KaamSetu.png";
 
 const Login = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top of the page
-  }, []);
-
-  const [showInfo, setShowInfo] = useState(false);
-  const [role, setRole] = useState("Job Seeker");
+   useEffect(() => {
+        window.scrollTo(0, 0); // Scroll to the top of the page
+      }, []);
+  const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -30,10 +28,11 @@ const Login = () => {
       navigateTo("/");
     }
     if (error) {
-      toast.info(error);
+      toast.error(error);
       dispatch(clearAllUserErrors());
     }
   }, [dispatch, error, loading, isAuthenticated]);
+
   const handleLogin = (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -58,114 +57,92 @@ const Login = () => {
     return <Home />;
   } else {
     return (
-      <div className="flex justify-between py-8 w-full">
+      <div className="flex flex-col lg:flex-row justify-between lg:py-8 w-full">
         <img
-          src="./RegisterBanner.jpg"
-          className="hidden sticky top-[50px] h-[500px] lg:w-[35%] lg:flex"
+          src={KaamSetu}
+          className="w-[120px] h-[120px] lg:sticky lg:top-[50px] lg:h-[500px] lg:w-[35%] lg:flex"
         />
         <div className="flex flex-col justify-center items-start gap-4 w-full sm:w-[600px] md:w-[750px] lg:w-[55%] lg:px-[100px]">
-          <div className="flex items-start w-full pt-2 pl-2">
-            <IoIosInformationCircleOutline
-              className="animated-box text-3xl"
-              onClick={() => {
-                setShowInfo(!showInfo);
-              }}
-            />
-            {showInfo && (
-              <div className="fixed top-0 left-0 z-20 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50">
-                <div className=" p-4 bg-white shadow-lg">
-                  <p className="mb-5 mt-5">
-                    <span className="text-xl font-[500]">Demo Id</span>
-                    <br />
-                    <br />
-                    For Job Seeker-
-                    <br />
-                    Gmail: jobseeker@gmail.com
-                    <br />
-                    Password: password
-                    <br />
-                    <br />
-                    For Employer-
-                    <br />
-                    Gmail: employer@gmail.com
-                    <br />
-                    Password: password
-                  </p>
-                  <div className="flex justify-end">
-                    <button
-                      onClick={() => {
-                        setShowInfo(!showInfo);
-                      }}
-                      className="bg-sky-600 rounded text-white p-2 hover:cursor-pointer"
-                    >
-                      Thank You ✓
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-          <h3 className="text-xl">Login to your account</h3>
+          <h3 className="text-3xl">Welcome Back</h3>
           <div className="w-full">
             <form onSubmit={handleLogin} className="flex flex-col gap-4">
-              <label className="text-xl">Login As</label>
-              <div className="flex">
+              <label className="text-xl font-medium">Login As</label>
+              <div className="flex px-2 border-2 border-black rounded-md justify-between items-center">
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  className="w-full border-2 border-black border-r-0"
+                  className="px-2 w-full"
                 >
+                  <option value="" disabled>
+                    Please Select A Role
+                  </option>
                   <option value="Employer">Employer</option>
                   <option value="Job Seeker">Job Seeker</option>
                 </select>
-                <FaRegUser className="text-3xl text-white bg-sky-600 p-1" />
+                <FaRegUser className="text-3xl" />
               </div>
-              <label className="text-xl">Email</label>
-              <div className="flex">
+              <label className="text-xl font-medium">Email</label>
+              <div className="flex rounded-md px-2 border-2 border-black items-center justify-between">
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full border-2 border-black border-r-0 pl-2 "
+                  onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                  className="pl-2 w-full"
                 />
-                <MdOutlineMailOutline className="text-3xl text-white bg-sky-600 p-1" />
+                <MdOutlineMailOutline className="text-4xl" />
               </div>
-              <label className="text-xl">Password</label>
-              <div className="flex">
+              <label className="text-xl font-medium">Password</label>
+              <div className="flex rounded-md px-2 border-2 border-black items-center justify-between">
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full border-2 border-black border-r-0 pl-2 "
+                  className="pl-2 w-full"
                 />
                 {showPassword ? (
                   <IoEyeOutline
-                    className="text-3xl p-1 text-white bg-sky-600"
+                    className="text-4xl"
                     onClick={() => setShowPassword(!showPassword)}
                   />
                 ) : (
                   <IoEyeOffOutline
-                    className="text-3xl p-1 text-white bg-sky-600"
+                    className="text-4xl"
                     onClick={() => setShowPassword(!showPassword)}
                   />
                 )}
               </div>
-              <div className="flex flex-col gap-4">
-                <button
-                  type="submit"
-                  disabled={formIncompleteOrLoading}
-                  className={`bg-sky-600 rounded text-center w-full text-white py-2 ${
-                    formIncompleteOrLoading
-                      ? "cursor-not-allowed"
-                      : "cursor-pointer"
-                  }`}
-                >
-                  Login
-                </button>
+              <button
+                type="submit"
+                disabled={formIncompleteOrLoading}
+                className={`bg-sky-600 hover:bg-sky-700 text-xl rounded-md text-center w-full text-white  md:px-2 px-1   py-2 ${
+                  formIncompleteOrLoading
+                    ? "cursor-not-allowed"
+                    : "cursor-pointer"
+                }`}
+              >
+                Login
+              </button>
+              <div className="flex flex-col gap-4 mt-5">
                 Don't have an account yet ?
+                <button
+                  onClick={() => {
+                    if (role == "") {
+                      toast.info("Select user role for login");
+                    } else if (role && role == "Employer") {
+                      setEmail("employer@gmail.com");
+                      setPassword("password");
+                    } else if (role && role == "Job Seeker") {
+                      setEmail("jobseeker@gmail.com");
+                      setPassword("password");
+                    }
+                  }}
+                  className={` bg-sky-600 hover:bg-sky-700 text-xl rounded-md w-full text-white hover:cursor-pointer text-center  md:px-2 px-1   py-2`}
+                >
+                  Login With Demo Account
+                </button>
                 <Link
                   to={"/register"}
-                  className={` bg-gray-300 rounded underline w-full hover:text-white hover:bg-gray-400 hover:cursor-pointer text-center text-back py-2`}
+                  className={` bg-gray-500 text-white text-xl rounded-md underline w-full hover:bg-gray-600 hover:cursor-pointer text-center text-back md:px-2 px-1 py-2`}
                 >
                   Register Now
                 </Link>
