@@ -1,24 +1,27 @@
 import React, { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
-const ImageUploader = ({ onImageUpload , profilePicturePreview}) => {
+const ImageUploader = ({ onImageUpload, profilePicturePreview }) => {
   const [preview, setPreview] = useState(profilePicturePreview || null);
   const [error, setError] = useState("");
 
-  const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
-    if (rejectedFiles.length > 0) {
-      setError("Invalid file type. Please upload an image.");
-      return;
-    }
+  const onDrop = useCallback(
+    (acceptedFiles, rejectedFiles) => {
+      if (rejectedFiles.length > 0) {
+        setError("Invalid file type. Please upload an image.");
+        return;
+      }
 
-    const file = acceptedFiles[0];
-    setPreview(URL.createObjectURL(file));
-    setError("");
+      const file = acceptedFiles[0];
+      setPreview(URL.createObjectURL(file));
+      setError("");
 
-    if (onImageUpload) {
-      onImageUpload(file);
-    }
-  }, [onImageUpload]);
+      if (onImageUpload) {
+        onImageUpload(file);
+      }
+    },
+    [onImageUpload]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -36,9 +39,11 @@ const ImageUploader = ({ onImageUpload , profilePicturePreview}) => {
       >
         <input {...getInputProps()} />
         {preview ? (
-          <img src={preview} alt="Profile Preview" className="w-full h-full object-cover" />
+          <img src={preview} alt="Profile Preview" className="h-full w-full" />
         ) : (
-          <p className="text-gray-500 text-center text-sm">Drag & drop or click to upload</p>
+          <p className="text-gray-500 text-center text-sm">
+            Drag & drop or click to upload
+          </p>
         )}
       </div>
       {error && <p className="text-red-500 text-sm mt-2 ml-2">{error}</p>}

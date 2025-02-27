@@ -10,6 +10,7 @@ import { IoBriefcaseOutline } from "react-icons/io5";
 import { IoSearchOutline } from "react-icons/io5";
 import { FaRegMessage } from "react-icons/fa6";
 import KaamSetu from "../images/KaamSetu.png";
+import { IoIosLogIn } from "react-icons/io";
 
 const Navbar = () => {
   const navigateTo = useNavigate();
@@ -23,11 +24,11 @@ const Navbar = () => {
     }
   }, [showSidebar]);
 
-  if (!isAuthenticated) {
-    return;
-  }
+  // if (!isAuthenticated) {
+  //   return;
+  // }
   return (
-    <div className="sticky top-0 w-full z-20 h-auto border-b-2 bg-white border-gray-100 flex justify-between items-center mb-5">
+    <div className="sticky top-0 w-full z-20 h-auto border-b-2 bg-white border-gray-100 flex justify-between items-center">
       <img
         onClick={() => {
           navigateTo("/");
@@ -41,7 +42,9 @@ const Navbar = () => {
           to="/"
           className={({ isActive }) =>
             `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-              isActive ? "bg-sky-600 hover:bg-sky-700 text-white" : "hover:bg-sky-700"
+              isActive
+                ? "bg-sky-600 hover:bg-sky-700 text-white"
+                : "hover:bg-sky-700"
             }`
           }
         >
@@ -53,32 +56,38 @@ const Navbar = () => {
           to="/jobs"
           className={({ isActive }) =>
             `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-              isActive ? "bg-sky-600 hover:bg-sky-700 text-white" : "hover:bg-sky-700"
+              isActive
+                ? "bg-sky-600 hover:bg-sky-700 text-white"
+                : "hover:bg-sky-700"
             }`
           }
         >
           <IoSearchOutline className="text-2xl" />{" "}
           <span className="font-medium">Find Jobs</span>
         </NavLink>
-
-        <NavLink
-          to="/sendmessage"
-          className={({ isActive }) =>
-            `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-              isActive ? "bg-sky-600 hover:bg-sky-700 text-white" : "hover:bg-sky-700"
-            }`
-          }
-        >
-          <FaRegMessage className="text-xl" />{" "}
-          <span className="font-medium">Send Message</span>
-        </NavLink>
-
+        {isAuthenticated && (
+          <NavLink
+            to="/sendmessage"
+            className={({ isActive }) =>
+              `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
+                isActive
+                  ? "bg-sky-600 hover:bg-sky-700 text-white"
+                  : "hover:bg-sky-700"
+              }`
+            }
+          >
+            <FaRegMessage className="text-xl" />{" "}
+            <span className="font-medium">Send Message</span>
+          </NavLink>
+        )}
         {user?.role === "Employer" && (
           <NavLink
             to="/dashboard/Job Post"
             className={({ isActive }) =>
               `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                isActive ? "bg-sky-600 hover:bg-sky-700 text-white" : "hover:bg-sky-700"
+                isActive
+                  ? "bg-sky-600 hover:bg-sky-700 text-white"
+                  : "hover:bg-sky-700"
               }`
             }
           >
@@ -92,7 +101,9 @@ const Navbar = () => {
             to="/dashboard/My Jobs"
             className={({ isActive }) =>
               `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                isActive ? "bg-sky-600 hover:bg-sky-700 text-white" : "hover:bg-sky-700"
+                isActive
+                  ? "bg-sky-600 hover:bg-sky-700 text-white"
+                  : "hover:bg-sky-700"
               }`
             }
           >
@@ -106,7 +117,9 @@ const Navbar = () => {
             to="/dashboard/Applications"
             className={({ isActive }) =>
               `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                isActive ? "bg-sky-600 hover:bg-sky-700 text-white" : "hover:bg-sky-700"
+                isActive
+                  ? "bg-sky-600 hover:bg-sky-700 text-white"
+                  : "hover:bg-sky-700"
               }`
             }
           >
@@ -120,7 +133,9 @@ const Navbar = () => {
             to="/dashboard/My Applications"
             className={({ isActive }) =>
               `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                isActive ? "bg-sky-600 hover:bg-sky-700 text-white" : "hover:bg-sky-700"
+                isActive
+                  ? "bg-sky-600 hover:bg-sky-700 text-white"
+                  : "hover:bg-sky-700"
               }`
             }
           >
@@ -130,6 +145,15 @@ const Navbar = () => {
         )}
       </div>
       <div className="flex items-center gap-10">
+        {!isAuthenticated && (
+          <NavLink
+            to={"/login"}
+            className="text-xl gap-2 flex items-center px-2 py-1 text-white bg-sky-600 justify-center rounded-md"
+          >
+            <IoIosLogIn className="text-xl" />
+            Login
+          </NavLink>
+        )}
         {isAuthenticated && <DropdownWithLinks user={user} />}
         {!showSidebar && (
           <RxHamburgerMenu
@@ -157,7 +181,9 @@ const Navbar = () => {
                 to="/"
                 className={({ isActive }) =>
                   `flex font-medium gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                    isActive ? "bg-sky-600 hover:bg-sky-700 text-white" : "hover:bg-sky-700"
+                    isActive
+                      ? "bg-sky-600 hover:bg-sky-700 text-white"
+                      : "hover:bg-sky-700"
                   }`
                 }
               >
@@ -169,24 +195,29 @@ const Navbar = () => {
                 to="/jobs"
                 className={({ isActive }) =>
                   `flex font-medium gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                    isActive ? "bg-sky-600 hover:bg-sky-700 text-white" : "hover:bg-sky-700"
+                    isActive
+                      ? "bg-sky-600 hover:bg-sky-700 text-white"
+                      : "hover:bg-sky-700"
                   }`
                 }
               >
                 <IoSearchOutline className="text-2xl" /> Find Jobs
               </NavLink>
-
-              <NavLink
-                onClick={() => setShowSidebar((prev) => !prev)}
-                to="/sendmessage"
-                className={({ isActive }) =>
-                  `flex font-medium gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                    isActive ? "bg-sky-600 hover:bg-sky-700 text-white" : "hover:bg-sky-700"
-                  }`
-                }
-              >
-                <FaRegMessage className="text-xl" /> Send Message
-              </NavLink>
+              {isAuthenticated && (
+                <NavLink
+                  onClick={() => setShowSidebar((prev) => !prev)}
+                  to="/sendmessage"
+                  className={({ isActive }) =>
+                    `flex font-medium gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
+                      isActive
+                        ? "bg-sky-600 hover:bg-sky-700 text-white"
+                        : "hover:bg-sky-700"
+                    }`
+                  }
+                >
+                  <FaRegMessage className="text-xl" /> Send Message
+                </NavLink>
+              )}
 
               {user?.role === "Employer" && (
                 <NavLink
@@ -194,7 +225,9 @@ const Navbar = () => {
                   to="/dashboard/Job Post"
                   className={({ isActive }) =>
                     `flex font-medium gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                      isActive ? "bg-sky-600 hover:bg-sky-700 text-white" : "hover:bg-sky-700"
+                      isActive
+                        ? "bg-sky-600 hover:bg-sky-700 text-white"
+                        : "hover:bg-sky-700"
                     }`
                   }
                 >
@@ -208,7 +241,9 @@ const Navbar = () => {
                   to="/dashboard/My Jobs"
                   className={({ isActive }) =>
                     `flex font-medium gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                      isActive ? "bg-sky-600 hover:bg-sky-700 text-white" : "hover:bg-sky-700"
+                      isActive
+                        ? "bg-sky-600 hover:bg-sky-700 text-white"
+                        : "hover:bg-sky-700"
                     }`
                   }
                 >
@@ -222,7 +257,9 @@ const Navbar = () => {
                   to="/dashboard/Applications"
                   className={({ isActive }) =>
                     `flex font-medium gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                      isActive ? "bg-sky-600 hover:bg-sky-700 text-white" : "hover:bg-sky-700"
+                      isActive
+                        ? "bg-sky-600 hover:bg-sky-700 text-white"
+                        : "hover:bg-sky-700"
                     }`
                   }
                 >
@@ -237,7 +274,9 @@ const Navbar = () => {
                   to="/dashboard/My Applications"
                   className={({ isActive }) =>
                     `flex font-medium gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                      isActive ? "bg-sky-600 hover:bg-sky-700 text-white" : "hover:bg-sky-700"
+                      isActive
+                        ? "bg-sky-600 hover:bg-sky-700 text-white"
+                        : "hover:bg-sky-700"
                     }`
                   }
                 >

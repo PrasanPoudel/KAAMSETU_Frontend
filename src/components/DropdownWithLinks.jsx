@@ -20,7 +20,7 @@ const DropdownWithLinks = ({ user }) => {
       document.body.style.overflow = "";
     }
   }, [isOpen]);
- // Ref for the dropdown container
+  // Ref for the dropdown container
   const dropdownRef = useRef(null);
 
   // Close dropdown when clicking outside
@@ -74,25 +74,25 @@ const DropdownWithLinks = ({ user }) => {
       <div className="flex items-center justify-center p-1 bg-gray-100 hover:bg-gray-200 mr-[-5px] rounded-full">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="bg-white rounded-full"
+          className="bg-white rounded-full w-[50px] h-[50px]"
         >
           {user.profilePicture ? (
             <img
               src={user.profilePicture.url}
               alt="user image"
-              className="rounded-full w-[50px] h-[50px]"
+              className="rounded-full object-cover"
             />
           ) : (
             <img
               src={unknownProfile}
               alt="user image"
-              className="rounded-full w-[50px] h-[50px]"
+              className="rounded-full object-cover"
             />
           )}
         </button>
         {isOpen && (
-          <div className="fixed z-30 top-0 right-0 h-[100vh] overflow-y-auto w-[100%] bg-opacity-50 bg-black" >
-            <div  
+          <div className="fixed z-30 top-0 right-0 h-[100vh] overflow-y-auto w-[100%] bg-opacity-50 bg-black">
+            <div
               ref={dropdownRef}
               className="flex flex-col pb-5 fixed md:top-[110px]  md:right-[100px] h-full md:h-auto w-full md:w-[400px] bg-white rounded-md  px-2  border-2"
             >
@@ -103,19 +103,21 @@ const DropdownWithLinks = ({ user }) => {
                 />
               </div>
               <div className="flex flex-col justify-center items-center py-1 gap-1">
-              {user.profilePicture ? (
-            <img
-              src={user.profilePicture.url}
-              alt="user image"
-              className="rounded-full bg-gray-100 hover:bg-gray-200 w-[75px] h-[75px]"
-            />
-          ) : (
-            <img
-              src={unknownProfile}
-              alt="user image"
-              className="rounded-full w-[75px] h-[75px]"
-            />
-          )}
+                <div className="w-[75px] h-[75px]">
+                  {user.profilePicture ? (
+                    <img
+                      src={user.profilePicture.url}
+                      alt="user image"
+                      className="rounded-full object-cover bg-gray-100 hover:bg-gray-200"
+                    />
+                  ) : (
+                    <img
+                      src={unknownProfile}
+                      alt="user image"
+                      className="rounded-full object-cover bg-gray-100 hover:bg-gray-200"
+                    />
+                  )}
+                </div>
                 <p className="break-words font-medium text-xl">
                   <span>Hi,</span> {user.name} !
                 </p>

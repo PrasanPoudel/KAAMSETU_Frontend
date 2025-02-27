@@ -5,20 +5,23 @@ const FileUploader = ({ onFileUpload }) => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
 
-  const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
-    if (rejectedFiles.length > 0) {
-      setError("Invalid file type. Only PDFs and images are allowed.");
-      return;
-    }
+  const onDrop = useCallback(
+    (acceptedFiles, rejectedFiles) => {
+      if (rejectedFiles.length > 0) {
+        setError("Invalid file type. Only PDFs and images are allowed.");
+        return;
+      }
 
-    const uploadedFile = acceptedFiles[0];
-    setFile(uploadedFile);
-    setError("");
+      const uploadedFile = acceptedFiles[0];
+      setFile(uploadedFile);
+      setError("");
 
-    if (onFileUpload) {
-      onFileUpload(uploadedFile);
-    }
-  }, [onFileUpload]);
+      if (onFileUpload) {
+        onFileUpload(uploadedFile);
+      }
+    },
+    [onFileUpload]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -40,7 +43,9 @@ const FileUploader = ({ onFileUpload }) => {
       {isDragActive ? (
         <p className="text-sky-600">Drop the file here...</p>
       ) : (
-        <p className="text-gray-500">Drag & drop a file here, or click to select one</p>
+        <p className="text-gray-500">
+          Drag & drop a file here, or click to select one
+        </p>
       )}
       {file && (
         <div className="mt-4 text-sm text-gray-700">

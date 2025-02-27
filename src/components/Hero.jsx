@@ -19,7 +19,7 @@ const Hero = () => {
           Explore Jobs
         </Link>
         <Link
-          to={"/contact"}
+          to={"/sendmessage"}
           className="flex justify-center items-center text-sky-600 border-2 w-[300px] border-sky-600 p-2 rounded-md text-xl"
         >
           Talk To Us

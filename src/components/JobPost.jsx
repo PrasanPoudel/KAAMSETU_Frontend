@@ -24,6 +24,7 @@ const JobPost = () => {
   const [offers, setOffers] = useState("");
   const [jobCategory, setJobCategory] = useState("");
   const [salary, setSalary] = useState("");
+  const [salaryNegotiable, setSalaryNegotiable] = useState(false);
   const [hiringMultipleCandidates, setHiringMultipleCandidates] =
     useState("No");
   const [WebsiteTitle, setWebsiteTitle] = useState("");
@@ -124,7 +125,7 @@ const JobPost = () => {
 
   return (
     <form onSubmit={handlePostJob} className="grid gap-4 w-full md:w-[80%]">
-      <div className="grid grid-cols-1 items-center justify-between gap-4 md:grid-cols-2 w-full">
+      <div className="grid grid-cols-1 items-center md:items-end justify-between gap-4 md:grid-cols-2 w-full">
         <div className="flex flex-col gap-2">
           <label className="text-xl font-medium">Company's Logo</label>
           <ImageUploader onImageUpload={companyLogoHandler} />
@@ -292,11 +293,23 @@ const JobPost = () => {
         <div className="flex flex-col gap-2">
           <label className="text-xl font-medium">Salary (Per year)</label>
           <input
-            className="w-full border-2 border-black pl-2 "
-            type="number"
+            className="w-full border-2 border-black px-2 "
+            type={salaryNegotiable ? "text" : "number"}
             value={salary}
             onChange={(e) => setSalary(e.target.value)}
+            disabled={salaryNegotiable}
           />
+          <div htmlFor="checkBox" className="text-sm font-medium flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={salaryNegotiable}
+              onChange={() => {
+                setSalaryNegotiable(!salaryNegotiable);
+                setSalary("Negotiable");
+              }}
+            />
+            Negotiable
+          </div>
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">

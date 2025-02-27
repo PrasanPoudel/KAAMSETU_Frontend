@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import "./App.css";
+import React, { useEffect, Suspense, lazy } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,23 +7,26 @@ import {
 } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Dashboard from "./pages/Dashboard";
-import Jobs from "./pages/Jobs";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
-import PostApplication from "./pages/PostApplication";
-import Register from "./pages/Register";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./store/slices/userSlice";
-import SendMessage from "./pages/SendMessage";
+import Loader from "./components/Loader"; // Import your custom Loader component
 
+// Lazy load all pages
+const Home = lazy(() => import("./pages/Home"));
+const Jobs = lazy(() => import("./pages/Jobs"));
+const Login = lazy(() => import("./pages/Login"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const PostApplication = lazy(() => import("./pages/PostApplication"));
+const Register = lazy(() => import("./pages/Register"));
+const SendMessage = lazy(() => import("./pages/SendMessage"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.user);
   const navigateTo = useNavigate();
+
   useEffect(() => {
     if (!isAuthenticated) {
       navigateTo("/login");
@@ -33,39 +35,47 @@ const ProtectedRoute = ({ children }) => {
 
   return children;
 };
+
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUser());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
-      <Router>
+      <Router
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
         <Navbar />
         <Routes>
           <Route
             path="/"
             element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
+                <Suspense fallback={<Loader />}>
+                  <Home />
+                </Suspense>
             }
           />
           <Route
             path="/jobs"
             element={
-              <ProtectedRoute>
-                <Jobs />
-              </ProtectedRoute>
+                <Suspense fallback={<Loader />}>
+                  <Jobs />
+                </Suspense>
             }
           />
           <Route
             path="/sendmessage"
             element={
               <ProtectedRoute>
-                <SendMessage />
+                <Suspense fallback={<Loader />}>
+                  <SendMessage />
+                </Suspense>
               </ProtectedRoute>
             }
           />
@@ -73,7 +83,9 @@ const App = () => {
             path="/dashboard/:activeComponent"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <Suspense fallback={<Loader />}>
+                  <Dashboard />
+                </Suspense>
               </ProtectedRoute>
             }
           />
@@ -81,14 +93,37 @@ const App = () => {
             path="/post/application/:jobId"
             element={
               <ProtectedRoute>
-                <PostApplication />
+                <Suspense fallback={<Loader />}>
+                  <PostApplication />
+                </Suspense>
               </ProtectedRoute>
             }
           />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>   
+          <Route
+            path="/register"
+            element={
+              <Suspense fallback={<Loader />}>
+                <Register />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Suspense fallback={<Loader />}>
+                <Login />
+              </Suspense>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<Loader />}>
+                <NotFound />
+              </Suspense>
+            }
+          />
+        </Routes>
         <Footer />
         <ToastContainer
           position="top-right"

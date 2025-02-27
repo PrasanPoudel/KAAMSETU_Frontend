@@ -11,6 +11,7 @@ import {
   resetApplicationSlice,
 } from "../store/slices/applicationSlice";
 import { toast } from "react-toastify";
+import { TfiWrite } from "react-icons/tfi";
 
 const JobCard = ({
   element,
@@ -21,31 +22,6 @@ const JobCard = ({
   expanded,
 }) => {
   const dispatch = useDispatch();
-  const [timeAgo, setTimeAgo] = useState("");
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      const postedDate = new Date(element.jobPostedOn);
-      const diffInSeconds = Math.floor((now - postedDate) / 1000);
-
-      if (diffInSeconds < 60) {
-        setTimeAgo(`${diffInSeconds} seconds ago`);
-      } else if (diffInSeconds < 3600) {
-        setTimeAgo(`${Math.floor(diffInSeconds / 60)} minutes ago`);
-      } else if (diffInSeconds < 86400) {
-        setTimeAgo(`${Math.floor(diffInSeconds / 3600)} hours ago`);
-      } else {
-        setTimeAgo(`${Math.floor(diffInSeconds / 86400)} days ago`);
-      }
-    };
-
-    updateTime(); // Run initially
-    const interval = setInterval(updateTime, 60000); // Update every minute
-
-    return () => clearInterval(interval); // Cleanup on unmount
-  }, [element.jobPostedOn]);
-
   const handleDeleteJob = (id) => {
     dispatch(deleteJob(id));
   };
@@ -94,14 +70,14 @@ const JobCard = ({
     >
       <div
         onClick={() => toggleExpand(element._id)}
-        className="w-full max-w-[400px] hover:cursor-pointer shadow-[0px_0px_2.5px_rgba(0,0,0,0.35)] px-3 py-5 rounded-md h-[350px]"
+        className="max-w-[400px] hover:cursor-pointer border hover:shadow-[0px_0px_2.5px_rgba(0,0,0,0.35)] px-3 py-2 rounded-md h-full flex flex-col justify-between"
       >
         <div
           className={`grid ${
             element?.companyLogo ? "grid-cols-[1fr_2fr]" : "grid-cols-1"
-          } items-center gap-4`}
+          } items-start gap-4`}
         >
-          <div className="flex items-center justify-center rounded-md">
+          <div className="flex items-start justify-center rounded-md">
             {element?.companyLogo ? (
               <img
                 src={element.companyLogo.url}
@@ -115,34 +91,26 @@ const JobCard = ({
             <h3 className="text-sky-600 text-sm font-semibold">
               {element.companyName}
             </h3>
-            <h2 className="text-xl font-medium">{element.title}</h2>
+            <h2 className="font-medium  md:text-xl">{element.title}</h2>
           </div>
         </div>
-        <div className="mt-4 space-y-4">
-          <p className="text-gray-500 text-sm">{timeAgo}</p>
-          <div className="text-sm grid grid-cols-[1fr_1.2fr] gap-2 justify-between items-start">
-            <span className="font-medium text-gray-600 flex items-center gap-1">
-              <GoClock className="text-xl" />
-              Job Type:
-            </span>
-            <span className="bg-sky-100 text-sky-600 px-2 py-1 rounded-md">
-              {element.jobType}
-            </span>
+        <div className="grid grid-cols-2 mt-5 gap-2 items-center justify-between">
+          <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
+            <GoClock />
+            {element.jobType}
           </div>
-          <div className="text-sm grid grid-cols-[1fr_1.2fr] gap-2 justify-between items-start">
-            <span className="font-medium text-gray-600 flex items-center gap-1">
-              <TbCurrencyRupeeNepalese className="text-xl" />
-              Salary:
-            </span>
-            <span className="bg-sky-100 text-sky-600 px-2 py-1 rounded-md">
-              {element.salary} / year
-            </span>
+          <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
+            <MdOutlineLocationOn />
+            {element.location}
           </div>
-          <div className="text-sm grid grid-cols-[1fr_1.2fr] gap-2 justify-between items-start">
-            <span className="font-medium text-gray-600 flex items-center gap-1">
-              <MdOutlineLocationOn className="text-xl" /> Location:
-            </span>
-            <span className="text-gray-800">{element.location}</span>
+          <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
+            <TbCurrencyRupeeNepalese />
+            {element.salary.charAt(0) + "." + element.salary.slice(1, 2)} L /
+            Year
+          </div>
+          <div className="flex gap-1 items-center text-sm p-1 rounded-md">
+            <TfiWrite />
+            {element.jobPostedOn.slice(0, 10)}
           </div>
         </div>
       </div>
@@ -165,7 +133,7 @@ const JobCard = ({
               <label className="text-xl font-medium text-sky-600">
                 Company's Introduction
               </label>
-              <p className="  text-gray-500 text-justify">
+              <p className="text-gray-500 text-justify">
                 {element.introduction}
               </p>
             </div>
@@ -180,7 +148,9 @@ const JobCard = ({
                     .map((qualification) => qualification.trim()) // Remove extra spaces
                     .filter((qualification) => qualification.length > 0) // Remove empty items
                     .map((qualification, index) => (
-                      <li key={index}>{qualification}</li> // Display as a list item
+                      <li key={index} className="text-justify">
+                        {qualification}
+                      </li> // Display as a list item
                     ))}
                 </ul>
               </div>
@@ -196,7 +166,9 @@ const JobCard = ({
                     .map((responsibility) => responsibility.trim()) // Remove extra spaces
                     .filter((responsibility) => responsibility.length > 0) // Remove empty items
                     .map((responsibility, index) => (
-                      <li key={index}>{responsibility}</li> // Display as a list item
+                      <li key={index} className="text-justify">
+                        {responsibility}
+                      </li> // Display as a list item
                     ))}
                 </ul>
               </div>
@@ -212,13 +184,15 @@ const JobCard = ({
                     .map((offer) => offer.trim()) // Remove extra spaces
                     .filter((offer) => offer.length > 0) // Remove empty items
                     .map((offer, index) => (
-                      <li key={index}>{offer}</li> // Display as a list item
+                      <li key={index} className="text-justify">
+                        {offer}
+                      </li> // Display as a list item
                     ))}
                 </ul>
               </div>
             )}
           </div>
-          <div className="mt-5 flex flex-col md:flex-row justify-end gap-5">
+          <div className="mt-5 flex flex-col md:flex-row justify-end gap-2">
             {enableDeleteJob && (
               <button
                 className="bg-red-500 hover:bg-red-600 text-xl flex justify-center items-center text-white  md:px-2 px-1   py-2  rounded-md transition-all duration-300"
@@ -231,9 +205,11 @@ const JobCard = ({
               <>
                 {!isAuthenticated && (
                   <button
-                    className="rounded-md text-xl w-full bg-gray-500 hover:cursor-pointer text-white md:px-2 px-1 py-2"
+                    className="rounded-md text-xl bg-gray-500 hover:cursor-pointer text-white md:px-2 px-1 py-2"
                     onClick={() => {
-                      toast.error("User is not authenticated.");
+                      toast.error(
+                        "User is not authenticated. Please login or signup and try again."
+                      );
                     }}
                   >
                     Apply
@@ -241,7 +217,7 @@ const JobCard = ({
                 )}
                 {isAuthenticated && user.role === "Employer" && (
                   <button
-                    className=" rounded-md text-xl w-full bg-gray-500 hover:cursor-pointer text-white md:px-2 px-1 py-2 "
+                    className=" rounded-md text-xl bg-gray-500 hover:cursor-pointer text-white md:px-2 px-1 py-2 "
                     onClick={() => {
                       toast.info("Employer cannot apply for jobs.");
                     }}
@@ -252,7 +228,7 @@ const JobCard = ({
                 <form>
                   {isAuthenticated && user.role === "Job Seeker" && (
                     <button
-                      className="rounded-md text-xl w-full bg-sky-600 hover:bg-sky-700 hover:cursor-pointer text-white md:px-2 px-1 py-2 "
+                      className="rounded-md text-xl bg-sky-600 hover:bg-sky-700 hover:cursor-pointer text-white md:px-2 px-1 py-2 "
                       onClick={handlePostApplication}
                       disabled={loading}
                     >
