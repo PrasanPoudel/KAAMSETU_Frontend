@@ -71,7 +71,7 @@ const Login = () => {
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  className="px-2 w-full"
+                  className="px-2 w-full bg-white"
                 >
                   <option value="" disabled>
                     Please Select A Role
