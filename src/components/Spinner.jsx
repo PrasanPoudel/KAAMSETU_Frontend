@@ -3,7 +3,6 @@ import { ScaleLoader } from "react-spinners";
 
 const Spinner = () => {
   return (
-    <>
       <section
         style={{
           minHeight: "525px",
@@ -15,7 +14,6 @@ const Spinner = () => {
       >
         <ScaleLoader height={25} width={5} color="#0284c7" />
       </section>
-    </>
   );
 };
 

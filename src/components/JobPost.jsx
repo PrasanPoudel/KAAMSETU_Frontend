@@ -299,13 +299,16 @@ const JobPost = () => {
             onChange={(e) => setSalary(e.target.value)}
             disabled={salaryNegotiable}
           />
-          <div htmlFor="checkBox" className="text-sm font-medium flex items-center gap-2">
+          <div
+            htmlFor="checkBox"
+            className="text-sm font-medium flex items-center gap-2"
+          >
             <input
               type="checkbox"
               checked={salaryNegotiable}
               onChange={() => {
                 setSalaryNegotiable(!salaryNegotiable);
-                setSalary("Negotiable");
+                setSalary("(Negotiable)");
               }}
             />
             Negotiable

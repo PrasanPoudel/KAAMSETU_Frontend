@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { clearAllJobErrors, fetchJobs } from "../store/slices/jobSlice";
 import JobsPagination from "../components/JobPagination";
-import { IoSearchOutline } from "react-icons/io5";
+import { MdFindReplace } from "react-icons/md";
 import { IoLocationOutline, IoBriefcaseOutline } from "react-icons/io5";
 import { GoClock } from "react-icons/go";
 import { CiFilter } from "react-icons/ci";
@@ -23,6 +23,8 @@ const Jobs = () => {
       document.body.style.overflow = "";
     }
   }, [showFilters]);
+
+  const { jobs, error } = useSelector((state) => state.jobs);
   const [filteredSuggestionsForLocation, setFilteredSuggestionsForLocation] =
     useState([]);
   const [
@@ -34,7 +36,6 @@ const Jobs = () => {
   const [jobType, setJobType] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [resetFilters, setResetFilters] = useState(false);
-  const { jobs, error } = useSelector((state) => state.jobs);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -84,7 +85,7 @@ const Jobs = () => {
     <>
       <div className="flex w-full md:px-5">
         <div className="flex border-2 bg-white border-black px-2 w-full items-center lg:hidden rounded-md">
-          <IoSearchOutline className="text-xl w-[30px] text-black" />
+          <MdFindReplace className="text-xl w-[30px] text-black" />
           <input
             type="search"
             value={searchKeyword}
@@ -97,7 +98,7 @@ const Jobs = () => {
             placeholder="Search for Jobs"
           />
           <CiFilter
-            className="text-4xl border-2 border-black rounded-md lg:hidden"
+            className="text-4xl border border-black shadow-[0px_0px_2.5px_rgba(0,0,0,0.35)] rounded-md lg:hidden"
             onClick={() => setShowFilters(!showFilters)}
           />
         </div>
@@ -116,10 +117,6 @@ const Jobs = () => {
             onClick={() => setShowFilters(!showFilters)}
           />
         </div>
-        <p className="text-2xl font-medium">Find Your Dream Job</p>
-        <p className="text-gray-500">
-          Narrow down your job search with filters
-        </p>
         <div className="flex justify-between items-center">
           {(searchKeyword || city || jobType || jobCategory) != "" && (
             <button
@@ -127,7 +124,6 @@ const Jobs = () => {
                 setCity("");
                 setJobCategory("");
                 setJobType("");
-                setSearchKeyword("");
                 setResetFilters(!resetFilters);
               }}
               className="flex items-center gap-1 p-2 text-black bg-white border hover:bg-gray-200 border-black rounded-md"
@@ -135,21 +131,6 @@ const Jobs = () => {
               Reset Filters
             </button>
           )}
-        </div>
-        <hr className="min-h-[1px] w-full bg-black" />
-        <div className="flex border-2 bg-white border-black px-2 w-full items-center rounded-md">
-          <IoSearchOutline className="text-xl w-[30px] text-black" />
-          <input
-            type="search"
-            value={searchKeyword}
-            onChange={(e) => {
-              setSearchKeyword(
-                e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
-              );
-            }}
-            className="w-full pl-2 bg-transparent"
-            placeholder="Search for Jobs"
-          />
         </div>
         <div className="flex border-2 bg-white border-black pl-2 w-full items-center rounded-md">
           <IoLocationOutline className="text-xl w-[30px] text-black" />
@@ -231,14 +212,10 @@ const Jobs = () => {
       </div>
       {/* End */}
       <div className={`${showFilters ? "hidden" : "flex flex-col gap-5"}`}>
-        <div className="job-filters rounded-md px-5 bg-img hidden lg:flex lg:flex-col gap-2 py-10">
-          <p className="text-3xl font-medium">Find Your Dream Job</p>
-          <p className="text-xl text-gray-500">
-            Narrow down your job search with filters
-          </p>
+        <div className="job-filters rounded-md px-2 hidden lg:flex lg:flex-col gap-2 py-10">
           <div className="grid grid-cols-4 gap-2">
             <div className="flex border-2 bg-white border-black pl-2 w-full items-center rounded-md">
-              <IoSearchOutline className="text-xl w-[30px] text-black" />
+              <MdFindReplace className="text-xl w-[30px] text-black" />
               <input
                 type="search"
                 value={searchKeyword}

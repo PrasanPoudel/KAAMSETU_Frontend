@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import {
@@ -6,8 +6,8 @@ import {
   getMyJobs,
   resetJobSlice,
 } from "../store/slices/jobSlice";
-import Spinner from "../components/Spinner";
-import JobCard from "./JobCard";
+import Loader from "../components/Loader";
+const JobCard= React.lazy(()=> import('./JobCard'))
 
 const MyJobs = () => {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const MyJobs = () => {
   return (
     <>
       {loading ? (
-        <Spinner />
+        <Loader />
       ) : myJobs?.length === 0 ? (
         <h1 className="text-xl text-center md:text-start">
           You have not posted any jobs yet.
@@ -50,13 +50,15 @@ const MyJobs = () => {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 w-full">
             {myJobs.map((element) => (
+              <Suspense fallback={<Loader/>}>
               <JobCard
                 key={element._id}
                 element={element}
                 enableDeleteJob={true}
                 toggleExpand={toggleExpand}
                 expandedJobId={expandedJobId}
-              />
+                />
+                </Suspense>
             ))}
           </div>
         </div>

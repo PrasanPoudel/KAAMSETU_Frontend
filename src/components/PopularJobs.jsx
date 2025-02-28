@@ -2,13 +2,12 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Sd from "../images/Sd.webp";
-import UiUx from  "../images/ui-ux.jpg";
+import UiUx from "../images/ui-ux.jpg";
 import Se from "../images/sales-executive.jpg";
 import Mm from "../images/marketing-manager.jpg";
 import Hr from "../images/hr.jpg";
 import Fa from "../images/financial-analyst.jpg";
 import Cw from "../images/content-writer.jpeg";
-
 
 const PopularJobs = () => {
   // Responsive Breakpoints
@@ -32,46 +31,48 @@ const PopularJobs = () => {
 
   const jobItems = [
     {
-      description: "Marketing Manager - Driving Brand Growth and Awareness",
-      headline: "MarketHub - Leading the Future of Advertising",
+      description: "Hub - Leading the Future of Advertising. Join us to revolutionize digital marketing strategies and drive brand growth through innovative campaigns.",
+      headline: "Marketing Manager - Driving Brand Growth and Awareness",
       image: Mm,
     },
     {
-      description: "UX/UI Designer - Crafting User-Centered Digital Experiences",
-      headline: "DesignPros - Innovating Through Design",
+      description: "DesignPros - Innovating Through Design. Be part of a team that creates seamless and intuitive user experiences for cutting-edge digital products.",
+      headline: "UX/UI Designer - Crafting User-Centered Digital Experiences",
       image: UiUx,
     },
     {
-      description: "Sales Executive - Building Strong Customer Relationships",
-      headline: "SalesHub - Empowering Sales Teams to Succeed",
+      description: "SalesHub - Empowering Sales Teams to Succeed. Help businesses grow by building strong customer relationships and closing high-value deals.",
+      headline: "Sales Executive - Building Strong Customer Relationships",
       image: Se,
     },
     {
-      description: "Human Resources Manager - Building Effective Teams",
-      headline: "PeopleFirst - Creating a Positive Work Culture",
+      description: "PeopleFirst - Creating a Positive Work Culture. Lead initiatives to build effective teams and foster a collaborative workplace environment.",
+      headline: "Human Resources Manager - Building Effective Teams",
       image: Hr,
     },
     {
-      description: "Software Developer - Creating Cutting-Edge Applications",
-      headline: "CodeWorks - Shaping the Digital World",
+      description: "CodeWorks - Shaping the Digital World. Develop innovative software solutions that solve real-world problems and drive technological advancements.",
+      headline: "Software Developer - Creating Cutting-Edge Applications",
       image: Sd,
     },
     {
-      description: "Financial Analyst - Analyzing Market Trends and Forecasts",
-      headline: "FinancePro - Turning Data into Financial Strategies",
+      description: "FinancePro - Turning Data into Financial Strategies. Analyze market trends and provide insights to help businesses make informed financial decisions.",
+      headline: "Financial Analyst - Analyzing Market Trends and Forecasts",
       image: Fa,
     },
     {
-      description: "Content Writer - Crafting Compelling Written Narratives",
-      headline: "WriteNow - Bringing Ideas to Life Through Words",
+      description: "WriteNow - Bringing Ideas to Life Through Words. Craft compelling narratives and create engaging content that resonates with diverse audiences.",
+      headline: "Content Writer - Crafting Compelling Written Narratives",
       image: Cw,
     },
-  ];  
+  ];
 
   return (
     <div className="w-full pt-10">
-      <h2 className="text-3xl text-center mb-10 font-medium" >Popular Jobs Categories</h2>
-      <div className="z-10 relative" >
+      <h2 className="text-3xl text-center mb-10 font-medium">
+        Popular Jobs Categories
+      </h2>
+      <div className="z-10 relative">
         <Carousel
           responsive={responsive}
           infinite
@@ -94,9 +95,10 @@ const PopularJobs = () => {
                 src={job.image}
                 alt="Job"
                 className="w-full h-[250px] object-cover rounded-md"
+                loading="lazy"
               />
-              <h3 className="text-xl mt-2 font-medium">{job.headline}</h3>
-              <p className="text-gray-500">{job.description}</p>
+              <h3 className="text-xl mt-2 font-medium text-justify">{job.headline}</h3>
+              <p className="text-gray-500 text-justify">{job.description}</p>
             </div>
           ))}
         </Carousel>

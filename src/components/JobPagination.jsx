@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import JobCard from "./JobCard";
-import Loader from "./Loader";
+const JobCard = React.lazy(() => import("./JobCard"));
+import SkeletonUiForJobs from "./SkeletonUiForJobs";
 
 const JobsPagination = ({
   jobs,
@@ -78,11 +78,11 @@ const JobsPagination = ({
         ))}
       </div>
       {!jobs.length > 0 && (
-        <div className="flex text-xl justify-center h-[300px] items-center text-center md:text-justify">
+        <div className="w-full">
           {isLoading ? (
-            <Loader />
+            <SkeletonUiForJobs />
           ) : (
-            <h1>
+            <h1 className="text-center w-full">
               No {jobType}{" "}
               {searchKeyword.length > 0 ? `"${searchKeyword}"` : ""} Job
               Available {""} {jobCategory ? `for ${jobCategory} ` : ""}

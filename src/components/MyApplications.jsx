@@ -8,7 +8,7 @@ import {
   deleteApplication,
   fetchJobSeekerApplications,
 } from "../store/slices/applicationSlice";
-import Spinner from "../components/Spinner";
+import Loader from "../components/Loader";
 
 const MyApplications = () => {
   const { loading, error, applications, message } = useSelector(
@@ -40,7 +40,7 @@ const MyApplications = () => {
   return (
     <>
       {loading ? (
-        <Spinner />
+        <Loader />
       ) : applications && applications.length <= 0 ? (
         <h1 className="text-xl text-center md:text-start">
           You have not applied for any job yet
@@ -92,9 +92,12 @@ const MyApplications = () => {
                         {element.jobInfo.jobId}
                       </td>
                       <td className="p-2 border-2 border-white">
-                      <Link to={`/post/Application/${element.jobInfo.jobId}`} className="text-sm underline">
-                        More Details
-                      </Link>
+                        <Link
+                          to={`/post/Application/${element.jobInfo.jobId}`}
+                          className="text-sm underline"
+                        >
+                          More Details
+                        </Link>
                       </td>
                       <td className="p-2 border bg-sky-600 hover:bg-sky-700">
                         <Link

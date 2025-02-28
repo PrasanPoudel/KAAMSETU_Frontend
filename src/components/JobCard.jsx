@@ -12,6 +12,7 @@ import {
 } from "../store/slices/applicationSlice";
 import { toast } from "react-toastify";
 import { TfiWrite } from "react-icons/tfi";
+import { Link } from "react-router-dom";
 
 const JobCard = ({
   element,
@@ -58,7 +59,6 @@ const JobCard = ({
       dispatch(resetApplicationSlice());
     }
   };
-
   return (
     <div
       className={` ${
@@ -66,10 +66,11 @@ const JobCard = ({
           ? "px-2 py-5 shadow-[0px_0px_2.5px_rgba(0,0,0,0.35)] md:p-5 border grid col-start-1 row-start-1 row-end-2 sm:col-span-full xl:col-span-full"
           : ""
       } min-w-full rounded-md gap-5 max-w-md`}
-      key={element._id}
+      key={element?._id}
     >
-      <div
-        onClick={() => toggleExpand(element._id)}
+      {toggleExpand ? (
+        <div
+        onClick={() => toggleExpand(element?._id)}
         className="max-w-[400px] hover:cursor-pointer border hover:shadow-[0px_0px_2.5px_rgba(0,0,0,0.35)] px-3 py-2 rounded-md h-full flex flex-col justify-between"
       >
         <div
@@ -80,8 +81,9 @@ const JobCard = ({
           <div className="flex items-start justify-center rounded-md">
             {element?.companyLogo ? (
               <img
-                src={element.companyLogo.url}
+                src={element?.companyLogo?.url}
                 className="w-[60px] h-[60px] border-2 border-gray-100 mix-blend-multiply rounded-md"
+                loading="lazy"
               />
             ) : (
               ""
@@ -89,40 +91,96 @@ const JobCard = ({
           </div>
           <div>
             <h3 className="text-sky-600 text-sm font-semibold">
-              {element.companyName}
+              {element?.companyName}
             </h3>
-            <h2 className="font-medium  md:text-xl">{element.title}</h2>
+            <h2 className="font-bold  md:text-xl">{element.title}</h2>
           </div>
         </div>
         <div className="grid grid-cols-2 mt-5 gap-2 items-center justify-between">
           <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
             <GoClock />
-            {element.jobType}
+            {element?.jobType}
           </div>
           <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
             <MdOutlineLocationOn />
-            {element.location}
+            {element?.location}
           </div>
           <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
             <TbCurrencyRupeeNepalese />
-            {element.salary.charAt(0) + "." + element.salary.slice(1, 2)} L /
-            Year
+            {element?.salary != null &&
+              element.salary.toString().charAt(0) +
+                "." +
+                element.salary.toString().slice(1, 2) +
+                " L/Year"}
+            {element?.salary == null && "(Negotiable)"}
           </div>
           <div className="flex gap-1 items-center text-sm p-1 rounded-md">
             <TfiWrite />
-            {element.jobPostedOn.slice(0, 10)}
+            {element?.jobPostedOn?.slice(0, 10)}
           </div>
         </div>
       </div>
-
+      ):(
+        <Link
+        to={`post/application/${element._id}`}
+        className="max-w-[400px] hover:cursor-pointer border hover:shadow-[0px_0px_2.5px_rgba(0,0,0,0.35)] px-3 py-2 rounded-md h-full flex flex-col justify-between"
+      >
+        <div
+          className={`grid ${
+            element?.companyLogo ? "grid-cols-[1fr_2fr]" : "grid-cols-1"
+          } items-start gap-4`}
+        >
+          <div className="flex items-start justify-center rounded-md">
+            {element?.companyLogo ? (
+              <img
+                src={element?.companyLogo?.url}
+                className="w-[60px] h-[60px] border-2 border-gray-100 mix-blend-multiply rounded-md"
+                loading="lazy"
+              />
+            ) : (
+              ""
+            )}
+          </div>
+          <div>
+            <h3 className="text-sky-600 text-sm font-semibold">
+              {element?.companyName}
+            </h3>
+            <h2 className="font-bold  md:text-xl">{element.title}</h2>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 mt-5 gap-2 items-center justify-between">
+          <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
+            <GoClock />
+            {element?.jobType}
+          </div>
+          <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
+            <MdOutlineLocationOn />
+            {element?.location}
+          </div>
+          <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
+            <TbCurrencyRupeeNepalese />
+            {element?.salary != null &&
+              element.salary.toString().charAt(0) +
+                "." +
+                element.salary.toString().slice(1, 2) +
+                " L/Year"}
+            {element?.salary == null && "(Negotiable)"}
+          </div>
+          <div className="flex gap-1 items-center text-sm p-1 rounded-md">
+            <TfiWrite />
+            {element?.jobPostedOn?.slice(0, 10)}
+          </div>
+        </div>
+      </Link>
+      )}
       {(expanded || expandedJobId === element._id) && (
         <div className="flex flex-col gap-5 pl-2">
           <div className="flex flex-col gap-2">
-            <label className="text-xl font-medium text-sky-600">
+            <label className="text-xl font-bold text-sky-600">
               Job Category
             </label>
             <p className="  text-gray-500">{element.jobCategory}</p>
-            <label className="text-xl font-medium text-sky-600">
+            <label className="text-xl font-bold text-sky-600">
               Employer Id
             </label>
             <p className="  text-gray-500">{element.postedBy}</p>
@@ -130,16 +188,16 @@ const JobCard = ({
 
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
-              <label className="text-xl font-medium text-sky-600">
+              <label className="text-xl font-bold text-sky-600">
                 Company's Introduction
               </label>
               <p className="text-gray-500 text-justify">
-                {element.introduction}
+                {element?.introduction}
               </p>
             </div>
-            {element.qualifications && (
+            {element?.qualifications && (
               <div className="flex flex-col gap-2">
-                <label className="text-xl font-medium text-sky-600">
+                <label className="text-xl font-bold text-sky-600">
                   Qualifications
                 </label>
                 <ul className="list-disc pl-5 text-gray-500">
@@ -157,11 +215,11 @@ const JobCard = ({
             )}
             {element.responsibilities && (
               <div className="flex flex-col gap-2">
-                <label className="text-xl font-medium text-sky-600">
+                <label className="text-xl font-bold text-sky-600">
                   Responsibilities
                 </label>
                 <ul className="list-disc pl-5 text-gray-500">
-                  {element.responsibilities
+                  {element?.responsibilities
                     .split(".") // Split the string into an array
                     .map((responsibility) => responsibility.trim()) // Remove extra spaces
                     .filter((responsibility) => responsibility.length > 0) // Remove empty items
@@ -175,11 +233,11 @@ const JobCard = ({
             )}
             {element.offers && (
               <div className="flex flex-col gap-2">
-                <label className="text-xl font-medium text-sky-600">
+                <label className="text-xl font-bold text-sky-600">
                   Offering
                 </label>
                 <ul className="list-disc pl-5 text-gray-500">
-                  {element.offers
+                  {element?.offers
                     .split(".") // Split the string into an array
                     .map((offer) => offer.trim()) // Remove extra spaces
                     .filter((offer) => offer.length > 0) // Remove empty items

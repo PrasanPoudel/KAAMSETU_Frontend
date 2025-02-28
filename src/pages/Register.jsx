@@ -179,22 +179,18 @@ const Register = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row justify-between lg:py-8 w-full">
-      <img
-        src={KaamSetu}
-        className="w-[120px] h-[120px] lg:sticky lg:top-[50px] lg:h-[500px] lg:w-[35%] lg:flex"
-      />
-      <div className="flex flex-col justify-center items-start gap-4 w-full sm:w-[600px] md:w-[750px] lg:w-[55%] lg:px-[100px]">
-        <h3 className="text-3xl">Register A New Account</h3>
+    <div className="lg:py-2 w-full bg-img">
+      <div className="flex flex-col justify-center items-start gap-2 w-full sm:w-[600px] md:w-[750px] lg:w-[55%]">
+        <h3 className="text-3xl font-bold">Register A New Account</h3>
         <div className="w-full">
           <form
             onSubmit={handleRegister}
-            className="flex flex-col gap-4 justify-center w-full items-start"
+            className="flex flex-col gap-2 justify-center w-full items-start"
           >
             {step === 1 && (
               <>
                 <label className="text-xl font-medium">Register As</label>
-                <div className="flex w-full rounded-md border-2 border-black justify-between items-center px-2">
+                <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                   <select
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
@@ -209,7 +205,7 @@ const Register = () => {
                   <FaRegUser className="text-3xl" />
                 </div>
                 <label className="text-xl font-medium">Name</label>
-                <div className="flex w-full rounded-md border-2 border-black justify-between items-center px-2">
+                <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                   <input
                     type="text"
                     value={name}
@@ -224,7 +220,7 @@ const Register = () => {
                   <HiOutlinePencilAlt className="text-4xl" />
                 </div>
                 <label className="text-xl font-medium">Phone Number</label>
-                <div className="flex w-full rounded-md border-2 border-black justify-between items-center px-2">
+                <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                   <input
                     type="number"
                     value={phone}
@@ -243,7 +239,7 @@ const Register = () => {
                   </p>
                 )}
                 <label className="text-xl font-medium">Address</label>
-                <div className="flex w-full rounded-md border-2 border-black justify-between items-center px-2">
+                <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                   <div className="w-full flex items-center bg-white pl-2">
                     <div className="relative w-full">
                       <input
@@ -282,7 +278,7 @@ const Register = () => {
             {step === 2 && (
               <>
                 <label className="text-xl font-medium">Email Address</label>
-                <div className="flex w-full rounded-md border-2 border-black justify-between items-center px-2">
+                <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                   <input
                     type="email"
                     value={email}
@@ -292,7 +288,7 @@ const Register = () => {
                   <MdOutlineMailOutline className="text-4xl" />
                 </div>
                 <label className="text-xl font-medium">Password</label>
-                <div className="flex w-full rounded-md border-2 border-black justify-between items-center px-2">
+                <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
@@ -326,9 +322,9 @@ const Register = () => {
                       <FileUploader onFileUpload={resumeHandler} />
                     </div>
                     <div className="flex flex-col gap-4 w-full justify-center">
-                      <p className="text-xl font-medium">Job Choices</p>
+                      <p className="text-xl font-medium">Job Choices <span>(Select Any 3 Job Category You Prefer To Do)</span></p>
                       <div className="flex flex-col gap-8">
-                        <div className="flex w-full rounded-md border-2 border-black justify-between items-center px-2">
+                        <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                           <div className="pl-2 w-full">
                             <div className="relative w-full">
                               <input
@@ -371,7 +367,7 @@ const Register = () => {
                           <p className="text-xl pl-2">1st</p>
                         </div>
 
-                        <div className="flex w-full rounded-md border-2 border-black justify-between items-center px-2">
+                        <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                           <div className="pl-2 w-full">
                             <div className="relative w-full">
                               <input
@@ -414,7 +410,7 @@ const Register = () => {
                           <p className="text-xl pl-2">2nd</p>
                         </div>
 
-                        <div className="flex w-full rounded-md border-2 border-black justify-between items-center px-2">
+                        <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                           <div className="pl-2 w-full">
                             <div className="relative w-full">
                               <input
@@ -470,13 +466,13 @@ const Register = () => {
               </>
             )}
           </form>
-          <div className="w-full flex justify-between items-center mt-5">
+          <div className="w-full flex justify-between items-center mt-2">
             <button
               onClick={prevStep}
               className={`${
                 isDisabled
                   ? "text-white bg-white"
-                  : "text-black bg-gray-100 hover:bg-gray-200"
+                  : "text-white bg-gray-500 hover:bg-gray-600"
               } text-xl  py-2 px-4 rounded-md cursor-pointer`}
               disabled={isDisabled}
             >

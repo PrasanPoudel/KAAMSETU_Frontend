@@ -14,14 +14,16 @@ const UpdatePassword = () => {
   }, []);
 
   const { user } = useSelector((state) => state.user);
-   const [isDemoAccount, setIsDemoAccount] = useState(false);
-    useEffect(() => {
-      setIsDemoAccount(user?.name === "Demo Employer" || user?.name === "Demo Job Seeker");
-    }, [user]);
-  
-    if (isDemoAccount) {
-      console.log("It is a Demo Account");
-    }
+  const [isDemoAccount, setIsDemoAccount] = useState(false);
+  useEffect(() => {
+    setIsDemoAccount(
+      user?.name === "Demo Employer" || user?.name === "Demo Job Seeker"
+    );
+  }, [user]);
+
+  if (isDemoAccount) {
+    console.log("It is a Demo Account");
+  }
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -124,25 +126,24 @@ const UpdatePassword = () => {
         )}
       </div>
 
-     {!isDemoAccount ? (
-      <button
-      className=" text-xl rounded-md w-full hover:cursor-pointer text-center bg-sky-600 hover:bg-sky-700 text-white  md:px-2 px-1   py-2"
-      onClick={handleUpdatePassword}
-      disabled={loading}
-    >
-      Update Password
-    </button>
-     ) : (
-      <div
-      className=" text-xl rounded-md w-full hover:cursor-pointer text-center bg-sky-600 hover:bg-sky-700 text-white  md:px-2 px-1   py-2"
-      onClick={()=>{
-        toast.info("Demo Account Cannot Update Password")
-      }}
-    >
-      Update Password
-    </div>
-     )}
-      
+      {!isDemoAccount ? (
+        <button
+          className=" text-xl rounded-md w-full hover:cursor-pointer text-center bg-sky-600 hover:bg-sky-700 text-white  md:px-2 px-1   py-2"
+          onClick={handleUpdatePassword}
+          disabled={loading}
+        >
+          Update Password
+        </button>
+      ) : (
+        <div
+          className=" text-xl rounded-md w-full hover:cursor-pointer text-center bg-sky-600 hover:bg-sky-700 text-white  md:px-2 px-1   py-2"
+          onClick={() => {
+            toast.info("Demo Account Cannot Update Password");
+          }}
+        >
+          Update Password
+        </div>
+      )}
     </div>
   );
 };

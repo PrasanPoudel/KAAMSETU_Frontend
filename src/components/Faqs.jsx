@@ -4,7 +4,7 @@ const faqs = [
   {
     question: "What is Kaamsetu?",
     answer:
-    "Kaamsetu a Nepal-based job portal designed to bridge the gap between job seekers and employers, making the job search and hiring process more efficient and seamless. Our intuitive platform enables job seekers to explore a wide range of opportunities across various industries while helping employers find the right talent quickly. Kaamsetu offers advanced search filters, personalized job recommendations, and real-time updates to keep users informed about the latest openings. For employers, the platform streamlines the recruitment process, allowing them to post job listings, review applications, and connect with potential candidates effortlessly. Designed to cater to fresh graduates, experienced professionals, and businesses of all sizes, Kaamsetu supports full-time, part-time, and freelance job opportunities. By leveraging technology, we aim to enhance Nepal’s employment sector, fostering career growth and business success."
+      "Kaamsetu a Nepal-based job portal designed to bridge the gap between job seekers and employers, making the job search and hiring process more efficient and seamless. Our intuitive platform enables job seekers to explore a wide range of opportunities across various industries while helping employers find the right talent quickly. Kaamsetu offers advanced search filters, personalized job recommendations, and real-time updates to keep users informed about the latest openings. For employers, the platform streamlines the recruitment process, allowing them to post job listings, review applications, and connect with potential candidates effortlessly. Designed to cater to fresh graduates, experienced professionals, and businesses of all sizes, Kaamsetu supports full-time, part-time, and freelance job opportunities. By leveraging technology, we aim to enhance Nepal’s employment sector, fostering career growth and business success.",
   },
   {
     question: "How do I create an account on Kaamsetu?",
@@ -43,7 +43,6 @@ const faqs = [
   },
 ];
 
-
 const Faqs = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -53,21 +52,27 @@ const Faqs = () => {
 
   return (
     <div className="pt-10">
-      <h2 className="text-3xl text-center mb-10 font-medium" >Frequently Asked Questions</h2>
+      <h2 className="text-3xl text-center mb-10 font-medium">
+        Frequently Asked Questions
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {faqs.map((faq, index) => (
           <div
             key={index}
-            className={`${openIndex=== index ? "row-start-1 row-end-2 col-start-1 col-end-3" : ""} rounded-md   overflow-hidden`}
-            
-            
+            className={`${
+              openIndex === index
+                ? "row-start-1 row-end-2 col-start-1 col-end-3"
+                : ""
+            } rounded-md   overflow-hidden`}
           >
             <button
               onClick={() => toggleFAQ(index)}
               className="w-full flex justify-between items-center text-start  md:px-2 px-1   py-2 border-2 hover:bg-gray-100"
             >
               <span className="text-xl">{faq.question}</span>
-              <span className="text-3xl">{openIndex === index ? "−" : "+"}</span>
+              <span className="text-3xl">
+                {openIndex === index ? "−" : "+"}
+              </span>
             </button>
             {openIndex === index && (
               <div className="p-5 text-justify text-gray-500">{faq.answer}</div>

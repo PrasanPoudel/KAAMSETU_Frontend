@@ -7,7 +7,7 @@ import { IoClose, IoHomeOutline } from "react-icons/io5";
 import { LuLetterText } from "react-icons/lu";
 import { TfiWrite } from "react-icons/tfi";
 import { IoBriefcaseOutline } from "react-icons/io5";
-import { IoSearchOutline } from "react-icons/io5";
+import { MdOutlineFindInPage } from "react-icons/md";
 import { FaRegMessage } from "react-icons/fa6";
 import KaamSetu from "../images/KaamSetu.png";
 import { IoIosLogIn } from "react-icons/io";
@@ -24,11 +24,8 @@ const Navbar = () => {
     }
   }, [showSidebar]);
 
-  // if (!isAuthenticated) {
-  //   return;
-  // }
   return (
-    <div className="sticky top-0 w-full z-20 h-auto border-b-2 bg-white border-gray-100 flex justify-between items-center">
+    <div className="sticky top-0 w-full z-20 h-auto bg-white border-gray-100 flex justify-between items-center">
       <img
         onClick={() => {
           navigateTo("/");
@@ -36,6 +33,7 @@ const Navbar = () => {
         src={KaamSetu}
         alt="KaamSetu Logo"
         className="w-[100px] h-[80px] cursor-pointer mix-blend-multiply md:w-[120px] md:h-[100px]"
+        loading="lazy"
       />
       <div className="gap-2 hidden xl:flex">
         <NavLink
@@ -62,7 +60,7 @@ const Navbar = () => {
             }`
           }
         >
-          <IoSearchOutline className="text-2xl" />{" "}
+          <MdOutlineFindInPage className="text-2xl" />{" "}
           <span className="font-medium">Find Jobs</span>
         </NavLink>
         {isAuthenticated && (
@@ -201,7 +199,7 @@ const Navbar = () => {
                   }`
                 }
               >
-                <IoSearchOutline className="text-2xl" /> Find Jobs
+                <MdOutlineFindInPage className="text-2xl" /> Find Jobs
               </NavLink>
               {isAuthenticated && (
                 <NavLink

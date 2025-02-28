@@ -81,12 +81,14 @@ const DropdownWithLinks = ({ user }) => {
               src={user.profilePicture.url}
               alt="user image"
               className="rounded-full object-cover"
+              loading="lazy"
             />
           ) : (
             <img
               src={unknownProfile}
               alt="user image"
               className="rounded-full object-cover"
+              loading="lazy"
             />
           )}
         </button>
@@ -109,12 +111,14 @@ const DropdownWithLinks = ({ user }) => {
                       src={user.profilePicture.url}
                       alt="user image"
                       className="rounded-full object-cover bg-gray-100 hover:bg-gray-200"
+                      loading="lazy"
                     />
                   ) : (
                     <img
                       src={unknownProfile}
                       alt="user image"
                       className="rounded-full object-cover bg-gray-100 hover:bg-gray-200"
+                      loading="lazy"
                     />
                   )}
                 </div>
