@@ -39,11 +39,14 @@ const Jobs = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch(clearAllJobErrors());
-    }
-    dispatch(fetchJobs(city, jobCategory, jobType, searchKeyword));
+    const debouncer = setTimeout(() => {
+      if (error) {
+        toast.error(error);
+        dispatch(clearAllJobErrors());
+      }
+      dispatch(fetchJobs(city, jobCategory, jobType, searchKeyword));
+    }, 500);
+    return () => clearTimeout(debouncer);
   }, [error, city, jobCategory, jobType, resetFilters, searchKeyword]);
 
   const handlecityChange = (e) => {

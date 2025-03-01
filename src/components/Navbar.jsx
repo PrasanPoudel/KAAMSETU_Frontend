@@ -23,7 +23,9 @@ const Navbar = () => {
       document.body.style.overflow = "";
     }
   }, [showSidebar]);
-
+if(!user || !isAuthenticated){
+  return;
+}
   return (
     <div className="sticky top-0 w-full z-20 h-auto bg-white border-gray-100 flex justify-between items-center">
       <img
@@ -35,35 +37,35 @@ const Navbar = () => {
         className="w-[100px] h-[80px] cursor-pointer mix-blend-multiply md:w-[120px] md:h-[100px]"
         loading="lazy"
       />
-      <div className="gap-2 hidden xl:flex">
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-              isActive
-                ? "bg-sky-600 hover:bg-sky-700 text-white"
-                : "hover:bg-sky-700"
-            }`
-          }
-        >
-          <IoHomeOutline className="text-xl" />{" "}
-          <span className="font-medium">Home</span>
-        </NavLink>
+      {isAuthenticated && (
+        <div className="gap-2 hidden xl:flex">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
+                isActive
+                  ? "bg-sky-600 hover:bg-sky-700 text-white"
+                  : "hover:bg-sky-700"
+              }`
+            }
+          >
+            <IoHomeOutline className="text-xl" />{" "}
+            <span className="font-medium">Home</span>
+          </NavLink>
 
-        <NavLink
-          to="/jobs"
-          className={({ isActive }) =>
-            `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-              isActive
-                ? "bg-sky-600 hover:bg-sky-700 text-white"
-                : "hover:bg-sky-700"
-            }`
-          }
-        >
-          <MdOutlineFindInPage className="text-2xl" />{" "}
-          <span className="font-medium">Find Jobs</span>
-        </NavLink>
-        {isAuthenticated && (
+          <NavLink
+            to="/jobs"
+            className={({ isActive }) =>
+              `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
+                isActive
+                  ? "bg-sky-600 hover:bg-sky-700 text-white"
+                  : "hover:bg-sky-700"
+              }`
+            }
+          >
+            <MdOutlineFindInPage className="text-2xl" />{" "}
+            <span className="font-medium">Find Jobs</span>
+          </NavLink>
           <NavLink
             to="/sendmessage"
             className={({ isActive }) =>
@@ -77,71 +79,72 @@ const Navbar = () => {
             <FaRegMessage className="text-xl" />{" "}
             <span className="font-medium">Send Message</span>
           </NavLink>
-        )}
-        {user?.role === "Employer" && (
-          <NavLink
-            to="/dashboard/Job Post"
-            className={({ isActive }) =>
-              `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                isActive
-                  ? "bg-sky-600 hover:bg-sky-700 text-white"
-                  : "hover:bg-sky-700"
-              }`
-            }
-          >
-            <TfiWrite className="text-xl" />{" "}
-            <span className="font-medium">Post A New Job</span>
-          </NavLink>
-        )}
+          {user?.role === "Employer" && (
+            <NavLink
+              to="/dashboard/Job Post"
+              className={({ isActive }) =>
+                `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
+                  isActive
+                    ? "bg-sky-600 hover:bg-sky-700 text-white"
+                    : "hover:bg-sky-700"
+                }`
+              }
+            >
+              <TfiWrite className="text-xl" />{" "}
+              <span className="font-medium">Post A New Job</span>
+            </NavLink>
+          )}
 
-        {user?.role === "Employer" && (
-          <NavLink
-            to="/dashboard/My Jobs"
-            className={({ isActive }) =>
-              `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                isActive
-                  ? "bg-sky-600 hover:bg-sky-700 text-white"
-                  : "hover:bg-sky-700"
-              }`
-            }
-          >
-            <IoBriefcaseOutline className="text-xl" />{" "}
-            <span className="font-medium">My Posted Jobs</span>
-          </NavLink>
-        )}
+          {user?.role === "Employer" && (
+            <NavLink
+              to="/dashboard/My Jobs"
+              className={({ isActive }) =>
+                `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
+                  isActive
+                    ? "bg-sky-600 hover:bg-sky-700 text-white"
+                    : "hover:bg-sky-700"
+                }`
+              }
+            >
+              <IoBriefcaseOutline className="text-xl" />{" "}
+              <span className="font-medium">My Posted Jobs</span>
+            </NavLink>
+          )}
 
-        {user?.role === "Employer" && (
-          <NavLink
-            to="/dashboard/Applications"
-            className={({ isActive }) =>
-              `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                isActive
-                  ? "bg-sky-600 hover:bg-sky-700 text-white"
-                  : "hover:bg-sky-700"
-              }`
-            }
-          >
-            <LuLetterText className="text-xl" />{" "}
-            <span className="font-medium">Jobs Seeker's Applications</span>
-          </NavLink>
-        )}
+          {user?.role === "Employer" && (
+            <NavLink
+              to="/dashboard/Applications"
+              className={({ isActive }) =>
+                `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
+                  isActive
+                    ? "bg-sky-600 hover:bg-sky-700 text-white"
+                    : "hover:bg-sky-700"
+                }`
+              }
+            >
+              <LuLetterText className="text-xl" />{" "}
+              <span className="font-medium">Jobs Seeker's Applications</span>
+            </NavLink>
+          )}
 
-        {user?.role === "Job Seeker" && (
-          <NavLink
-            to="/dashboard/My Applications"
-            className={({ isActive }) =>
-              `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                isActive
-                  ? "bg-sky-600 hover:bg-sky-700 text-white"
-                  : "hover:bg-sky-700"
-              }`
-            }
-          >
-            <LuLetterText className="text-xl" />
-            <span className="font-medium">My Applications</span>
-          </NavLink>
-        )}
-      </div>
+          {user?.role === "Job Seeker" && (
+            <NavLink
+              to="/dashboard/My Applications"
+              className={({ isActive }) =>
+                `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
+                  isActive
+                    ? "bg-sky-600 hover:bg-sky-700 text-white"
+                    : "hover:bg-sky-700"
+                }`
+              }
+            >
+              <LuLetterText className="text-xl" />
+              <span className="font-medium">My Applications</span>
+            </NavLink>
+          )}
+        </div>
+      )}
+
       <div className="flex items-center gap-10">
         {!isAuthenticated && (
           <NavLink
@@ -152,14 +155,18 @@ const Navbar = () => {
             Login
           </NavLink>
         )}
-        {isAuthenticated && <DropdownWithLinks user={user} />}
-        {!showSidebar && (
-          <RxHamburgerMenu
-            className="text-4xl xl:hidden"
-            onClick={() => {
-              setShowSidebar(!showSidebar);
-            }}
-          />
+        {isAuthenticated && (
+          <>
+            <DropdownWithLinks user={user} />
+            {!showSidebar && (
+              <RxHamburgerMenu
+                className="text-4xl xl:hidden"
+                onClick={() => {
+                  setShowSidebar(!showSidebar);
+                }}
+              />
+            )}
+          </>
         )}
       </div>
 

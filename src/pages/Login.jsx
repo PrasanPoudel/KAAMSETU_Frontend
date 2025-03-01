@@ -6,14 +6,15 @@ import { toast } from "react-toastify";
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import Spinner from "../components/Spinner";
-import KaamSetu from "../images/KaamSetu.png";
+import SpinnerHome from "../components/SpinnerHome";
 
 const Login = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top of the page
   }, []);
-  const { isAuthenticated, error } = useSelector((state) => state.user);
+  const { isAuthenticated, error, loading } = useSelector(
+    (state) => state.user
+  );
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +37,10 @@ const Login = () => {
       dispatch(clearAllUserErrors());
     }
   };
-  if (isAuthenticated) {
+
+  if (loading) {
+    return <SpinnerHome />;
+  } else if (isAuthenticated) {
     navigateTo("/");
   } else {
     return (

@@ -12,7 +12,10 @@ import { MdOutlinePhone } from "react-icons/md";
 import { MdOutlineMail } from "react-icons/md";
 
 const Footer = () => {
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { isAuthenticated, user } = useSelector((state) => state.user);
+  if(!user || !isAuthenticated){
+    return;
+  }
   return (
     <div className="bg-img pt-10">
       <div className="flex flex-col w-full border-t-2 border-gray-100 gap-5 py-5 justify-between h-auto md:flex-row md:gap-0 ">
@@ -34,35 +37,29 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="flex flex-col gap-8">
-          <h4 className="text-xl font-medium">Quick Links</h4>
-          <ul>
-            <li>
-              <Link to={"/"} className="underline">
-                Home
-              </Link>
-            </li>
-            {isAuthenticated && (
-              <>
-                <li>
-                  <Link to={"/dashboard"} className="underline">
-                    Dashboard
-                  </Link>
-                </li>
-                <li>
-                  <Link to={"/jobs"} className="underline">
-                    Find Jobs
-                  </Link>
-                </li>
-                <li>
-                  <Link to={"/sendmessage"} className="underline">
-                    Send Message
-                  </Link>
-                </li>
-              </>
-            )}
-          </ul>
-        </div>
+        {isAuthenticated && (
+          <div className="flex flex-col gap-8">
+            <h4 className="text-xl font-medium">Quick Links</h4>
+            <ul>
+              <li>
+                <Link to={"/"} className="underline">
+                  Home
+                </Link>
+              </li>
+
+              <li>
+                <Link to={"/jobs"} className="underline">
+                  Find Jobs
+                </Link>
+              </li>
+              <li>
+                <Link to={"/sendmessage"} className="underline">
+                  Send Message
+                </Link>
+              </li>
+            </ul>
+          </div>
+        )}
         <div className="flex flex-col gap-8">
           <h4 className="text-xl font-medium">Follow Us</h4>
           <ul>

@@ -11,7 +11,6 @@ import {
 } from "react-icons/md";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import KaamSetu from "../images/KaamSetu.png";
 import jobCategoryArray from "../data/jobCategoryArray";
 import cities from "../data/cities";
 import FileUploader from "../components/FileUploader";

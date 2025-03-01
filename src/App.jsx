@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense, lazy } from "react";
+import React, { useEffect, Suspense } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,9 +10,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./store/slices/userSlice";
-import Loader from "./components/Loader"; // Import your custom Loader component
+import Loader from "./components/Loader";
 import Dashboard from "./pages/Dashboard";
-// Lazy load all pages
+
 const Home = React.lazy(() => import("./pages/Home"));
 const Jobs = React.lazy(() => import("./pages/Jobs"));
 const Login = React.lazy(() => import("./pages/Login"));
@@ -54,17 +54,21 @@ const App = () => {
           <Route
             path="/"
             element={
-              <Suspense fallback={<Loader />}>
-                <Home />
-              </Suspense>
+              <ProtectedRoute>
+                <Suspense fallback={<Loader />}>
+                  <Home />
+                </Suspense>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/jobs"
             element={
-              <Suspense fallback={<Loader />}>
-                <Jobs />
-              </Suspense>
+              <ProtectedRoute>
+                <Suspense fallback={<Loader />}>
+                  <Jobs />
+                </Suspense>
+              </ProtectedRoute>
             }
           />
           <Route
