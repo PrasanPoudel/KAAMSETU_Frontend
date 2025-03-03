@@ -46,7 +46,7 @@ const Login = () => {
     return (
       <div className="lg:py-2 w-full bg-img">
         <div className="flex flex-col justify-center items-start gap-2 w-full sm:w-[600px] md:w-[750px] lg:w-[55%] ">
-          <h3 className="text-3xl font-bold">Welcome Back</h3>
+          <h3 className="text-3xl font-medium">Welcome Back</h3>
           <div className="w-full">
             <form onSubmit={handleLogin} className="flex flex-col gap-2">
               <label className="text-xl font-medium">Login As</label>

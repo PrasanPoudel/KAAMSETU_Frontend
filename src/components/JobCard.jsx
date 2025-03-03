@@ -250,7 +250,7 @@ const JobCard = ({
               </div>
             )}
           </div>
-          <div className="mt-5 flex flex-col md:flex-row justify-end gap-2">
+          <div className="mt-5 flex flex-col md:flex-row justify-end gap-4">
             {enableDeleteJob && (
               <button
                 className="bg-red-500 hover:bg-red-600 text-xl flex justify-center items-center text-white  md:px-2 px-1   py-2  rounded-md transition-all duration-300"
@@ -261,21 +261,9 @@ const JobCard = ({
             )}
             {enableApplyApplication && (
               <>
-                {!isAuthenticated && (
-                  <button
-                    className="rounded-md text-xl bg-gray-500 hover:cursor-pointer text-white md:px-2 px-1 py-2"
-                    onClick={() => {
-                      toast.error(
-                        "User is not authenticated. Please login or signup and try again."
-                      );
-                    }}
-                  >
-                    Apply
-                  </button>
-                )}
                 {isAuthenticated && user.role === "Employer" && (
                   <button
-                    className=" rounded-md text-xl bg-gray-500 hover:cursor-pointer text-white md:px-2 px-1 py-2 "
+                    className="rounded-md w-full md:w-[200px] text-xl bg-gray-500 hover:cursor-pointer text-white md:px-2 px-1 py-3 "
                     onClick={() => {
                       toast.info("Employer cannot apply for jobs.");
                     }}
@@ -286,7 +274,7 @@ const JobCard = ({
                 <form>
                   {isAuthenticated && user.role === "Job Seeker" && (
                     <button
-                      className="rounded-md text-xl bg-sky-600 hover:bg-sky-700 hover:cursor-pointer text-white md:px-2 px-1 py-2 "
+                      className="rounded-md w-full md:w-[200px] text-xl bg-sky-600 hover:bg-sky-700 hover:cursor-pointer text-white md:px-2 px-1 py-3 "
                       onClick={handlePostApplication}
                       disabled={loading}
                     >

@@ -14,7 +14,7 @@ const SpinnerHome = () => {
       gap:"5px"
     }}
   >
-    <img src={KaamSetu} className='h-[150px] w-[150px]'/>
+    <img src={KaamSetu} className='h-[200px] w-[200px] mix-blend-multiply'/>
     <ScaleLoader height={25} width={5} color="#0284c7" />
   </section>
   )

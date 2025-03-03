@@ -14,7 +14,7 @@ import { IoIosLogIn } from "react-icons/io";
 
 const Navbar = () => {
   const navigateTo = useNavigate();
-  const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { isAuthenticated, user, loading } = useSelector((state) => state.user);
   const [showSidebar, setShowSidebar] = useState(false);
   useEffect(() => {
     if (showSidebar) {
@@ -23,7 +23,7 @@ const Navbar = () => {
       document.body.style.overflow = "";
     }
   }, [showSidebar]);
-if(!user || !isAuthenticated){
+if(loading){
   return;
 }
   return (

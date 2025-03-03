@@ -80,9 +80,7 @@ const Register = () => {
       formData.append("resume", resume);
     }
     dispatch(register(formData));
-  };
-
-  useEffect(() => {
+    
     if (error) {
       toast.error(error);
       dispatch(clearAllUserErrors());
@@ -90,7 +88,7 @@ const Register = () => {
     if (isAuthenticated) {
       navigateTo("/");
     }
-  }, [dispatch, error, loading, isAuthenticated, message]);
+  };
   const [filteredSuggestionsForLocation, setFilteredSuggestionsForLocation] =
     useState([]);
   const handleAddressChange = (e) => {
@@ -180,7 +178,7 @@ const Register = () => {
   return (
     <div className="lg:py-2 w-full bg-img">
       <div className="flex flex-col justify-center items-start gap-2 w-full sm:w-[600px] md:w-[750px] lg:w-[55%]">
-        <h3 className="text-3xl font-bold">Register A New Account</h3>
+        <h3 className="text-3xl font-medium">Register A New Account</h3>
         <div className="w-full">
           <form
             onSubmit={handleRegister}

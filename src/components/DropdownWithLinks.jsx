@@ -71,10 +71,10 @@ const DropdownWithLinks = ({ user }) => {
           </div>
         </div>
       )}
-      <div className="flex items-center justify-center p-1 bg-sky-100 hover:bg-sky-200 mr-[-5px] rounded-full">
+      <div className="flex items-center justify-center p-1 hover:bg-sky-100 mr-[-5px] rounded-full">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="bg-white rounded-full w-[50px] h-[50px]"
+          className="bg-white rounded-full w-[40px] h-[40px]"
         >
           {user.profilePicture ? (
             <img
@@ -110,14 +110,14 @@ const DropdownWithLinks = ({ user }) => {
                     <img
                       src={user.profilePicture.url}
                       alt="user image"
-                      className="rounded-full object-cover bg-sky-100 hover:bg-sky-200"
+                      className="rounded-full object-cover hover:bg-sky-100"
                       loading="lazy"
                     />
                   ) : (
                     <img
                       src={unknownProfile}
                       alt="user image"
-                      className="rounded-full object-cover bg-sky-100 hover:bg-sky-200"
+                      className="rounded-full object-cover hover:bg-sky-100"
                       loading="lazy"
                     />
                   )}

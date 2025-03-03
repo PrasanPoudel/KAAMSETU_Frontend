@@ -64,7 +64,7 @@ const JobsPagination = ({
     return () => clearTimeout(timer); // Clear timeout if user types again
   }, []);
   return (
-    <div className="w-full flex flex-col gap-5 pt-5">
+    <div className="w-full flex flex-col gap-5 pt-2">
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {currentJobs.map((element) => (
           <JobCard
@@ -85,7 +85,7 @@ const JobsPagination = ({
             <h1 className="text-center w-full">
               No {jobType}{" "}
               {searchKeyword.length > 0 ? `"${searchKeyword}"` : ""} Job
-              Available {""} {jobCategory ? `for ${jobCategory} ` : ""}
+              Available {""} {jobCategory ? `on ${jobCategory} ` : ""}
               {""}
               {city ? `in ${city}` : ""} Right Now.
             </h1>

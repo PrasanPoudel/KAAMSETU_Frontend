@@ -7,13 +7,9 @@ import {useNavigate} from "react-router-dom";
 
 const FeaturedJobs = () => {
   const navigateTo= useNavigate();
-  const { jobs, error } = useSelector((state) => state.jobs);
+  const { jobs } = useSelector((state) => state.jobs);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch(clearAllJobErrors());
-    }
     dispatch(fetchJobs());
   }, []);
   return (
@@ -23,8 +19,8 @@ const FeaturedJobs = () => {
         <SkeletonUiForJobs />
       ) : (
         <div className="w-full gap-2 px-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {jobs.slice(0, 4).map((job) => (
-            <JobCard element={job} onclick={()=>{
+          {jobs.slice(0, 4).map((job, index) => (
+            <JobCard element={job} key={index} onclick={()=>{
               navigateTo(`/post/application/${job_id}`)
             }}/>
           ))}

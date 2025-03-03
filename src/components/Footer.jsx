@@ -12,8 +12,8 @@ import { MdOutlinePhone } from "react-icons/md";
 import { MdOutlineMail } from "react-icons/md";
 
 const Footer = () => {
-  const { isAuthenticated, user } = useSelector((state) => state.user);
-  if(!user || !isAuthenticated){
+  const { isAuthenticated, loading } = useSelector((state) => state.user);
+  if(loading){
     return;
   }
   return (

@@ -35,7 +35,6 @@ const Jobs = () => {
   const [jobCategory, setJobCategory] = useState("");
   const [jobType, setJobType] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
-  const [resetFilters, setResetFilters] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -47,7 +46,7 @@ const Jobs = () => {
       dispatch(fetchJobs(city, jobCategory, jobType, searchKeyword));
     }, 500);
     return () => clearTimeout(debouncer);
-  }, [error, city, jobCategory, jobType, resetFilters, searchKeyword]);
+  }, [error, city, jobCategory, jobType, searchKeyword]);
 
   const handlecityChange = (e) => {
     const input =
@@ -120,21 +119,7 @@ const Jobs = () => {
             onClick={() => setShowFilters(!showFilters)}
           />
         </div>
-        <div className="flex justify-between items-center">
-          {(searchKeyword || city || jobType || jobCategory) != "" && (
-            <button
-              onClick={() => {
-                setCity("");
-                setJobCategory("");
-                setJobType("");
-                setResetFilters(!resetFilters);
-              }}
-              className="flex items-center gap-1 p-2 text-black bg-white border hover:bg-gray-200 border-black rounded-md"
-            >
-              Reset Filters
-            </button>
-          )}
-        </div>
+
         <div className="flex border-2 bg-white border-black pl-2 w-full items-center rounded-md">
           <IoLocationOutline className="text-xl w-[30px] text-black" />
           <div className="relative w-full">
@@ -312,6 +297,15 @@ const Jobs = () => {
             </div>
           </div>
         </div>
+        { jobs.length > 0 && (searchKeyword || jobCategory || city || jobType) != "" && (
+          <h1 className="w-full mt-2 pl-1">
+            Searching For {jobType}{" "}
+            {searchKeyword.length > 0 ? `"${searchKeyword}"` : ""}
+            {""} {jobCategory ? `for ${jobCategory} ` : ""}
+            {""}
+            {city ? `in ${city}` : ""}
+          </h1>
+        )}
         <JobsPagination
           jobs={jobs}
           searchKeyword={searchKeyword}
