@@ -35,7 +35,7 @@ const PostApplication = () => {
 
   return (
     <>
-      <p className="text-xl my-5 font-medium">
+      <p className="text-xl my-5 ">
         Job Id<span>:</span>
         <span className="text-sm text-gray-500"> {postedJob._id}</span>
       </p>

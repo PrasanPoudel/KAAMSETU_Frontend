@@ -15,6 +15,7 @@ import jobCategoryArray from "../data/jobCategoryArray";
 import cities from "../data/cities";
 import FileUploader from "../components/FileUploader";
 import ImageUploader from "../components/ImageUploader";
+
 const Register = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top of the page
@@ -79,13 +80,12 @@ const Register = () => {
       formData.append("thirdChoice", thirdChoice);
       formData.append("resume", resume);
     }
+
     dispatch(register(formData));
-    
     if (error) {
       toast.error(error);
       dispatch(clearAllUserErrors());
-    }
-    if (isAuthenticated) {
+    } else if (!error && isAuthenticated) {
       navigateTo("/");
     }
   };
@@ -178,7 +178,7 @@ const Register = () => {
   return (
     <div className="lg:py-2 w-full bg-img">
       <div className="flex flex-col justify-center items-start gap-2 w-full sm:w-[600px] md:w-[750px] lg:w-[55%]">
-        <h3 className="text-3xl font-medium">Register A New Account</h3>
+        <h3 className="text-3xl ">Register A New Account</h3>
         <div className="w-full">
           <form
             onSubmit={handleRegister}
@@ -186,7 +186,7 @@ const Register = () => {
           >
             {step === 1 && (
               <>
-                <label className="text-xl font-medium">Register As</label>
+                <label className="text-xl ">Register As</label>
                 <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                   <select
                     value={role}
@@ -201,7 +201,7 @@ const Register = () => {
                   </select>
                   <FaRegUser className="text-3xl" />
                 </div>
-                <label className="text-xl font-medium">Name</label>
+                <label className="text-xl ">Name</label>
                 <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                   <input
                     type="text"
@@ -216,7 +216,7 @@ const Register = () => {
                   />
                   <HiOutlinePencilAlt className="text-4xl" />
                 </div>
-                <label className="text-xl font-medium">Phone Number</label>
+                <label className="text-xl ">Phone Number</label>
                 <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                   <input
                     type="number"
@@ -235,7 +235,7 @@ const Register = () => {
                     Error: Invalid phone number
                   </p>
                 )}
-                <label className="text-xl font-medium">Address</label>
+                <label className="text-xl ">Address</label>
                 <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                   <div className="w-full flex items-center bg-white pl-2">
                     <div className="relative w-full">
@@ -274,7 +274,7 @@ const Register = () => {
             )}
             {step === 2 && (
               <>
-                <label className="text-xl font-medium">Email Address</label>
+                <label className="text-xl ">Email Address</label>
                 <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                   <input
                     type="email"
@@ -284,7 +284,7 @@ const Register = () => {
                   />
                   <MdOutlineMailOutline className="text-4xl" />
                 </div>
-                <label className="text-xl font-medium">Password</label>
+                <label className="text-xl ">Password</label>
                 <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -309,17 +309,22 @@ const Register = () => {
             {step === 3 && (
               <>
                 <div className="flex flex-col gap-4 w-full">
-                  <label className="text-xl font-medium">Profile Picture</label>
+                  <label className="text-xl ">Profile Picture</label>
                   <ImageUploader onImageUpload={profilePictureHandler} />
                 </div>
                 {role === "Job Seeker" && (
                   <>
                     <div className="flex flex-col gap-4 w-full">
-                      <label className="text-xl font-medium">Resume</label>
+                      <label className="text-xl ">Resume</label>
                       <FileUploader onFileUpload={resumeHandler} />
                     </div>
                     <div className="flex flex-col gap-4 w-full justify-center">
-                      <p className="text-xl font-medium">Job Choices <span>(Select Any 3 Job Category You Prefer To Do)</span></p>
+                      <p className="text-xl ">
+                        Job Choices{" "}
+                        <span>
+                          (Select Any 3 Job Category You Prefer To Do)
+                        </span>
+                      </p>
                       <div className="flex flex-col gap-8">
                         <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
                           <div className="pl-2 w-full">
@@ -455,7 +460,7 @@ const Register = () => {
                 )}
                 <button
                   type="submit"
-                  className="mb-2 bg-gray-500 text-white text-xl rounded-md w-full hover:bg-gray-600 hover:cursor-pointer text-center py-2"
+                  className="mb-2 border-2 border-sky-600 text-sky-600 text-xl rounded-md w-full  hover:cursor-pointer text-center py-2"
                   disabled={loading}
                 >
                   Register
@@ -468,8 +473,8 @@ const Register = () => {
               onClick={prevStep}
               className={`${
                 isDisabled
-                  ? "text-white bg-white"
-                  : "text-white bg-gray-500 hover:bg-gray-600"
+                  ? "text-transparent bg-transparent"
+                  : "border-2 border-sky-600 text-sky-600 "
               } text-xl  py-2 px-4 rounded-md cursor-pointer`}
               disabled={isDisabled}
             >

@@ -122,7 +122,7 @@ const DropdownWithLinks = ({ user }) => {
                     />
                   )}
                 </div>
-                <p className="break-words font-medium text-xl">
+                <p className="break-words  text-xl">
                   <span>Hi,</span> {user.name} !
                 </p>
                 <p className="break-words underline text-sm text-center">

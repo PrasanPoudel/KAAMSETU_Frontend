@@ -29,12 +29,12 @@ const Login = () => {
     formData.append("email", email);
     formData.append("password", password);
     dispatch(login(formData));
-    if (isAuthenticated) {
-      navigateTo("/");
-    }
     if (error) {
       toast.error(error);
       dispatch(clearAllUserErrors());
+    }
+    if (!error && isAuthenticated) {
+      navigateTo("/");
     }
   };
 
@@ -46,10 +46,10 @@ const Login = () => {
     return (
       <div className="lg:py-2 w-full bg-img">
         <div className="flex flex-col justify-center items-start gap-2 w-full sm:w-[600px] md:w-[750px] lg:w-[55%] ">
-          <h3 className="text-3xl font-medium">Welcome Back</h3>
+          <h3 className="text-3xl ">Welcome Back</h3>
           <div className="w-full">
             <form onSubmit={handleLogin} className="flex flex-col gap-2">
-              <label className="text-xl font-medium">Login As</label>
+              <label className="text-xl ">Login As</label>
               <div className="flex px-2 border-2 border-black bg-white rounded-md justify-between items-center">
                 <select
                   value={role}
@@ -65,7 +65,7 @@ const Login = () => {
                 </select>
                 <FaRegUser className="text-3xl" />
               </div>
-              <label className="text-xl font-medium">Email</label>
+              <label className="text-xl ">Email</label>
               <div className="flex rounded-md px-2 border-2 border-black bg-white items-center justify-between">
                 <input
                   type="email"
@@ -76,7 +76,7 @@ const Login = () => {
                 />
                 <MdOutlineMailOutline className="text-4xl" />
               </div>
-              <label className="text-xl font-medium">Password</label>
+              <label className="text-xl ">Password</label>
               <div className="flex rounded-md px-2 border-2 bg-white border-black items-center justify-between">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -123,7 +123,7 @@ const Login = () => {
                 </button>
                 <Link
                   to={"/register"}
-                  className={` bg-gray-500 text-white text-xl rounded-md underline w-full hover:bg-gray-600 hover:cursor-pointer text-center text-back md:px-2 px-1 py-2`}
+                  className={`border-2 border-sky-600 text-sky-600 text-xl rounded-md underline w-full hover:cursor-pointer text-center text-back md:px-2 px-1 py-2`}
                 >
                   Register Now
                 </Link>

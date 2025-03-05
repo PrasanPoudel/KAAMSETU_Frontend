@@ -13,14 +13,14 @@ import { MdOutlineMail } from "react-icons/md";
 
 const Footer = () => {
   const { isAuthenticated, loading } = useSelector((state) => state.user);
-  if(loading){
+  if (loading) {
     return;
   }
   return (
     <div className="bg-img pt-10">
       <div className="flex flex-col w-full border-t-2 border-gray-100 gap-5 py-5 justify-between h-auto md:flex-row md:gap-0 ">
         <div className="flex flex-col gap-8">
-          <h4 className="text-xl font-medium">Support</h4>
+          <h4 className="text-xl ">Support</h4>
           <ul>
             <li className="flex items-center gap-2">
               <MdOutlineLocationOn />
@@ -39,7 +39,7 @@ const Footer = () => {
 
         {isAuthenticated && (
           <div className="flex flex-col gap-8">
-            <h4 className="text-xl font-medium">Quick Links</h4>
+            <h4 className="text-xl ">Quick Links</h4>
             <ul>
               <li>
                 <Link to={"/"} className="underline">
@@ -61,7 +61,7 @@ const Footer = () => {
           </div>
         )}
         <div className="flex flex-col gap-8">
-          <h4 className="text-xl font-medium">Follow Us</h4>
+          <h4 className="text-xl ">Follow Us</h4>
           <ul>
             <li>
               <Link to={"/"} className="flex items-center gap-2">

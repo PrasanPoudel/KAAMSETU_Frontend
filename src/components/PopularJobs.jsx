@@ -31,47 +31,52 @@ const PopularJobs = () => {
 
   const jobItems = [
     {
-      description: "Hub - Leading the Future of Advertising. Join us to revolutionize digital marketing strategies and drive brand growth through innovative campaigns.",
-      headline: "Marketing Manager - Driving Brand Growth and Awareness",
+      description:
+        "Leading the Future of Advertising. Join us to revolutionize digital marketing strategies and drive brand growth through innovative campaigns.",
+      headline: "Marketing Manager",
       image: Mm,
     },
     {
-      description: "DesignPros - Innovating Through Design. Be part of a team that creates seamless and intuitive user experiences for cutting-edge digital products.",
-      headline: "UX/UI Designer - Crafting User-Centered Digital Experiences",
+      description:
+        "Innovating Through Design. Be part of a team that creates seamless and intuitive user experiences for cutting-edge digital products.",
+      headline: "UX/UI Designer",
       image: UiUx,
     },
     {
-      description: "SalesHub - Empowering Sales Teams to Succeed. Help businesses grow by building strong customer relationships and closing high-value deals.",
-      headline: "Sales Executive - Building Strong Customer Relationships",
+      description:
+        "Empowering Sales Teams to Succeed. Help businesses grow by building strong customer relationships and closing high-value deals.",
+      headline: "Sales Executive",
       image: Se,
     },
     {
-      description: "PeopleFirst - Creating a Positive Work Culture. Lead initiatives to build effective teams and foster a collaborative workplace environment.",
-      headline: "Human Resources Manager - Building Effective Teams",
+      description:
+        "Creating a Positive Work Culture. Lead initiatives to build effective teams and foster a collaborative workplace environment.",
+      headline: "Human Resources Manager",
       image: Hr,
     },
     {
-      description: "CodeWorks - Shaping the Digital World. Develop innovative software solutions that solve real-world problems and drive technological advancements.",
-      headline: "Software Developer - Creating Cutting-Edge Applications",
+      description:
+        "Shaping the Digital World. Develop innovative software solutions that solve real-world problems and drive technological advancements.",
+      headline: "Software Developer",
       image: Sd,
     },
     {
-      description: "FinancePro - Turning Data into Financial Strategies. Analyze market trends and provide insights to help businesses make informed financial decisions.",
-      headline: "Financial Analyst - Analyzing Market Trends and Forecasts",
+      description:
+        "Turning Data into Financial Strategies. Analyze market trends and provide insights to help businesses make informed financial decisions.",
+      headline: "Financial Analyst",
       image: Fa,
     },
     {
-      description: "WriteNow - Bringing Ideas to Life Through Words. Craft compelling narratives and create engaging content that resonates with diverse audiences.",
-      headline: "Content Writer - Crafting Compelling Written Narratives",
+      description:
+        "Bringing Ideas to Life Through Words. Craft compelling narratives and create engaging content that resonates with diverse audiences.",
+      headline: "Content Writer",
       image: Cw,
     },
   ];
 
   return (
     <div className="w-full pt-10">
-      <h2 className="text-3xl text-center mb-10 font-medium">
-        Popular Jobs Categories
-      </h2>
+      <h2 className="text-3xl text-center mb-10 ">Popular Jobs Categories</h2>
       <div className="z-10 relative">
         <Carousel
           responsive={responsive}
@@ -89,16 +94,16 @@ const PopularJobs = () => {
           {jobItems.map((job, index) => (
             <div
               key={index}
-              className="p-2 border-2 border-gray-100   rounded-md mx-1 flex flex-col gap-5 h-full"
+              className="border-2 mx-5 pb-5 flex flex-col gap-5 h-full rounded-md overflow-hidden"
             >
               <img
                 src={job.image}
                 alt="Job"
-                className="w-full h-[250px] object-cover rounded-md"
+                className="w-full h-[200px] object-cover"
                 loading="lazy"
               />
-              <h3 className="text-xl mt-2 font-medium text-justify">{job.headline}</h3>
-              <p className="text-gray-500 text-justify">{job.description}</p>
+              <h3 className="text-xl mt-2 px-5 text-justify font-medium">{job.headline}</h3>
+              <p className="text-justify px-5">{job.description}</p>
             </div>
           ))}
         </Carousel>

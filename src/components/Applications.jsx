@@ -55,28 +55,28 @@ const Applications = () => {
             <table className="w-full border-collapse overflow-hidden rounded-md">
               <thead className="bg-sky-600 hover:bg-sky-700 text-white">
                 <tr>
-                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                  <th className="p-2 text-left border-2 border-white text-sm ">
                     S/N
                   </th>
-                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                  <th className="p-2 text-left border-2 border-white text-sm ">
                     Job's Title
                   </th>
-                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                  <th className="p-2 text-left border-2 border-white text-sm ">
                     Applicant's Name
                   </th>
-                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                  <th className="p-2 text-left border-2 border-white text-sm ">
                     Applicant's Email
                   </th>
-                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                  <th className="p-2 text-left border-2 border-white text-sm ">
                     Applicant's Phone Number
                   </th>
-                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                  <th className="p-2 text-left border-2 border-white text-sm ">
                     Applicant's Address
                   </th>
-                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                  <th className="p-2 text-left border-2 border-white text-sm ">
                     Applicant's Resume
                   </th>
-                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                  <th className="p-2 text-left border-2 border-white text-sm ">
                     Click To Delete
                   </th>
                 </tr>

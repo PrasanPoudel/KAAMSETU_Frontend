@@ -61,7 +61,7 @@ const UpdatePassword = () => {
   return (
     <div className="flex flex-col w-full gap-4 md:w-[80%]">
       {/* Current Password */}
-      <label className="text-xl font-medium">Current Password</label>
+      <label className="text-xl ">Current Password</label>
       <div className="flex rounded-md px-2 border-2 border-black items-center justify-between bg-white">
         <input
           type={showOldPassword ? "text" : "password"}
@@ -83,7 +83,7 @@ const UpdatePassword = () => {
       </div>
 
       {/* New Password */}
-      <label className="text-xl font-medium">New Password</label>
+      <label className="text-xl ">New Password</label>
       <div className="flex rounded-md px-2 border-2 border-black items-center justify-between bg-white">
         <input
           type={showNewPassword ? "text" : "password"}
@@ -105,7 +105,7 @@ const UpdatePassword = () => {
       </div>
 
       {/* Confirm Password */}
-      <label className="text-xl font-medium">Confirm Password</label>
+      <label className="text-xl ">Confirm Password</label>
       <div className="flex rounded-md px-2 border-2 border-black items-center justify-between">
         <input
           type={showConfirmPassword ? "text" : "password"}

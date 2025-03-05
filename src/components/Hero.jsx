@@ -2,14 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 const Hero = () => {
   return (
-    <div className="bg-img flex flex-col gap-5 pt-10 pb-10">
-      <p className="text-4xl font-medium text-center">
-        Where Careers Meet Opportunities
-      </p>
-      <p className="text-gray-500 text-xl text-center">
-        "Connecting people with opportunities through{" "}
-        <span className="text-sky-600 text-xl">Kaamsetu</span>, Nepal's own job
-        portal"
+    <div className="flex flex-col gap-5 md:py-28 py-10 px-5">
+      <p className="text-4xl  text-center">Where Careers Meet Opportunities</p>
+      <p className="text-xl  text-center">
+        "Connecting people with opportunities through Nepal's own job portal"
       </p>
       <div className="flex flex-col md:flex-row w-full items-center justify-center gap-5">
         <Link

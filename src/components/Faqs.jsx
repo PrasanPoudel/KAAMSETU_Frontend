@@ -52,7 +52,7 @@ const Faqs = () => {
 
   return (
     <div className="pt-10">
-      <h2 className="text-3xl text-center mb-10 font-medium">
+      <h2 className="text-3xl text-center mb-10">
         Frequently Asked Questions
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -67,9 +67,9 @@ const Faqs = () => {
           >
             <button
               onClick={() => toggleFAQ(index)}
-              className="w-full flex justify-between items-center text-start  md:px-2 px-1   py-2 border-2 hover:bg-gray-100"
+              className="w-full flex justify-between items-center text-start rounded-md p-2 border-2 hover:bg-gray-200"
             >
-              <span className="text-xl">{faq.question}</span>
+              <span className="">{faq.question}</span>
               <span className="text-3xl">
                 {openIndex === index ? "−" : "+"}
               </span>

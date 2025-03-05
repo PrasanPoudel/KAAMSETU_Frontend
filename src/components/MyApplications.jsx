@@ -55,22 +55,22 @@ const MyApplications = () => {
             <table className="w-full border-collapse overflow-hidden rounded-md">
               <thead className="bg-sky-600 hover:bg-sky-700 text-white">
                 <tr>
-                  <th className="p-2 text-left border-2 border-white  text-sm font-medium">
+                  <th className="p-2 text-left border-2 border-white  text-sm ">
                     S/N
                   </th>
-                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                  <th className="p-2 text-left border-2 border-white text-sm ">
                     Job's Title
                   </th>
-                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                  <th className="p-2 text-left border-2 border-white text-sm ">
                     Job's Id
                   </th>
-                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                  <th className="p-2 text-left border-2 border-white text-sm ">
                     Also
                   </th>
-                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                  <th className="p-2 text-left border-2 border-white text-sm ">
                     Resume Sent
                   </th>
-                  <th className="p-2 text-left border-2 border-white text-sm font-medium">
+                  <th className="p-2 text-left border-2 border-white text-sm ">
                     Action
                   </th>
                 </tr>

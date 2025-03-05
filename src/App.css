@@ -11,8 +11,6 @@
   font-optical-sizing: auto;
 }
 body {
-  background-color: white;
-  padding: 10px;
   -webkit-user-select: none; /* Safari, Chrome */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */

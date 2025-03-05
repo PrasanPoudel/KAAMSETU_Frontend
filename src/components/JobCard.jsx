@@ -70,117 +70,117 @@ const JobCard = ({
     >
       {toggleExpand ? (
         <div
-        onClick={() => toggleExpand(element?._id)}
-        className="max-w-[400px] hover:cursor-pointer border hover:shadow-[0px_0px_2.5px_rgba(0,0,0,0.35)] px-3 py-2 rounded-md h-full flex flex-col justify-between"
-      >
-        <div
-          className={`grid ${
-            element?.companyLogo ? "grid-cols-[1fr_2fr]" : "grid-cols-1"
-          } items-start gap-4`}
+          onClick={() => toggleExpand(element?._id)}
+          className="max-w-[400px] hover:cursor-pointer border hover:shadow-[0px_0px_2.5px_rgba(0,0,0,0.35)] px-3 py-2 rounded-md h-full flex flex-col justify-between"
         >
-          <div className="flex items-start justify-center rounded-md">
-            {element?.companyLogo ? (
-              <img
-                src={element?.companyLogo?.url}
-                className="w-[60px] h-[60px] border-2 border-gray-100 mix-blend-multiply rounded-md"
-                loading="lazy"
-              />
-            ) : (
-              ""
-            )}
+          <div
+            className={`grid ${
+              element?.companyLogo ? "grid-cols-[1fr_2fr]" : "grid-cols-1"
+            } items-start gap-4`}
+          >
+            <div className="flex items-start justify-center rounded-md">
+              {element?.companyLogo ? (
+                <img
+                  src={element?.companyLogo?.url}
+                  className="w-[60px] h-[60px] border-2 border-gray-100 mix-blend-multiply rounded-md"
+                  loading="lazy"
+                />
+              ) : (
+                ""
+              )}
+            </div>
+            <div>
+              <h3 className="text-sky-600 text-sm font-semibold">
+                {element?.companyName}
+              </h3>
+              <h2 className="font-medium  md:text-xl">{element.title}</h2>
+            </div>
           </div>
-          <div>
-            <h3 className="text-sky-600 text-sm font-semibold">
-              {element?.companyName}
-            </h3>
-            <h2 className="font-bold  md:text-xl">{element.title}</h2>
+          <div className="grid grid-cols-2 mt-5 gap-2 items-center justify-between">
+            <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
+              <GoClock />
+              {element?.jobType}
+            </div>
+            <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
+              <MdOutlineLocationOn />
+              {element?.location}
+            </div>
+            <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
+              <TbCurrencyRupeeNepalese />
+              {element?.salary != null &&
+                element.salary.toString().charAt(0) +
+                  "." +
+                  element.salary.toString().slice(1, 2) +
+                  " L/Year"}
+              {element?.salary == null && "(Negotiable)"}
+            </div>
+            <div className="flex gap-1 items-center text-sm p-1 rounded-md">
+              <TfiWrite />
+              {element?.jobPostedOn?.slice(0, 10)}
+            </div>
           </div>
         </div>
-        <div className="grid grid-cols-2 mt-5 gap-2 items-center justify-between">
-          <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
-            <GoClock />
-            {element?.jobType}
-          </div>
-          <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
-            <MdOutlineLocationOn />
-            {element?.location}
-          </div>
-          <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
-            <TbCurrencyRupeeNepalese />
-            {element?.salary != null &&
-              element.salary.toString().charAt(0) +
-                "." +
-                element.salary.toString().slice(1, 2) +
-                " L/Year"}
-            {element?.salary == null && "(Negotiable)"}
-          </div>
-          <div className="flex gap-1 items-center text-sm p-1 rounded-md">
-            <TfiWrite />
-            {element?.jobPostedOn?.slice(0, 10)}
-          </div>
-        </div>
-      </div>
-      ):(
+      ) : (
         <Link
-        to={`post/application/${element._id}`}
-        className="max-w-[400px] hover:cursor-pointer border hover:shadow-[0px_0px_2.5px_rgba(0,0,0,0.35)] px-3 py-2 rounded-md h-full flex flex-col justify-between"
-      >
-        <div
-          className={`grid ${
-            element?.companyLogo ? "grid-cols-[1fr_2fr]" : "grid-cols-1"
-          } items-start gap-4`}
+          to={`post/application/${element._id}`}
+          className="max-w-[400px] hover:cursor-pointer border hover:shadow-[0px_0px_2.5px_rgba(0,0,0,0.35)] px-3 py-2 rounded-md h-full flex flex-col justify-between"
         >
-          <div className="flex items-start justify-center rounded-md">
-            {element?.companyLogo ? (
-              <img
-                src={element?.companyLogo?.url}
-                className="w-[60px] h-[60px] border-2 border-gray-100 mix-blend-multiply rounded-md"
-                loading="lazy"
-              />
-            ) : (
-              ""
-            )}
+          <div
+            className={`grid ${
+              element?.companyLogo ? "grid-cols-[1fr_2fr]" : "grid-cols-1"
+            } items-start gap-4`}
+          >
+            <div className="flex items-start justify-center rounded-md">
+              {element?.companyLogo ? (
+                <img
+                  src={element?.companyLogo?.url}
+                  className="w-[60px] h-[60px] border-2 border-gray-100 mix-blend-multiply rounded-md"
+                  loading="lazy"
+                />
+              ) : (
+                ""
+              )}
+            </div>
+            <div>
+              <h3 className="text-sky-600 text-sm font-semibold">
+                {element?.companyName}
+              </h3>
+              <h2 className="font-medium  md:text-xl">{element.title}</h2>
+            </div>
           </div>
-          <div>
-            <h3 className="text-sky-600 text-sm font-semibold">
-              {element?.companyName}
-            </h3>
-            <h2 className="font-bold  md:text-xl">{element.title}</h2>
+          <div className="grid grid-cols-2 mt-5 gap-2 items-center justify-between">
+            <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
+              <GoClock />
+              {element?.jobType}
+            </div>
+            <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
+              <MdOutlineLocationOn />
+              {element?.location}
+            </div>
+            <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
+              <TbCurrencyRupeeNepalese />
+              {element?.salary != null &&
+                element.salary.toString().charAt(0) +
+                  "." +
+                  element.salary.toString().slice(1, 2) +
+                  " L/Year"}
+              {element?.salary == null && "(Negotiable)"}
+            </div>
+            <div className="flex gap-1 items-center text-sm p-1 rounded-md">
+              <TfiWrite />
+              {element?.jobPostedOn?.slice(0, 10)}
+            </div>
           </div>
-        </div>
-        <div className="grid grid-cols-2 mt-5 gap-2 items-center justify-between">
-          <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
-            <GoClock />
-            {element?.jobType}
-          </div>
-          <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
-            <MdOutlineLocationOn />
-            {element?.location}
-          </div>
-          <div className="flex items-center gap-1 bg-sky-100 text-sky-600 text-sm p-1 rounded-md">
-            <TbCurrencyRupeeNepalese />
-            {element?.salary != null &&
-              element.salary.toString().charAt(0) +
-                "." +
-                element.salary.toString().slice(1, 2) +
-                " L/Year"}
-            {element?.salary == null && "(Negotiable)"}
-          </div>
-          <div className="flex gap-1 items-center text-sm p-1 rounded-md">
-            <TfiWrite />
-            {element?.jobPostedOn?.slice(0, 10)}
-          </div>
-        </div>
-      </Link>
+        </Link>
       )}
       {(expanded || expandedJobId === element._id) && (
         <div className="flex flex-col gap-5 pl-2">
           <div className="flex flex-col gap-2">
-            <label className="text-xl font-bold text-sky-600">
+            <label className="text-xl font-medium text-sky-600">
               Job Category
             </label>
             <p className="  text-gray-500">{element.jobCategory}</p>
-            <label className="text-xl font-bold text-sky-600">
+            <label className="text-xl font-medium text-sky-600">
               Employer Id
             </label>
             <p className="  text-gray-500">{element.postedBy}</p>
@@ -188,7 +188,7 @@ const JobCard = ({
 
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
-              <label className="text-xl font-bold text-sky-600">
+              <label className="text-xl font-medium text-sky-600">
                 Company's Introduction
               </label>
               <p className="text-gray-500 text-justify">
@@ -197,7 +197,7 @@ const JobCard = ({
             </div>
             {element?.qualifications && (
               <div className="flex flex-col gap-2">
-                <label className="text-xl font-bold text-sky-600">
+                <label className="text-xl font-medium text-sky-600">
                   Qualifications
                 </label>
                 <ul className="list-disc pl-5 text-gray-500">
@@ -215,7 +215,7 @@ const JobCard = ({
             )}
             {element.responsibilities && (
               <div className="flex flex-col gap-2">
-                <label className="text-xl font-bold text-sky-600">
+                <label className="text-xl font-medium text-sky-600">
                   Responsibilities
                 </label>
                 <ul className="list-disc pl-5 text-gray-500">
@@ -233,7 +233,7 @@ const JobCard = ({
             )}
             {element.offers && (
               <div className="flex flex-col gap-2">
-                <label className="text-xl font-bold text-sky-600">
+                <label className="text-xl font-medium text-sky-600">
                   Offering
                 </label>
                 <ul className="list-disc pl-5 text-gray-500">

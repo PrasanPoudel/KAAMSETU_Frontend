@@ -127,11 +127,11 @@ const JobPost = () => {
     <form onSubmit={handlePostJob} className="grid gap-4 w-full md:w-[80%]">
       <div className="grid grid-cols-1 items-center md:items-end justify-between gap-4 md:grid-cols-2 w-full">
         <div className="flex flex-col gap-2">
-          <label className="text-xl font-medium">Company's Logo</label>
+          <label className="text-xl ">Company's Logo</label>
           <ImageUploader onImageUpload={companyLogoHandler} />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xl font-medium">Company's Name</label>
+          <label className="text-xl ">Company's Name</label>
           <input
             className="w-full border-2 border-black pl-2 "
             type="text"
@@ -144,7 +144,7 @@ const JobPost = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xl font-medium">Job's Title</label>
+          <label className="text-xl ">Job's Title</label>
           <input
             className="w-full border-2 border-black pl-2 "
             type="text"
@@ -157,7 +157,7 @@ const JobPost = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xl font-medium">Job Category</label>
+          <label className="text-xl ">Job Category</label>
           <div className="w-full rounded-md border-2 border-black flex items-center bg-white pl-2">
             <div className="relative w-full">
               <input
@@ -191,7 +191,7 @@ const JobPost = () => {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xl font-medium">Job's Type</label>
+          <label className="text-xl ">Job's Type</label>
           <select
             className="w-full border-2 border-black px-2 "
             value={jobType}
@@ -202,7 +202,7 @@ const JobPost = () => {
           </select>
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xl font-medium">Location (City)</label>
+          <label className="text-xl ">Location (City)</label>
           <div className="w-full rounded-md border-2 border-black flex items-center bg-white pl-2">
             <div className="relative w-full">
               <input
@@ -234,7 +234,7 @@ const JobPost = () => {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xl font-medium">Company's Introduction</label>
+          <label className="text-xl ">Company's Introduction</label>
           <textarea
             className="w-full border-2 border-black pl-2"
             value={introduction}
@@ -247,7 +247,7 @@ const JobPost = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xl font-medium">Responsibilities</label>
+          <label className="text-xl ">Responsibilities</label>
           <textarea
             className="w-full border-2 border-black pl-2 "
             value={responsibilities}
@@ -260,7 +260,7 @@ const JobPost = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xl font-medium">Qualifications</label>
+          <label className="text-xl ">Qualifications</label>
           <textarea
             className="w-full border-2 border-black pl-2 "
             value={qualifications}
@@ -274,7 +274,7 @@ const JobPost = () => {
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
-            <label className="text-xl font-medium">What We Offer</label>
+            <label className="text-xl ">What We Offer</label>
             <p className="flex gap-2 items-center">
               <IoIosInformationCircleOutline /> Optional
             </p>
@@ -291,7 +291,7 @@ const JobPost = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xl font-medium">Salary (Per year)</label>
+          <label className="text-xl ">Salary (Per year)</label>
           <input
             className="w-full border-2 border-black px-2 "
             type={salaryNegotiable ? "text" : "number"}
@@ -299,10 +299,7 @@ const JobPost = () => {
             onChange={(e) => setSalary(e.target.value)}
             disabled={salaryNegotiable}
           />
-          <div
-            htmlFor="checkBox"
-            className="text-sm font-medium flex items-center gap-2"
-          >
+          <div htmlFor="checkBox" className="text-sm  flex items-center gap-2">
             <input
               type="checkbox"
               checked={salaryNegotiable}
@@ -316,9 +313,7 @@ const JobPost = () => {
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
-            <label className="text-xl font-medium">
-              Hiring Multiple Candidates?
-            </label>
+            <label className="text-xl ">Hiring Multiple Candidates?</label>
             <p className="flex gap-2 items-center">
               <IoIosInformationCircleOutline /> Optional
             </p>
@@ -334,7 +329,7 @@ const JobPost = () => {
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
-            <label className="text-xl font-medium">Website Name</label>
+            <label className="text-xl ">Website Name</label>
             <p className="flex gap-2 items-center">
               <IoIosInformationCircleOutline /> Optional
             </p>
@@ -352,7 +347,7 @@ const JobPost = () => {
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
-            <label className="text-xl font-medium">Website Link (URL)</label>
+            <label className="text-xl ">Website Link (URL)</label>
             <p className="flex gap-2 items-center">
               <IoIosInformationCircleOutline /> Optional
             </p>

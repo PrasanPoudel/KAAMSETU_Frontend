@@ -23,9 +23,9 @@ const Navbar = () => {
       document.body.style.overflow = "";
     }
   }, [showSidebar]);
-if(loading){
-  return;
-}
+  if (loading) {
+    return;
+  }
   return (
     <div className="sticky top-0 w-full z-20 h-auto bg-white border-gray-100 flex justify-between items-center">
       <img
@@ -50,7 +50,7 @@ if(loading){
             }
           >
             <IoHomeOutline className="text-xl" />{" "}
-            <span className="font-medium">Home</span>
+            <span className="mmm">Home</span>
           </NavLink>
 
           <NavLink
@@ -64,7 +64,7 @@ if(loading){
             }
           >
             <MdOutlineFindInPage className="text-2xl" />{" "}
-            <span className="font-medium">Find Jobs</span>
+            <span className="mmm">Find Jobs</span>
           </NavLink>
           <NavLink
             to="/sendmessage"
@@ -77,7 +77,7 @@ if(loading){
             }
           >
             <FaRegMessage className="text-xl" />{" "}
-            <span className="font-medium">Send Message</span>
+            <span className="mmm">Send Message</span>
           </NavLink>
           {user?.role === "Employer" && (
             <NavLink
@@ -91,7 +91,7 @@ if(loading){
               }
             >
               <TfiWrite className="text-xl" />{" "}
-              <span className="font-medium">Post A New Job</span>
+              <span className="mmm">Post A New Job</span>
             </NavLink>
           )}
 
@@ -107,7 +107,7 @@ if(loading){
               }
             >
               <IoBriefcaseOutline className="text-xl" />{" "}
-              <span className="font-medium">My Posted Jobs</span>
+              <span className="mmm">My Posted Jobs</span>
             </NavLink>
           )}
 
@@ -123,7 +123,7 @@ if(loading){
               }
             >
               <LuLetterText className="text-xl" />{" "}
-              <span className="font-medium">Jobs Seeker's Applications</span>
+              <span className="mmm">Jobs Seeker's Applications</span>
             </NavLink>
           )}
 
@@ -139,7 +139,7 @@ if(loading){
               }
             >
               <LuLetterText className="text-xl" />
-              <span className="font-medium">My Applications</span>
+              <span className="mmm">My Applications</span>
             </NavLink>
           )}
         </div>
@@ -185,7 +185,7 @@ if(loading){
                 onClick={() => setShowSidebar((prev) => !prev)}
                 to="/"
                 className={({ isActive }) =>
-                  `flex font-medium gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
+                  `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                     isActive
                       ? "bg-sky-600 hover:bg-sky-700 text-white"
                       : "hover:bg-sky-700"
@@ -199,7 +199,7 @@ if(loading){
                 onClick={() => setShowSidebar((prev) => !prev)}
                 to="/jobs"
                 className={({ isActive }) =>
-                  `flex font-medium gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
+                  `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                     isActive
                       ? "bg-sky-600 hover:bg-sky-700 text-white"
                       : "hover:bg-sky-700"
@@ -213,7 +213,7 @@ if(loading){
                   onClick={() => setShowSidebar((prev) => !prev)}
                   to="/sendmessage"
                   className={({ isActive }) =>
-                    `flex font-medium gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
+                    `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                       isActive
                         ? "bg-sky-600 hover:bg-sky-700 text-white"
                         : "hover:bg-sky-700"
@@ -229,7 +229,7 @@ if(loading){
                   onClick={() => setShowSidebar((prev) => !prev)}
                   to="/dashboard/Job Post"
                   className={({ isActive }) =>
-                    `flex font-medium gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
+                    `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                       isActive
                         ? "bg-sky-600 hover:bg-sky-700 text-white"
                         : "hover:bg-sky-700"
@@ -245,7 +245,7 @@ if(loading){
                   onClick={() => setShowSidebar((prev) => !prev)}
                   to="/dashboard/My Jobs"
                   className={({ isActive }) =>
-                    `flex font-medium gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
+                    `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                       isActive
                         ? "bg-sky-600 hover:bg-sky-700 text-white"
                         : "hover:bg-sky-700"
@@ -261,7 +261,7 @@ if(loading){
                   onClick={() => setShowSidebar((prev) => !prev)}
                   to="/dashboard/Applications"
                   className={({ isActive }) =>
-                    `flex font-medium gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
+                    `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                       isActive
                         ? "bg-sky-600 hover:bg-sky-700 text-white"
                         : "hover:bg-sky-700"
@@ -278,7 +278,7 @@ if(loading){
                   onClick={() => setShowSidebar((prev) => !prev)}
                   to="/dashboard/My Applications"
                   className={({ isActive }) =>
-                    `flex font-medium gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
+                    `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                       isActive
                         ? "bg-sky-600 hover:bg-sky-700 text-white"
                         : "hover:bg-sky-700"

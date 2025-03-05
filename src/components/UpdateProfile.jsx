@@ -183,7 +183,7 @@ const UpdateProfile = () => {
       className="grid gap-4 w-full md:w-[80%]"
     >
       <div className="flex flex-col gap-2">
-        <label className="text-xl font-medium">Profile Picture</label>
+        <label className="text-xl ">Profile Picture</label>
         <ImageUploader
           onImageUpload={profilePictureHandler}
           profilePicturePreview={profilePicture}
@@ -192,7 +192,7 @@ const UpdateProfile = () => {
       </div>
       <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
-          <label className="text-xl font-medium">Name</label>
+          <label className="text-xl ">Name</label>
           <input
             type="text"
             value={name}
@@ -201,7 +201,7 @@ const UpdateProfile = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xl font-medium">Email Address</label>
+          <label className="text-xl ">Email Address</label>
           <input
             type="email"
             value={email}
@@ -210,7 +210,7 @@ const UpdateProfile = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xl font-medium">Phone Number</label>
+          <label className="text-xl ">Phone Number</label>
           <input
             type="number"
             value={phone}
@@ -219,7 +219,7 @@ const UpdateProfile = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xl font-medium">Address</label>
+          <label className="text-xl ">Address</label>
           <div className="w-full border-2 border-black rounded-md flex items-center bg-white pl-2">
             <div className="relative w-full">
               <input
@@ -254,7 +254,7 @@ const UpdateProfile = () => {
       {user && user.role === "Job Seeker" && (
         <>
           <div className="flex flex-col gap-2">
-            <label className="text-xl font-medium">My Job Choices</label>
+            <label className="text-xl ">My Job Choices</label>
             <div className="flex flex-col gap-2">
               <div className="w-full border-2 border-black rounded-md flex items-center bg-white pl-2">
                 <div className="relative w-full">
@@ -357,11 +357,11 @@ const UpdateProfile = () => {
           {user && user.resume && user.role === "Job Seeker" && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
-                <label className="text-xl font-medium">Change Resume</label>
+                <label className="text-xl ">Change Resume</label>
                 <FileUploader onFileUpload={resumeHandler} />
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-xl font-medium">Current Resume</label>
+                <label className="text-xl ">Current Resume</label>
                 <ResumeViewer resume={resume} />
                 <Link
                   to={resume}
