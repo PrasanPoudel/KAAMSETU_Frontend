@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import apiURL from "../apiURL";
 
 const updateProfileSlice = createSlice({
   name: "updateProfile",
@@ -47,7 +48,7 @@ export const updateProfile = (data) => async (dispatch) => {
   dispatch(updateProfileSlice.actions.updateProfileRequest());
   try {
     const response = await axios.put(
-      "https://kaamsetu-backend.onrender.com/api/user/update/profile",
+      `${apiURL}/api/user/update/profile`,
       data,
       {
         withCredentials: true,
@@ -67,7 +68,7 @@ export const updatePassword = (data) => async (dispatch) => {
   dispatch(updateProfileSlice.actions.updatePasswordRequest());
   try {
     const response = await axios.put(
-      "https://kaamsetu-backend.onrender.com/api/user/update/password",
+      `${apiURL}/api/user/update/password`,
       data,
       {
         withCredentials: true,

@@ -1,24 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense, lazy } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   useNavigate,
 } from "react-router-dom";
-import Navbar from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./store/slices/userSlice";
-import Dashboard from "./pages/Dashboard";
-import Home from "./pages/Home";
-import Jobs from "./pages/Jobs";
+import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
-import PostApplication from "./pages/PostApplication";
 import Register from "./pages/Register";
-import SendMessage from "./pages/SendMessage";
 import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import Loader from "./components/Loader";
+
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Jobs = lazy(() => import("./pages/Jobs"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const PostApplication = lazy(() => import("./pages/PostApplication"));
+const SendMessage = lazy(() => import("./pages/SendMessage"));
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -63,7 +65,9 @@ const App = () => {
           path="/jobs"
           element={
             <ProtectedRoute>
-              <Jobs />
+              <Suspense fallback={<Loader />}>
+                <Jobs />
+              </Suspense>
             </ProtectedRoute>
           }
         />
@@ -71,7 +75,9 @@ const App = () => {
           path="/sendmessage"
           element={
             <ProtectedRoute>
-              <SendMessage />
+              <Suspense fallback={<Loader />}>
+                <SendMessage />
+              </Suspense>
             </ProtectedRoute>
           }
         />
@@ -79,7 +85,9 @@ const App = () => {
           path="/dashboard/:activeComponent"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <Suspense fallback={<Loader />}>
+                <Dashboard />
+              </Suspense>
             </ProtectedRoute>
           }
         />
@@ -87,13 +95,22 @@ const App = () => {
           path="/post/application/:jobId"
           element={
             <ProtectedRoute>
-              <PostApplication />
+              <Suspense fallback={<Loader />}>
+                <PostApplication />
+              </Suspense>
             </ProtectedRoute>
           }
         />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="*" element={<NotFound />} />
+        <Route
+          path="*"
+          element={
+            <Suspense fallback={<Loader />}>
+              <NotFound />
+            </Suspense>
+          }
+        />
       </Routes>
       <Footer />
       <ToastContainer

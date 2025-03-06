@@ -99,7 +99,7 @@ const PopularJobs = () => {
               <img
                 src={job.image}
                 alt="Job"
-                className="w-full h-[200px] object-cover"
+                className="h-[220px] aspect-video"
                 loading="lazy"
               />
               <h3 className="text-xl mt-2 px-5 text-justify font-medium">{job.headline}</h3>

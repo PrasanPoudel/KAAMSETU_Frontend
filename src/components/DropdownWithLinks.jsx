@@ -71,7 +71,7 @@ const DropdownWithLinks = ({ user }) => {
           </div>
         </div>
       )}
-      <div className="flex items-center justify-center p-1 hover:bg-sky-100 mr-[-5px] rounded-full">
+      <div className="flex items-center justify-center p-1 hover:bg-gray-200 mr-[-5px] rounded-full">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="bg-white rounded-full w-[40px] h-[40px]"
@@ -110,14 +110,14 @@ const DropdownWithLinks = ({ user }) => {
                     <img
                       src={user.profilePicture.url}
                       alt="user image"
-                      className="rounded-full object-cover hover:bg-sky-100"
+                      className="rounded-full object-cover hover:bg-gray-200"
                       loading="lazy"
                     />
                   ) : (
                     <img
                       src={unknownProfile}
                       alt="user image"
-                      className="rounded-full object-cover hover:bg-sky-100"
+                      className="rounded-full object-cover hover:bg-gray-200"
                       loading="lazy"
                     />
                   )}

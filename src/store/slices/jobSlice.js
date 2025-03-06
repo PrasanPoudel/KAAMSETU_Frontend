@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import apiURL from "../apiURL";
 
 const jobSlice = createSlice({
   name: "jobs",
@@ -108,7 +109,7 @@ export const fetchJobs =
   async (dispatch) => {
     try {
       dispatch(jobSlice.actions.requestForAllJobs());
-      let link = "https://kaamsetu-backend.onrender.com/api/job/getall?";
+      let link = `${apiURL}/api/job/getall?`;
       let queryParams = [];
       if (searchKeyword) {
         queryParams.push(`searchKeyword=${searchKeyword}`);
@@ -135,7 +136,7 @@ export const fetchSingleJob = (jobId) => async (dispatch) => {
   dispatch(jobSlice.actions.requestForSingleJob());
   try {
     const response = await axios.get(
-      `https://kaamsetu-backend.onrender.com/api/job/get/${jobId}`,
+      `${apiURL}/api/job/get/${jobId}`,
       { withCredentials: true }
     );
     dispatch(jobSlice.actions.successForSingleJob(response.data.job));
@@ -149,7 +150,7 @@ export const postJob = (data) => async (dispatch) => {
   dispatch(jobSlice.actions.requestForPostJob());
   try {
     const response = await axios.post(
-      `https://kaamsetu-backend.onrender.com/api/job/post`,
+      `${apiURL}/api/job/post`,
       data,
       {
         withCredentials: true,
@@ -167,7 +168,7 @@ export const getMyJobs = () => async (dispatch) => {
   dispatch(jobSlice.actions.requestForMyJobs());
   try {
     const response = await axios.get(
-      `https://kaamsetu-backend.onrender.com/api/job/getmyjobs`,
+      `${apiURL}/api/job/getmyjobs`,
       { withCredentials: true }
     );
     dispatch(jobSlice.actions.successForMyJobs(response.data.myJobs.reverse()));
@@ -181,7 +182,7 @@ export const deleteJob = (id) => async (dispatch) => {
   dispatch(jobSlice.actions.requestForDeleteJob());
   try {
     const response = await axios.delete(
-      `https://kaamsetu-backend.onrender.com/api/job/delete/${id}`,
+      `${apiURL}/api/job/delete/${id}`,
       { withCredentials: true }
     );
     dispatch(jobSlice.actions.successForDeleteJob(response.data.message));

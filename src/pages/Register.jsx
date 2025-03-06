@@ -17,6 +17,8 @@ import FileUploader from "../components/FileUploader";
 import ImageUploader from "../components/ImageUploader";
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const navigateTo = useNavigate();
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top of the page
   }, []);
@@ -61,9 +63,6 @@ const Register = () => {
     (state) => state.user
   );
 
-  const dispatch = useDispatch();
-  const navigateTo = useNavigate();
-
   const handleRegister = (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -86,7 +85,9 @@ const Register = () => {
       toast.error(error);
       dispatch(clearAllUserErrors());
     } else if (!error && isAuthenticated) {
-      navigateTo("/");
+      toast.info(message);
+      navigateTo("/login");
+      dispatch(clearAllUserErrors());
     }
   };
   const [filteredSuggestionsForLocation, setFilteredSuggestionsForLocation] =
@@ -489,13 +490,15 @@ const Register = () => {
               </button>
             )}
           </div>
-          Already have an account ?
-          <button
-            onClick={() => navigateTo("/login")}
-            className="bg-sky-600 hover:bg-sky-700 text-xl rounded-md w-full hover:cursor-pointer text-center text-white py-2 mt-2"
-          >
-            Login
-          </button>
+            <p>
+            Already have an account ?
+            <span
+              onClick={() => navigateTo("/login")}
+              className="ml-2 hover:underline text-sky-600 text-xl rounded-md w-full hover:cursor-pointer text-center py-2 mt-2"
+            >
+              Login Now
+            </span>
+            </p>
         </div>
       </div>
     </div>

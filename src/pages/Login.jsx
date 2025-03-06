@@ -9,6 +9,9 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import SpinnerHome from "../components/SpinnerHome";
 
 const Login = () => {
+  const navigateTo = useNavigate();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top of the page
   }, []);
@@ -19,8 +22,6 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useDispatch();
-  const navigateTo = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -29,19 +30,21 @@ const Login = () => {
     formData.append("email", email);
     formData.append("password", password);
     dispatch(login(formData));
+  };
+  useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearAllUserErrors());
     }
-    if (!error && isAuthenticated) {
+  }, [error, dispatch]);
+   // Navigate only when the user is authenticated
+   useEffect(() => {
+    if (isAuthenticated) {
       navigateTo("/");
     }
-  };
-
+  }, [isAuthenticated, navigateTo]);
   if (loading) {
     return <SpinnerHome />;
-  } else if (isAuthenticated) {
-    navigateTo("/");
   } else {
     return (
       <div className="lg:py-2 w-full bg-img">

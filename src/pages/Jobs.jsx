@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { clearAllJobErrors, fetchJobs } from "../store/slices/jobSlice";
 import JobsPagination from "../components/JobPagination";
-import { MdFindReplace } from "react-icons/md";
+import { MdOutlineFindInPage } from "react-icons/md";
 import { IoLocationOutline, IoBriefcaseOutline } from "react-icons/io5";
 import { GoClock } from "react-icons/go";
 import { CiFilter } from "react-icons/ci";
@@ -86,8 +86,8 @@ const Jobs = () => {
   return (
     <>
       <div className="flex w-full md:px-5">
-        <div className="flex border-2 bg-white border-black px-2 w-full items-center lg:hidden rounded-md">
-          <MdFindReplace className="text-xl w-[30px] text-black" />
+        <div className="flex border-2 bg-white border-l-0 border-r-0 border-t-0 border-black px-2 w-full items-center lg:hidden ">
+          <MdOutlineFindInPage className="text-xl w-[30px] text-black" />
           <input
             type="search"
             value={searchKeyword}
@@ -100,7 +100,7 @@ const Jobs = () => {
             placeholder="Search for Jobs"
           />
           <CiFilter
-            className="text-4xl border border-black shadow-[0px_0px_2.5px_rgba(0,0,0,0.35)] rounded-md lg:hidden"
+            className="text-3xl rounded-md border border-black shadow-[0px_0px_2.5px_rgba(0,0,0,0.35)]  lg:hidden"
             onClick={() => setShowFilters(!showFilters)}
           />
         </div>
@@ -120,7 +120,7 @@ const Jobs = () => {
           />
         </div>
 
-        <div className="flex border-2 bg-white border-black pl-2 w-full items-center rounded-md">
+        <div className="flex border-2 bg-white border-l-0 border-r-0 border-t-0 border-black pl-2 w-full items-center ">
           <IoLocationOutline className="text-xl w-[30px] text-black" />
           <div className="relative w-full">
             <input
@@ -138,7 +138,7 @@ const Jobs = () => {
                   }
                 }
               }}
-              className="w-full pl-2 bg-transparent  text-black placeholder:text-gray-500"
+              className="w-full pl-2 bg-transparent  text-black "
             />
             {filteredSuggestionsForLocation.length > 0 && city.length > 0 && (
               <span className="absolute left-2 top-[13px]">
@@ -150,7 +150,7 @@ const Jobs = () => {
             )}
           </div>
         </div>
-        <div className="flex border-2 bg-white border-black pl-2 w-full items-center rounded-md">
+        <div className="flex border-2 bg-white border-l-0 border-r-0 border-t-0 border-black pl-2 w-full items-center ">
           <IoBriefcaseOutline className="text-xl w-[30px] text-black" />
           <div className="relative w-full">
             <input
@@ -168,7 +168,7 @@ const Jobs = () => {
                   }
                 }
               }}
-              className="w-full pl-2 bg-transparent  text-black placeholder:text-gray-500"
+              className="w-full pl-2 bg-transparent  text-black "
             />
             {filteredSuggestionsForJobCategory.length > 0 &&
               jobCategoryArray.length > 0 && (
@@ -183,7 +183,7 @@ const Jobs = () => {
               )}
           </div>
         </div>
-        <div className="relative flex rounded-md bg-white border-2 border-black justify-between items-center">
+        <div className="relative flex  bg-white border-2 border-black justify-between items-center rounded-md">
           <GoClock className="absolute left-2 text-black w-[30px] text-xl" />
           <select
             onChange={(e) => setJobType(e.target.value)}
@@ -200,10 +200,10 @@ const Jobs = () => {
       </div>
       {/* End */}
       <div className={`${showFilters ? "hidden" : "flex flex-col gap-5"}`}>
-        <div className="job-filters rounded-md px-2 hidden lg:flex lg:flex-col gap-2 py-10">
+        <div className="job-filters  px-2 hidden lg:flex lg:flex-col gap-2 py-10">
           <div className="grid grid-cols-4 gap-2">
-            <div className="flex border-2 bg-white border-black pl-2 w-full items-center rounded-md">
-              <MdFindReplace className="text-xl w-[30px] text-black" />
+            <div className="flex border-2 bg-white border-l-0 border-r-0 border-t-0 border-black pl-2 w-full items-center ">
+              <MdOutlineFindInPage className="text-xl w-[30px] text-black" />
               <input
                 type="search"
                 value={searchKeyword}
@@ -217,7 +217,7 @@ const Jobs = () => {
                 placeholder="Search for Jobs"
               />
             </div>
-            <div className="flex border-2 bg-white border-black pl-2 w-full items-center rounded-md">
+            <div className="flex border-2 bg-white border-l-0 border-r-0 border-t-0 border-black pl-2 w-full items-center ">
               <IoLocationOutline className="text-xl w-[30px] text-black" />
               <div className="relative w-full">
                 <input
@@ -235,7 +235,7 @@ const Jobs = () => {
                       }
                     }
                   }}
-                  className="w-full pl-2 bg-transparent text-black placeholder:text-gray-500"
+                  className="w-full pl-2 bg-transparent text-black "
                 />
                 {filteredSuggestionsForLocation.length > 0 &&
                   city.length > 0 && (
@@ -248,7 +248,7 @@ const Jobs = () => {
                   )}
               </div>
             </div>
-            <div className="flex border-2 bg-white border-black pl-2 w-full items-center rounded-md">
+            <div className="flex border-2 bg-white border-l-0 border-r-0 border-t-0 border-black pl-2 w-full items-center ">
               <IoBriefcaseOutline className="text-xl w-[30px] text-black" />
               <div className="relative w-full">
                 <input
@@ -266,7 +266,7 @@ const Jobs = () => {
                       }
                     }
                   }}
-                  className="w-full pl-2 bg-transparent  text-black placeholder:text-gray-500"
+                  className="w-full pl-2 bg-transparent  text-black "
                 />
                 {filteredSuggestionsForJobCategory.length > 0 &&
                   jobCategoryArray.length > 0 && (
@@ -281,7 +281,7 @@ const Jobs = () => {
                   )}
               </div>
             </div>
-            <div className="relative flex rounded-md bg-white border-2 border-black justify-between items-center">
+            <div className="relative flex  bg-white border-2 border-black justify-between items-center rounded-md">
               <GoClock className="absolute left-2 text-black w-[30px] text-xl" />
               <select
                 onChange={(e) => setJobType(e.target.value)}
@@ -297,15 +297,16 @@ const Jobs = () => {
             </div>
           </div>
         </div>
-        { jobs.length > 0 && (searchKeyword || jobCategory || city || jobType) != "" && (
-          <h1 className="w-full mt-2 pl-1">
-            Searching For {jobType}{" "}
-            {searchKeyword.length > 0 ? `"${searchKeyword}"` : ""}
-            {""} {jobCategory ? `for ${jobCategory} ` : ""}
-            {""}
-            {city ? `in ${city}` : ""}
-          </h1>
-        )}
+        {jobs.length > 0 &&
+          (searchKeyword || jobCategory || city || jobType) != "" && (
+            <h1 className="w-full mt-2 pl-1">
+              Searching For {jobType}{" "}
+              {searchKeyword.length > 0 ? `"${searchKeyword}"` : ""}
+              {""} {jobCategory ? `for ${jobCategory} ` : ""}
+              {""}
+              {city ? `in ${city}` : ""}
+            </h1>
+          )}
         <JobsPagination
           jobs={jobs}
           searchKeyword={searchKeyword}

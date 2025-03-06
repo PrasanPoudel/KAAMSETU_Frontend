@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import apiURL from "../apiURL";
 
 const userSlice = createSlice({
   name: "user",
@@ -92,7 +93,7 @@ export const register = (data) => async (dispatch) => {
   dispatch(userSlice.actions.registerRequest());
   try {
     const response = await axios.post(
-      "https://kaamsetu-backend.onrender.com/api/user/register",
+      `${apiURL}/api/user/register`,
       data,
       {
         withCredentials: true,
@@ -110,7 +111,7 @@ export const login = (data) => async (dispatch) => {
   dispatch(userSlice.actions.loginRequest());
   try {
     const response = await axios.post(
-      "https://kaamsetu-backend.onrender.com/api/user/login",
+      `${apiURL}/api/user/login`,
       data,
       {
         withCredentials: true,
@@ -128,7 +129,7 @@ export const getUser = () => async (dispatch) => {
   dispatch(userSlice.actions.fetchUserRequest());
   try {
     const response = await axios.get(
-      "https://kaamsetu-backend.onrender.com/api/user/getuser",
+      `${apiURL}/api/user/getuser`,
       {
         withCredentials: true,
       }
@@ -142,7 +143,7 @@ export const getUser = () => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     const response = await axios.get(
-      "https://kaamsetu-backend.onrender.com/api/user/logout",
+      `${apiURL}/api/user/logout`,
       {
         withCredentials: true,
       }

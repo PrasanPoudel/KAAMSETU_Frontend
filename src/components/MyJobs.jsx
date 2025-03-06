@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import {
@@ -7,7 +7,7 @@ import {
   resetJobSlice,
 } from "../store/slices/jobSlice";
 import Loader from "../components/Loader";
-const JobCard= React.lazy(()=> import('./JobCard'))
+import JobCard from "./JobCard";
 
 const MyJobs = () => {
   const dispatch = useDispatch();
@@ -50,7 +50,6 @@ const MyJobs = () => {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 w-full">
             {myJobs.map((element) => (
-              <Suspense fallback={<Loader/>}>
               <JobCard
                 key={element._id}
                 element={element}
@@ -58,7 +57,6 @@ const MyJobs = () => {
                 toggleExpand={toggleExpand}
                 expandedJobId={expandedJobId}
                 />
-                </Suspense>
             ))}
           </div>
         </div>

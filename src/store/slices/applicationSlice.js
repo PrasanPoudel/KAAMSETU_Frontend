@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import apiURL from "../apiURL";
 
 const applicationSlice = createSlice({
   name: "applications",
@@ -84,7 +85,7 @@ export const fetchEmployerApplications = () => async (dispatch) => {
   dispatch(applicationSlice.actions.requestForAllApplications());
   try {
     const response = await axios.get(
-      `https://kaamsetu-backend.onrender.com/api/application/employer/getall`,
+      `${apiURl}/api/application/employer/getall`,
       {
         withCredentials: true,
       }
@@ -108,7 +109,7 @@ export const fetchJobSeekerApplications = () => async (dispatch) => {
   dispatch(applicationSlice.actions.requestForMyApplications());
   try {
     const response = await axios.get(
-      `https://kaamsetu-backend.onrender.com/api/application/jobseeker/getall`,
+      `${apiURL}/api/application/jobseeker/getall`,
       {
         withCredentials: true,
       }
@@ -132,7 +133,7 @@ export const postApplication = (data, jobId) => async (dispatch) => {
   dispatch(applicationSlice.actions.requestForPostApplication());
   try {
     const response = await axios.post(
-      `https://kaamsetu-backend.onrender.com/api/application/post/${jobId}`,
+      `${apiURL}/api/application/post/${jobId}`,
       data,
       {
         withCredentials: true,
@@ -156,7 +157,7 @@ export const deleteApplication = (id) => async (dispatch) => {
   dispatch(applicationSlice.actions.requestForDeleteApplication());
   try {
     const response = await axios.delete(
-      `https://kaamsetu-backend.onrender.com/api/application/delete/${id}`,
+      `${apiURL}/api/application/delete/${id}`,
       { withCredentials: true }
     );
     dispatch(
