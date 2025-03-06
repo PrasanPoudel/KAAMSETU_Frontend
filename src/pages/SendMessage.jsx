@@ -5,10 +5,10 @@ function SendMessage() {
     window.scrollTo(0, 0); // Scroll to the top of the page
   }, []);
   return (
-    <div className="flex flex-col justify-center items-center h-auto py-10 w-full md:mx-auto md:w-[80%]">
+    <div className="flex flex-col justify-center items-center h-auto py-5 w-full md:mx-auto md:w-[60%]">
       <p className="text-3xl ">Send Message</p>
       <p className="text-gray-500 text-xl"></p>
-      <form className="w-full flex flex-col mt-5 gap-4">
+      <form className="w-full flex flex-col mt-2 gap-2">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col w-full gap-2">
             <label className="text-xl ">Name</label>

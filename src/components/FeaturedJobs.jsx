@@ -14,7 +14,7 @@ const FeaturedJobs = () => {
   }, []);
   return (
     <div className="w-full pt-10">
-      <h2 className="text-3xl text-center mb-10 ">Featured Jobs</h2>
+      <h2 className="text-3xl text-center mb-10 font-medium">Featured Jobs</h2>
       {jobs.length < 1 ? (
         <SkeletonUiForJobs />
       ) : (

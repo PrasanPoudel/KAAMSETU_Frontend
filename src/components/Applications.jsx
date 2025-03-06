@@ -7,11 +7,10 @@ import {
   fetchEmployerApplications,
   resetApplicationSlice,
 } from "../store/slices/applicationSlice";
-import Loader from "./Loader";
 import { Link } from "react-router-dom";
 
 const Applications = () => {
-  const { applications, loading, error, message } = useSelector(
+  const { applications, error, message } = useSelector(
     (state) => state.applications
   );
 
@@ -35,9 +34,7 @@ const Applications = () => {
 
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : applications && applications.length <= 0 ? (
+      {applications.length === 0 ? (
         <h1 className="text-xl text-center md:text-start">
           You have not received any application from job seekers
         </h1>
