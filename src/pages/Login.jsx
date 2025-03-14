@@ -37,8 +37,8 @@ const Login = () => {
       dispatch(clearAllUserErrors());
     }
   }, [error, dispatch]);
-   // Navigate only when the user is authenticated
-   useEffect(() => {
+  // Navigate only when the user is authenticated
+  useEffect(() => {
     if (isAuthenticated) {
       navigateTo("/");
     }
@@ -47,7 +47,7 @@ const Login = () => {
     return <SpinnerHome />;
   } else {
     return (
-      <div className="lg:py-2 w-full bg-img">
+      <div className="lg:py-2 w-full">
         <div className="flex flex-col justify-center items-start gap-2 w-full sm:w-[600px] md:w-[750px] lg:w-[55%] ">
           <h3 className="text-3xl ">Welcome Back</h3>
           <div className="w-full">

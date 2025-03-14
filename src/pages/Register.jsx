@@ -177,7 +177,7 @@ const Register = () => {
   };
 
   return (
-    <div className="lg:py-2 w-full bg-img">
+    <div className="lg:py-2 w-full">
       <div className="flex flex-col justify-center items-start gap-2 w-full sm:w-[600px] md:w-[750px] lg:w-[55%]">
         <h3 className="text-3xl ">Register A New Account</h3>
         <div className="w-full">
@@ -490,7 +490,7 @@ const Register = () => {
               </button>
             )}
           </div>
-            <p>
+          <p>
             Already have an account ?
             <span
               onClick={() => navigateTo("/login")}
@@ -498,7 +498,7 @@ const Register = () => {
             >
               Login Now
             </span>
-            </p>
+          </p>
         </div>
       </div>
     </div>
