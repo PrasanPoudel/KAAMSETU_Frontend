@@ -4,6 +4,8 @@ import {
   Routes,
   Route,
   useNavigate,
+  useLocation,
+  Navigate,
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,26 +25,29 @@ const PostApplication = lazy(() => import("./pages/PostApplication"));
 const SendMessage = lazy(() => import("./pages/SendMessage"));
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated } = useSelector((state) => state.user);
-  const navigate = useNavigate();
+  const { isAuthenticated, loading } = useSelector((state) => state.user);
+  const location = useLocation();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
-  }, [isAuthenticated, navigate]);
+  if (!loading && !isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
 
-  return isAuthenticated ? children : null;
+  return !loading && isAuthenticated ? children : null;
 };
 
 const App = () => {
   const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(getUser()).catch((error) => {
       console.error("Failed to fetch user data:", error);
     });
   }, [dispatch]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <Router
@@ -82,7 +87,7 @@ const App = () => {
           }
         />
         <Route
-          path="/dashboard/:activeComponent"
+          path="/:activeComponent"
           element={
             <ProtectedRoute>
               <Suspense fallback={<Loader />}>

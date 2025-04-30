@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { clearAllJobErrors, fetchJobs } from "../store/slices/jobSlice";
 import JobsPagination from "../components/JobPagination";
-import { MdOutlineFindInPage } from "react-icons/md";
 import { IoLocationOutline, IoBriefcaseOutline } from "react-icons/io5";
 import { GoClock } from "react-icons/go";
 import { IoClose } from "react-icons/io5";
-import { VscSettings } from "react-icons/vsc";
+import { IoFilterOutline } from "react-icons/io5";
+import { IoIosSearch } from "react-icons/io";
 import jobCategoryArray from "../data/jobCategoryArray";
 import cities from "../data/cities";
 
@@ -83,11 +83,19 @@ const Jobs = () => {
   const handleJobCategoryBlur = () => {
     setTimeout(() => setFilteredSuggestionsForJobCategory([]), 200);
   };
+
+  // Determine if suggestion is active for styling
+  const isLocationSuggestionActive =
+    filteredSuggestionsForLocation.length > 0 && city.length > 0;
+  const isJobCategorySuggestionActive =
+    filteredSuggestionsForJobCategory.length > 0 && jobCategory.length > 0;
+
   return (
     <>
-      <div className="flex w-full md:px-5">
-        <div className="flex border-2 bg-white rounded-md border-gray-500 px-1 w-full items-center lg:hidden ">
-          <MdOutlineFindInPage className="text-5xl" />
+      {/* Mobile Search Bar */}
+      <div className="w-full px-4 py-3 lg:hidden">
+        <div className="flex items-center bg-white rounded-lg border border-gray-300 shadow-sm px-2">
+          <IoIosSearch className="text-gray-500 text-xl" />
           <input
             type="search"
             value={searchKeyword}
@@ -96,33 +104,44 @@ const Jobs = () => {
                 e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
               );
             }}
-            className="w-full pl-2 bg-transparent"
-            placeholder="Search for Jobs Title"
+            className="w-full h-10 pl-2 bg-transparent focus:outline-none text-sm"
+            placeholder="Search for Job Title"
           />
-          <VscSettings
-            className="text-5xl rounded-md border-black  lg:hidden"
-            onClick={() => setShowFilters(!showFilters)}
-          />
+          <button
+            type="button"
+            onClick={() => setShowFilters(true)}
+            className="ml-2 p-2 rounded-md text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+            aria-label="Open filters"
+          >
+            <IoFilterOutline className="text-xl" />
+          </button>
         </div>
       </div>
-      {/* Mobile Responsive Filters */}
+
+      {/* Mobile Fullscreen Filters */}
       <div
-        className={`${
-          showFilters
-            ? "flex flex-col gap-5 bg-white fixed top-0 pt-5 px-1 left-0 w-full min-h-[100vh] z-50"
-            : "hidden"
-        }`}
+        className={`fixed inset-0 z-50 bg-white p-5 transition-transform duration-300 ease-in-out lg:hidden ${
+          showFilters ? "translate-x-0" : "translate-x-full"
+        }`} // Use translate for smooth transition
       >
-        <div className="flex w-full justify-end">
-          <IoClose
-            className="text-4xl"
-            onClick={() => setShowFilters(!showFilters)}
-          />
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-lg font-semibold">Filters</h2>
+          <button
+            type="button"
+            onClick={() => setShowFilters(false)}
+            className="p-2 rounded-md text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+            aria-label="Close filters"
+          >
+            <IoClose className="text-2xl" />
+          </button>
         </div>
 
-        <div className="flex border-2 bg-white rounded-md border-gray-500 pl-2 w-full items-center ">
-          <IoLocationOutline className="text-2xl w-[30px] text-black" />
-          <div className="relative w-full">
+        <div className="flex flex-col gap-4">
+          {" "}
+          {/* Increased gap */}
+          {/* Location Input (Mobile) */}
+          <div className="relative flex items-center border border-gray-300 bg-white rounded-md px-3 h-10">
+            <IoLocationOutline className="text-gray-500 mr-2 flex-shrink-0" />
             <input
               placeholder="e.g. Kathmandu"
               onBlur={handleAddressBlur}
@@ -138,21 +157,24 @@ const Jobs = () => {
                   }
                 }
               }}
-              className="w-full pl-2 bg-transparent  text-black "
+              className={`w-full bg-transparent focus:outline-none text-sm ${
+                isLocationSuggestionActive
+                  ? "text-transparent caret-black"
+                  : "text-black"
+              }`}
             />
-            {filteredSuggestionsForLocation.length > 0 && city.length > 0 && (
-              <span className="absolute left-2 top-[13px]">
+            {isLocationSuggestionActive && (
+              <span className="absolute left-[calc(0.75rem+16px+0.5rem)] top-1/2 -translate-y-1/2 pointer-events-none text-sm">
                 {city}
-                <span className="text-gray-500">
+                <span className="text-gray-400">
                   {filteredSuggestionsForLocation[0].slice(city.length)}
                 </span>
               </span>
             )}
           </div>
-        </div>
-        <div className="flex border-2 bg-white rounded-md border-gray-500 pl-2 w-full items-center ">
-          <IoBriefcaseOutline className="text-2xl w-[30px] text-black" />
-          <div className="relative w-full">
+          {/* Job Category Input (Mobile) */}
+          <div className="relative flex items-center border border-gray-300 bg-white rounded-md px-3 h-10">
+            <IoBriefcaseOutline className="text-gray-500 mr-2 flex-shrink-0" />
             <input
               placeholder="e.g. Engineer"
               onBlur={handleJobCategoryBlur}
@@ -168,43 +190,82 @@ const Jobs = () => {
                   }
                 }
               }}
-              className="w-full pl-2 bg-transparent  text-black "
+              className={`w-full bg-transparent focus:outline-none text-sm ${
+                isJobCategorySuggestionActive
+                  ? "text-transparent caret-black"
+                  : "text-black"
+              }`}
             />
-            {filteredSuggestionsForJobCategory.length > 0 &&
-              jobCategoryArray.length > 0 && (
-                <span className="absolute left-2 top-[13px]">
-                  {jobCategory}
-                  <span className="text-gray-500">
-                    {filteredSuggestionsForJobCategory[0].slice(
-                      jobCategory.length
-                    )}
-                  </span>
+            {isJobCategorySuggestionActive && (
+              <span className="absolute left-[calc(0.75rem+16px+0.5rem)] top-1/2 -translate-y-1/2 pointer-events-none text-sm">
+                {jobCategory}
+                <span className="text-gray-400">
+                  {filteredSuggestionsForJobCategory[0].slice(
+                    jobCategory.length
+                  )}
                 </span>
-              )}
+              </span>
+            )}
           </div>
-        </div>
-        <div className="relative flex  bg-white border-2 border-gray-500 justify-between items-center rounded-md">
-          <GoClock className="absolute left-2 text-black w-[30px] text-2xl" />
-          <select
-            onChange={(e) => setJobType(e.target.value)}
-            value={jobType}
-            className="pl-10 w-full bg-transparent pr-4"
+          {/* Job Type Select (Mobile) */}
+          <div className="relative flex items-center border border-gray-300 bg-white rounded-md px-3 h-10">
+            <GoClock className="text-gray-500 mr-2" />
+            <select
+              onChange={(e) => setJobType(e.target.value)}
+              value={jobType}
+              className="w-full bg-transparent focus:outline-none text-sm appearance-none pr-8" // Added appearance-none and padding right
+            >
+              <option value="" disabled={jobType !== ""}>
+                Job Type
+              </option>{" "}
+              {/* Make placeholder selectable if value is empty */}
+              <option value="">Any</option>
+              <option value="Full Time">Full Time</option>
+              <option value="Part Time">Part Time</option>
+            </select>
+            {/* Custom dropdown arrow */}
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg
+                className="fill-current h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+              </svg>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowFilters(false)}
+            className="w-full bg-sky-600 text-white py-2 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 mt-4"
           >
-            <option value="" disabled>
-              Job Type
-            </option>
-            <option value="">Any</option>
-            <option value="Full Time">Full Time</option>
-            <option value="Part Time">Part Time</option>
-          </select>
+            Apply Filters
+          </button>
         </div>
       </div>
-      {/* End */}
-      <div className={`${showFilters ? "hidden" : "flex flex-col gap-5"}`}>
-        <div className="job-filters  px-2 hidden lg:flex lg:flex-col gap-2 py-10">
-          <div className="grid grid-cols-4 gap-2">
-            <div className="flex border-2 bg-white rounded-md border-gray-500 pl-2 w-full items-center ">
-              <MdOutlineFindInPage className="text-2xl w-[30px] text-black" />
+      {/* End Mobile Filters */}
+
+      {/* Container for Desktop Filters and Job Listings */}
+      <div
+        className={`${
+          showFilters ? "hidden" : "flex flex-col gap-5"
+        } px-4 md:px-6 lg:px-8`}
+      >
+        {" "}
+        {/* Added padding */}
+        {/* Desktop Filters */}
+        <div className="job-filters hidden lg:block bg-gray-50 p-4 rounded-lg shadow-sm mt-5">
+          {" "}
+          {/* Added bg, padding, rounded, shadow */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {" "}
+            {/* Adjusted grid cols and gap */}
+            {/* Search Input (Desktop) */}
+            <div className="flex items-center border border-gray-300 bg-white rounded-md px-3 h-10">
+              {" "}
+              {/* Standardized style */}
+              <IoIosSearch className="text-gray-500 mr-2" />{" "}
+              {/* Icon styling */}
               <input
                 type="search"
                 value={searchKeyword}
@@ -214,101 +275,114 @@ const Jobs = () => {
                       e.target.value.slice(1)
                   );
                 }}
-                className="w-full pl-2 bg-transparent p-2"
-                placeholder="Search for Jobs Title"
+                className="w-full bg-transparent focus:outline-none text-sm" // Standardized style
+                placeholder="Search for Job Title"
               />
             </div>
-            <div className="flex border-2 bg-white rounded-md border-gray-500 pl-2 w-full items-center ">
-              <IoLocationOutline className="text-2xl w-[30px] text-black" />
-              <div className="relative w-full">
-                <input
-                  placeholder="e.g. Kathmandu"
-                  onBlur={handleAddressBlur}
-                  type="text"
-                  value={city}
-                  onChange={handlecityChange}
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowRight" || e.key === "Tab") {
-                      e.preventDefault();
-                      if (filteredSuggestionsForLocation.length > 0) {
-                        setCity(filteredSuggestionsForLocation[0]);
-                        setFilteredSuggestionsForLocation([]);
-                      }
+            {/* Location Input (Desktop) */}
+            <div className="relative flex items-center border border-gray-300 bg-white rounded-md px-3 h-10">
+              {" "}
+              {/* Standardized style */}
+              <IoLocationOutline className="text-gray-500 mr-2 flex-shrink-0" />
+              <input
+                placeholder="e.g. Kathmandu"
+                onBlur={handleAddressBlur}
+                type="text"
+                value={city}
+                onChange={handlecityChange}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowRight" || e.key === "Tab") {
+                    e.preventDefault();
+                    if (filteredSuggestionsForLocation.length > 0) {
+                      setCity(filteredSuggestionsForLocation[0]);
+                      setFilteredSuggestionsForLocation([]);
                     }
-                  }}
-                  className="w-full pl-2 bg-transparent text-black "
-                />
-                {filteredSuggestionsForLocation.length > 0 &&
-                  city.length > 0 && (
-                    <span className="absolute left-2 top-[13px]">
-                      {city}
-                      <span className="text-gray-500">
-                        {filteredSuggestionsForLocation[0].slice(city.length)}
-                      </span>
-                    </span>
-                  )}
-              </div>
+                  }
+                }}
+                className={`w-full bg-transparent focus:outline-none text-sm ${
+                  isLocationSuggestionActive
+                    ? "text-transparent caret-black"
+                    : "text-black"
+                }`}
+              />
+              {isLocationSuggestionActive && (
+                <span className="absolute left-[calc(0.75rem+16px+0.5rem)] top-1/2 -translate-y-1/2 pointer-events-none text-sm">
+                  {city}
+                  <span className="text-gray-400">
+                    {filteredSuggestionsForLocation[0].slice(city.length)}
+                  </span>
+                </span>
+              )}
             </div>
-            <div className="flex border-2 bg-white rounded-md border-gray-500 pl-2 w-full items-center ">
-              <IoBriefcaseOutline className="text-2xl w-[30px] text-black" />
-              <div className="relative w-full">
-                <input
-                  placeholder="e.g. Engineer"
-                  onBlur={handleJobCategoryBlur}
-                  type="text"
-                  value={jobCategory}
-                  onChange={handleJobCategoryChange}
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowRight" || e.key === "Tab") {
-                      e.preventDefault();
-                      if (filteredSuggestionsForJobCategory.length > 0) {
-                        setJobCategory(filteredSuggestionsForJobCategory[0]);
-                        setFilteredSuggestionsForJobCategory([]);
-                      }
+            {/* Job Category Input (Desktop) */}
+            <div className="relative flex items-center border border-gray-300 bg-white rounded-md px-3 h-10">
+              {" "}
+              {/* Standardized style */}
+              <IoBriefcaseOutline className="text-gray-500 mr-2 flex-shrink-0" />
+              <input
+                placeholder="e.g. Engineer"
+                onBlur={handleJobCategoryBlur}
+                type="text"
+                value={jobCategory}
+                onChange={handleJobCategoryChange}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowRight" || e.key === "Tab") {
+                    e.preventDefault();
+                    if (filteredSuggestionsForJobCategory.length > 0) {
+                      setJobCategory(filteredSuggestionsForJobCategory[0]);
+                      setFilteredSuggestionsForJobCategory([]);
                     }
-                  }}
-                  className="w-full pl-2 bg-transparent  text-black "
-                />
-                {filteredSuggestionsForJobCategory.length > 0 &&
-                  jobCategoryArray.length > 0 && (
-                    <span className="absolute left-2 top-[13px]">
-                      {jobCategory}
-                      <span className="text-gray-500">
-                        {filteredSuggestionsForJobCategory[0].slice(
-                          jobCategory.length
-                        )}
-                      </span>
-                    </span>
-                  )}
-              </div>
+                  }
+                }}
+                className={`w-full bg-transparent focus:outline-none text-sm ${
+                  isJobCategorySuggestionActive
+                    ? "text-transparent caret-black"
+                    : "text-black"
+                }`}
+              />
+              {isJobCategorySuggestionActive && (
+                <span className="absolute left-[calc(0.75rem+16px+0.5rem)] top-1/2 -translate-y-1/2 pointer-events-none text-sm">
+                  {jobCategory}
+                  <span className="text-gray-400">
+                    {filteredSuggestionsForJobCategory[0].slice(
+                      jobCategory.length
+                    )}
+                  </span>
+                </span>
+              )}
             </div>
-            <div className="relative flex  bg-white border-2 border-gray-500 justify-between items-center rounded-md">
-              <GoClock className="absolute left-2 text-black w-[30px] text-2xl" />
+            {/* Job Type Select (Desktop) */}
+            <div className="relative flex items-center border border-gray-300 bg-white rounded-md px-3 h-10">
+              {" "}
+              {/* Standardized style */}
+              <GoClock className="text-gray-500 mr-2" />
               <select
                 onChange={(e) => setJobType(e.target.value)}
                 value={jobType}
-                className="pl-10 w-full bg-transparent pr-4"
+                className="w-full bg-transparent focus:outline-none text-sm appearance-none pr-8" // Added appearance-none and padding right
               >
-                <option value="" disabled>
+                <option value="" disabled={jobType !== ""}>
                   Job Type
-                </option>
+                </option>{" "}
+                {/* Make placeholder selectable if value is empty */}
                 <option value="">Any</option>
                 <option value="Full Time">Full Time</option>
                 <option value="Part Time">Part Time</option>
               </select>
+              {/* Custom dropdown arrow */}
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
-        {jobs.length > 0 &&
-          (searchKeyword || jobCategory || city || jobType) != "" && (
-            <h1 className="w-full mt-2 pl-1">
-              Searching for {jobType}{" "}
-              {searchKeyword.length > 0 ? `"${searchKeyword}"` : ""}
-              {""} {jobCategory ? `of ${jobCategory} ` : ""}
-              {""}
-              {city ? `in ${city}` : ""} Jobs
-            </h1>
-          )}
+        {/* Job Listings Pagination */}
         <JobsPagination
           jobs={jobs}
           searchKeyword={searchKeyword}

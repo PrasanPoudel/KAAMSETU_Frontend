@@ -7,10 +7,9 @@ import { IoClose, IoHomeOutline } from "react-icons/io5";
 import { LuLetterText } from "react-icons/lu";
 import { TfiWrite } from "react-icons/tfi";
 import { IoBriefcaseOutline } from "react-icons/io5";
-import { MdOutlineFindInPage } from "react-icons/md";
 import { FaRegMessage } from "react-icons/fa6";
 import KaamSetu from "../images/KaamSetu.png";
-import { IoIosLogIn } from "react-icons/io";
+import { IoIosLogIn, IoIosSearch} from "react-icons/io";
 
 const Navbar = () => {
   const navigateTo = useNavigate();
@@ -63,7 +62,7 @@ const Navbar = () => {
               }`
             }
           >
-            <MdOutlineFindInPage className="text-2xl" />{" "}
+            <IoIosSearch className="text-2xl" />{" "}
             <span className="mmm">Find Jobs</span>
           </NavLink>
           <NavLink
@@ -81,7 +80,7 @@ const Navbar = () => {
           </NavLink>
           {user?.role === "Employer" && (
             <NavLink
-              to="/dashboard/Job Post"
+              to="/Job Post"
               className={({ isActive }) =>
                 `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                   isActive
@@ -97,7 +96,7 @@ const Navbar = () => {
 
           {user?.role === "Employer" && (
             <NavLink
-              to="/dashboard/My Jobs"
+              to="/My Jobs"
               className={({ isActive }) =>
                 `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                   isActive
@@ -113,7 +112,7 @@ const Navbar = () => {
 
           {user?.role === "Employer" && (
             <NavLink
-              to="/dashboard/Applications"
+              to="/Applications"
               className={({ isActive }) =>
                 `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                   isActive
@@ -129,7 +128,7 @@ const Navbar = () => {
 
           {user?.role === "Job Seeker" && (
             <NavLink
-              to="/dashboard/My Applications"
+              to="/My Applications"
               className={({ isActive }) =>
                 `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                   isActive
@@ -206,7 +205,7 @@ const Navbar = () => {
                   }`
                 }
               >
-                <MdOutlineFindInPage className="text-2xl" /> Find Jobs
+                <IoIosSearch className="text-2xl" /> Find Jobs
               </NavLink>
               {isAuthenticated && (
                 <NavLink
@@ -227,7 +226,7 @@ const Navbar = () => {
               {user?.role === "Employer" && (
                 <NavLink
                   onClick={() => setShowSidebar((prev) => !prev)}
-                  to="/dashboard/Job Post"
+                  to="/Job Post"
                   className={({ isActive }) =>
                     `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                       isActive
@@ -243,7 +242,7 @@ const Navbar = () => {
               {user?.role === "Employer" && (
                 <NavLink
                   onClick={() => setShowSidebar((prev) => !prev)}
-                  to="/dashboard/My Jobs"
+                  to="/My Jobs"
                   className={({ isActive }) =>
                     `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                       isActive
@@ -259,7 +258,7 @@ const Navbar = () => {
               {user?.role === "Employer" && (
                 <NavLink
                   onClick={() => setShowSidebar((prev) => !prev)}
-                  to="/dashboard/Applications"
+                  to="/Applications"
                   className={({ isActive }) =>
                     `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                       isActive
@@ -276,7 +275,7 @@ const Navbar = () => {
               {user?.role === "Job Seeker" && (
                 <NavLink
                   onClick={() => setShowSidebar((prev) => !prev)}
-                  to="/dashboard/My Applications"
+                  to="/My Applications"
                   className={({ isActive }) =>
                     `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                       isActive

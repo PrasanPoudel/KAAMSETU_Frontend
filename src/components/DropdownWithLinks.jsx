@@ -132,14 +132,14 @@ const DropdownWithLinks = ({ user }) => {
               </div>
               <div className="flex flex-col pt-5 gap-2">
                 <Link
-                  to={"/dashboard/Update Profile"}
+                  to={"/Update Profile"}
                   onClick={() => setIsOpen(!isOpen)}
                   className="flex gap-2 items-center p-2 cursor-pointer hover:bg-sky-700 rounded-md  hover:text-white"
                 >
                   <FaRegUser className="text-xl" /> Update Profile
                 </Link>
                 <Link
-                  to={"/dashboard/Update Password"}
+                  to={"/Update Password"}
                   onClick={() => setIsOpen(!isOpen)}
                   className="flex gap-2 items-center p-2 cursor-pointer hover:bg-sky-700 rounded-md  hover:text-white"
                 >

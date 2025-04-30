@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { clearAllUserErrors, login } from "../store/slices/userSlice";
 import { toast } from "react-toastify";
 import { FaRegUser } from "react-icons/fa";
@@ -11,6 +11,7 @@ import SpinnerHome from "../components/SpinnerHome";
 const Login = () => {
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top of the page
@@ -37,12 +38,15 @@ const Login = () => {
       dispatch(clearAllUserErrors());
     }
   }, [error, dispatch]);
+  // Determine where to redirect after login
+  const from = location.state?.from?.pathname || "/";
+
   // Navigate only when the user is authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      navigateTo("/");
+      navigateTo(from, { replace: true });
     }
-  }, [isAuthenticated, navigateTo]);
+  }, [isAuthenticated, navigateTo, from]);
   if (loading) {
     return <SpinnerHome />;
   } else {

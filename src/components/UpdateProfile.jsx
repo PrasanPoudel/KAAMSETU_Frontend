@@ -39,7 +39,7 @@ const UpdateProfile = () => {
   const [phone, setPhone] = useState(user && user.phone);
   const [address, setAddress] = useState(user && user.address);
   const [profilePicture, setProfilePicture] = useState(
-    user?.profilePicture?.url || null
+    user?.profilePicture.url || null
   );
   const [resume, setResume] = useState(user?.resume?.url || null);
   const [firstChoice, setFirstChoice] = useState(
