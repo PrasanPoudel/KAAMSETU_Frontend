@@ -17,7 +17,7 @@ import Register from "./pages/Register";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Loader from "./components/Loader";
-
+import SpinnerHome from "./components/SpinnerHome";
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Jobs = lazy(() => import("./pages/Jobs"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -46,7 +46,7 @@ const App = () => {
   }, [dispatch]);
 
   if (loading) {
-    return <Loader />;
+    return <SpinnerHome />;
   }
 
   return (
