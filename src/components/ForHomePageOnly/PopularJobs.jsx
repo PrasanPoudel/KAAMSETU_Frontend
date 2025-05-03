@@ -1,13 +1,13 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import Sd from "../images/Sd.webp";
-import UiUx from "../images/ui-ux.jpg";
-import Se from "../images/sales-executive.jpg";
-import Mm from "../images/marketing-manager.jpg";
-import Hr from "../images/hr.jpg";
-import Fa from "../images/financial-analyst.jpg";
-import Cw from "../images/content-writer.jpeg";
+import Sd from "../../images/Sd.webp";
+import UiUx from "../../images/ui-ux.jpg";
+import Se from "../../images/sales-executive.jpg";
+import Mm from "../../images/marketing-manager.jpg";
+import Hr from "../../images/hr.jpg";
+import Fa from "../../images/financial-analyst.jpg";
+import Cw from "../../images/content-writer.jpeg";
 
 const PopularJobs = () => {
   // Responsive Breakpoints

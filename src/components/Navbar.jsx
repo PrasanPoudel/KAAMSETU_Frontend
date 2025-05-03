@@ -7,7 +7,6 @@ import { IoClose, IoHomeOutline } from "react-icons/io5";
 import { LuLetterText } from "react-icons/lu";
 import { TfiWrite } from "react-icons/tfi";
 import { IoBriefcaseOutline } from "react-icons/io5";
-import { FaRegMessage } from "react-icons/fa6";
 import KaamSetu from "../images/KaamSetu.png";
 import { IoIosLogIn, IoIosSearch} from "react-icons/io";
 
@@ -65,22 +64,9 @@ const Navbar = () => {
             <IoIosSearch className="text-2xl" />{" "}
             <span className="mmm">Find Jobs</span>
           </NavLink>
-          <NavLink
-            to="/sendmessage"
-            className={({ isActive }) =>
-              `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                isActive
-                  ? "bg-sky-600 hover:bg-sky-700 text-white"
-                  : "hover:bg-sky-700"
-              }`
-            }
-          >
-            <FaRegMessage className="text-xl" />{" "}
-            <span className="mmm">Send Message</span>
-          </NavLink>
           {user?.role === "Employer" && (
             <NavLink
-              to="/Job Post"
+              to="/UserProfile/Job Post"
               className={({ isActive }) =>
                 `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                   isActive
@@ -96,7 +82,7 @@ const Navbar = () => {
 
           {user?.role === "Employer" && (
             <NavLink
-              to="/My Jobs"
+              to="/UserProfile/My Jobs"
               className={({ isActive }) =>
                 `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                   isActive
@@ -112,7 +98,7 @@ const Navbar = () => {
 
           {user?.role === "Employer" && (
             <NavLink
-              to="/Applications"
+              to="/UserProfile/Applications"
               className={({ isActive }) =>
                 `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                   isActive
@@ -128,7 +114,7 @@ const Navbar = () => {
 
           {user?.role === "Job Seeker" && (
             <NavLink
-              to="/My Applications"
+              to="/UserProfile/My Applications"
               className={({ isActive }) =>
                 `flex gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                   isActive
@@ -207,26 +193,11 @@ const Navbar = () => {
               >
                 <IoIosSearch className="text-2xl" /> Find Jobs
               </NavLink>
-              {isAuthenticated && (
-                <NavLink
-                  onClick={() => setShowSidebar((prev) => !prev)}
-                  to="/sendmessage"
-                  className={({ isActive }) =>
-                    `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
-                      isActive
-                        ? "bg-sky-600 hover:bg-sky-700 text-white"
-                        : "hover:bg-sky-700"
-                    }`
-                  }
-                >
-                  <FaRegMessage className="text-xl" /> Send Message
-                </NavLink>
-              )}
 
               {user?.role === "Employer" && (
                 <NavLink
                   onClick={() => setShowSidebar((prev) => !prev)}
-                  to="/Job Post"
+                  to="/UserProfile/Job Post"
                   className={({ isActive }) =>
                     `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                       isActive
@@ -242,7 +213,7 @@ const Navbar = () => {
               {user?.role === "Employer" && (
                 <NavLink
                   onClick={() => setShowSidebar((prev) => !prev)}
-                  to="/My Jobs"
+                  to="/UserProfile/My Jobs"
                   className={({ isActive }) =>
                     `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                       isActive
@@ -258,7 +229,7 @@ const Navbar = () => {
               {user?.role === "Employer" && (
                 <NavLink
                   onClick={() => setShowSidebar((prev) => !prev)}
-                  to="/Applications"
+                  to="/UserProfile/Applications"
                   className={({ isActive }) =>
                     `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                       isActive
@@ -275,7 +246,7 @@ const Navbar = () => {
               {user?.role === "Job Seeker" && (
                 <NavLink
                   onClick={() => setShowSidebar((prev) => !prev)}
-                  to="/My Applications"
+                  to="/UserProfile/My Applications"
                   className={({ isActive }) =>
                     `flex  gap-2 items-center p-2 cursor-pointer rounded-md hover:text-white ${
                       isActive

@@ -1,10 +1,9 @@
 import React from "react";
-import WeborHomeAppliances from "../images/Webor Home Appliances.jpg";
-import TDC from "../images/TDC.png";
-import SuzimBazar from "../images/SuzimBazar.jpg";
-import ClassicTech from "../images/Classic Tech.jpg";
-import HarbourEducation from "../images/Harbour Education.jpg";
-
+import WeborHomeAppliances from "../../images/Webor Home Appliances.jpg";
+import TDC from "../../images/TDC.png";
+import SuzimBazar from "../../images/SuzimBazar.jpg";
+import ClassicTech from "../../images/Classic Tech.jpg";
+import HarbourEducation from "../../images/Harbour Education.jpg";
 const TrustedCompanies = () => {
   return (
     <section className="w-full py-10">

@@ -6,7 +6,8 @@ import MyJobs from "../components/MyJobs";
 import JobPost from "../components/JobPost";
 import Applications from "../components/Applications";
 import MyApplications from "../components/MyApplications";
-const Dashboard = () => {
+
+const Profile = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top of the page
   }, []);
@@ -34,4 +35,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Profile;

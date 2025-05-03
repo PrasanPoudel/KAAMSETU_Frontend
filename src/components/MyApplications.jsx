@@ -8,7 +8,7 @@ import {
   deleteApplication,
   fetchJobSeekerApplications,
 } from "../store/slices/applicationSlice";
-import Loader from "../components/Loader";
+import Spinner from "../components/Spinner";
 
 const MyApplications = () => {
   const { loading, error, applications, message } = useSelector(
@@ -40,7 +40,7 @@ const MyApplications = () => {
   return (
     <>
       {loading ? (
-        <Loader />
+        <Spinner />
       ) : applications && applications.length <= 0 ? (
         <h1 className="text-xl text-center md:text-start">
           You have not applied for any job yet

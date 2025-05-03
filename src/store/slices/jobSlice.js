@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import apiURL from "../apiURL";
+import apiURL from "../../api/apiURL";
 
 const jobSlice = createSlice({
   name: "jobs",

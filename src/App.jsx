@@ -1,9 +1,9 @@
 import React, { useEffect, Suspense, lazy } from "react";
+import "./App.css";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useNavigate,
   useLocation,
   Navigate,
 } from "react-router-dom";
@@ -16,11 +16,11 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
-import Loader from "./components/Loader";
+import Spinner from "./components/Spinner";
 import SpinnerHome from "./components/SpinnerHome";
-const Dashboard = lazy(() => import("./pages/Dashboard"));
+import NotFound from "./pages/NotFound";
+const UserProfile = lazy(() => import("./pages/UserProfile"));
 const Jobs = lazy(() => import("./pages/Jobs"));
-const NotFound = lazy(() => import("./pages/NotFound"));
 const PostApplication = lazy(() => import("./pages/PostApplication"));
 const SendMessage = lazy(() => import("./pages/SendMessage"));
 
@@ -70,7 +70,7 @@ const App = () => {
           path="/jobs"
           element={
             <ProtectedRoute>
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Spinner />}>
                 <Jobs />
               </Suspense>
             </ProtectedRoute>
@@ -80,18 +80,18 @@ const App = () => {
           path="/sendmessage"
           element={
             <ProtectedRoute>
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Spinner />}>
                 <SendMessage />
               </Suspense>
             </ProtectedRoute>
           }
         />
         <Route
-          path="/:activeComponent"
+          path="/UserProfile/:activeComponent"
           element={
             <ProtectedRoute>
-              <Suspense fallback={<Loader />}>
-                <Dashboard />
+              <Suspense fallback={<Spinner />}>
+                <UserProfile />
               </Suspense>
             </ProtectedRoute>
           }
@@ -100,7 +100,7 @@ const App = () => {
           path="/post/application/:jobId"
           element={
             <ProtectedRoute>
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Spinner />}>
                 <PostApplication />
               </Suspense>
             </ProtectedRoute>
@@ -109,11 +109,9 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route
-          path="*"
+          path="/*"
           element={
-            <Suspense fallback={<Loader />}>
               <NotFound />
-            </Suspense>
           }
         />
       </Routes>

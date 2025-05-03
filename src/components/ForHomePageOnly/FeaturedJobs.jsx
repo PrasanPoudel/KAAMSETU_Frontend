@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearAllJobErrors, fetchJobs } from "../store/slices/jobSlice";
-import JobCard from "./JobCard";
-import SkeletonUiForJobs from "./SkeletonUiForJobs";
+import { fetchJobs } from "../../store/slices/jobSlice";
+import JobCard from "../JobCard";
+import SkeletonUiForJobs from "../SkeletonUiForJobs";
 import { useNavigate } from "react-router-dom";
 
 const FeaturedJobs = () => {

@@ -6,7 +6,7 @@ import {
   getMyJobs,
   resetJobSlice,
 } from "../store/slices/jobSlice";
-import Loader from "../components/Loader";
+import Spinner from "../components/Spinner";
 import JobCard from "./JobCard";
 
 const MyJobs = () => {
@@ -37,7 +37,7 @@ const MyJobs = () => {
   return (
     <>
       {loading ? (
-        <Loader />
+        <Spinner />
       ) : myJobs?.length === 0 ? (
         <h1 className="text-xl text-center md:text-start">
           You have not posted any jobs yet.

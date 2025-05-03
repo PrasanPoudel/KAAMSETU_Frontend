@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { IoMdExit } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
+import { FaRegMessage } from "react-icons/fa6";
 import { TbLockPassword } from "react-icons/tb";
 import unknownProfile from "../images/unknown.png";
 
@@ -130,21 +131,29 @@ const DropdownWithLinks = ({ user }) => {
                 </p>
                 <p className="text-sm">{user.role}</p>
               </div>
-              <div className="flex flex-col pt-5 gap-2">
+              <div className="flex flex-col pt-5">
                 <Link
-                  to={"/Update Profile"}
+                  to={"/UserProfile/Update Profile"}
                   onClick={() => setIsOpen(!isOpen)}
                   className="flex gap-2 items-center p-2 cursor-pointer hover:bg-sky-700 rounded-md  hover:text-white"
                 >
                   <FaRegUser className="text-xl" /> Update Profile
                 </Link>
                 <Link
-                  to={"/Update Password"}
+                  to={"/UserProfile/Update Password"}
                   onClick={() => setIsOpen(!isOpen)}
                   className="flex gap-2 items-center p-2 cursor-pointer hover:bg-sky-700 rounded-md  hover:text-white"
                 >
                   <TbLockPassword className="text-xl" /> Update Password
                 </Link>
+                <Link
+                  to="/sendmessage"
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="flex  gap-2 items-center p-2 cursor-pointer hover:bg-sky-700 rounded-md  hover:text-white"
+                >
+                  <FaRegMessage className="text-xl"/> Send Message
+                </Link>
+
                 <div
                   onClick={() => {
                     setIsOpen(!isOpen);
