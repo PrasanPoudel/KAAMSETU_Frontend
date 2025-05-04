@@ -7,9 +7,18 @@ import {
   resetJobSlice,
 } from "../store/slices/jobSlice";
 import { IoIosInformationCircleOutline } from "react-icons/io";
+import { HiOutlineBriefcase, HiOutlineOfficeBuilding } from "react-icons/hi";
+import {
+  MdOutlineTitle,
+  MdOutlineAttachMoney,
+  MdOutlineLocationOn,
+} from "react-icons/md";
+import { BiLink } from "react-icons/bi";
+import { BsBookmark } from "react-icons/bs";
 import jobCategoryArray from "../data/jobCategoryArray";
 import cities from "../data/cities";
 import ImageUploader from "./ImageUploader";
+import AutoSuggestion from "./AutoSuggestion";
 
 const JobPost = () => {
   const { loading, error, message } = useSelector((state) => state.jobs);
@@ -81,293 +90,324 @@ const JobPost = () => {
       setCompanyLogo("");
     }
   }, [dispatch, error, loading, message]);
-  const [filteredSuggestionsForLocation, setFilteredSuggestionsForLocation] =
-    useState([]);
-  const [
-    filteredSuggestionsForJobCategory,
-    setFilteredSuggestionsForJobCategory,
-  ] = useState([]);
+
   const handleLocationChange = (e) => {
     const input =
       e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
     setLocation(input);
-
-    if (input.length > 0) {
-      const filtered = cities.filter(
-        (city) => city.toLowerCase().startsWith(input.toLowerCase()) // Ensure it starts with input
-      );
-      setFilteredSuggestionsForLocation(filtered);
-    } else {
-      setFilteredSuggestionsForLocation([]); // Hide suggestions when input is empty
-    }
   };
+
   const handleJobCategoryChange = (e) => {
     const input =
       e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
     setJobCategory(input);
-
-    if (input.length > 0) {
-      const filtered = jobCategoryArray.filter(
-        (jobCategory) =>
-          jobCategory.toLowerCase().startsWith(input.toLowerCase()) // Ensure it starts with input
-      );
-      setFilteredSuggestionsForJobCategory(filtered);
-    } else {
-      setFilteredSuggestionsForJobCategory([]); // Hide suggestions when input is empty
-    }
-  };
-  const handleAddressBlur = () => {
-    setTimeout(() => setFilteredSuggestionsForLocation([]), 200);
-  };
-  const handleJobCategoryBlur = () => {
-    setTimeout(() => setFilteredSuggestionsForJobCategory([]), 200);
   };
 
   return (
-    <form onSubmit={handlePostJob} className="grid gap-4 w-full md:w-[80%]">
-      <div className="grid grid-cols-1 items-center md:items-end justify-between gap-4 md:grid-cols-2 w-full">
-        <div className="flex flex-col gap-2">
-          <label className="text-xl ">Company's Logo</label>
-          <ImageUploader onImageUpload={companyLogoHandler} />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-xl ">Company's Name</label>
-          <input
-            className="w-full border-2 border-black pl-2 "
-            type="text"
-            value={companyName}
-            onChange={(e) =>
-              setCompanyName(
-                e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
-              )
-            }
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-xl ">Job's Title</label>
-          <input
-            className="w-full border-2 border-black pl-2 "
-            type="text"
-            value={title}
-            onChange={(e) =>
-              setTitle(
-                e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
-              )
-            }
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-xl ">Job Category</label>
-          <div className="w-full rounded-md border-2 border-black flex items-center bg-white pl-2">
-            <div className="relative w-full">
-              <input
-                onBlur={handleJobCategoryBlur}
-                type="text"
+    <div className="max-w-5xl mx-auto w-full px-4 py-8">
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+          Post a New Job
+        </h2>
+        <p className="text-gray-600 mb-8 text-center">
+          Fill in the details below to create a new job listing
+        </p>
+
+        <form onSubmit={handlePostJob} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Company Logo */}
+            <div className="form-group md:col-span-1">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Company Logo
+              </label>
+              <ImageUploader onImageUpload={companyLogoHandler} />
+            </div>
+
+            {/* Company Name */}
+            <div className="form-group md:col-span-1">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Company Name
+              </label>
+              <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                <input
+                  type="text"
+                  value={companyName}
+                  onChange={(e) =>
+                    setCompanyName(
+                      e.target.value.charAt(0).toUpperCase() +
+                        e.target.value.slice(1)
+                    )
+                  }
+                  className="w-full h-full focus:outline-none text-base"
+                  placeholder="Enter company name"
+                  required
+                />
+                <HiOutlineOfficeBuilding className="text-lg text-gray-500" />
+              </div>
+            </div>
+
+            {/* Job Title */}
+            <div className="form-group md:col-span-1">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Job Title
+              </label>
+              <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) =>
+                    setTitle(
+                      e.target.value.charAt(0).toUpperCase() +
+                        e.target.value.slice(1)
+                    )
+                  }
+                  className="w-full h-full focus:outline-none text-base"
+                  placeholder="Enter job title"
+                  required
+                />
+                <MdOutlineTitle className="text-lg text-gray-500" />
+              </div>
+            </div>
+
+            {/* Job Category */}
+            <div className="form-group md:col-span-1">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Job Category
+              </label>
+              <AutoSuggestion
                 value={jobCategory}
                 onChange={handleJobCategoryChange}
-                onKeyDown={(e) => {
-                  if (e.key === "ArrowRight" || e.key === "Tab") {
-                    e.preventDefault();
-                    if (filteredSuggestionsForJobCategory.length > 0) {
-                      setJobCategory(filteredSuggestionsForJobCategory[0]);
-                      setFilteredSuggestionsForJobCategory([]);
-                    }
-                  }
-                }}
-                className="w-full outline-none bg-transparent text-black placeholder:text-gray-500"
+                onSelect={(suggestion) => setJobCategory(suggestion)}
+                suggestions={jobCategoryArray}
+                placeholder="Enter job category"
+                icon={<HiOutlineBriefcase className="text-lg text-gray-500" />}
+                required={true}
               />
-              {filteredSuggestionsForJobCategory.length > 0 &&
-                jobCategoryArray.length > 0 && (
-                  <span className="absolute left-0 top-[12px]">
-                    {jobCategory}
-                    <span className="text-gray-500">
-                      {filteredSuggestionsForJobCategory[0].slice(
-                        jobCategory.length
-                      )}
-                    </span>
-                  </span>
-                )}
             </div>
-          </div>
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-xl ">Job's Type</label>
-          <select
-            className="w-full border-2 border-black px-2 "
-            value={jobType}
-            onChange={(e) => setJobType(e.target.value)}
-          >
-            <option value="Full Time">Full Time</option>
-            <option value="Part Time">Part Time</option>
-          </select>
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-xl ">Location (City)</label>
-          <div className="w-full rounded-md border-2 border-black flex items-center bg-white pl-2">
-            <div className="relative w-full">
-              <input
-                onBlur={handleAddressBlur}
-                type="text"
+
+            {/* Job Type */}
+            <div className="form-group md:col-span-1">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Job Type
+              </label>
+              <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                <select
+                  value={jobType}
+                  onChange={(e) => setJobType(e.target.value)}
+                  className="w-full h-full bg-white focus:outline-none text-base"
+                  required
+                >
+                  <option value="Full Time">Full Time</option>
+                  <option value="Part Time">Part Time</option>
+                </select>
+                <BsBookmark className="text-lg text-gray-500" />
+              </div>
+            </div>
+
+            {/* Location */}
+            <div className="form-group md:col-span-1">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Location (City)
+              </label>
+              <AutoSuggestion
                 value={location}
                 onChange={handleLocationChange}
-                onKeyDown={(e) => {
-                  if (e.key === "ArrowRight" || e.key === "Tab") {
-                    e.preventDefault();
-                    if (filteredSuggestionsForLocation.length > 0) {
-                      setLocation(filteredSuggestionsForLocation[0]);
-                      setFilteredSuggestionsForLocation([]);
-                    }
-                  }
-                }}
-                className="w-full outline-none bg-transparent text-black placeholder:text-gray-500"
+                onSelect={(suggestion) => setLocation(suggestion)}
+                suggestions={cities}
+                placeholder="Enter location"
+                icon={<MdOutlineLocationOn className="text-lg text-gray-500" />}
+                required={true}
               />
-              {filteredSuggestionsForLocation.length > 0 &&
-                location.length > 0 && (
-                  <span className="absolute left-0 top-[12px]">
-                    {location}
-                    <span className="text-gray-500">
-                      {filteredSuggestionsForLocation[0].slice(location.length)}
-                    </span>
-                  </span>
-                )}
+            </div>
+
+            {/* Salary */}
+            <div className="form-group md:col-span-1">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Salary (Per year)
+              </label>
+              <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                <input
+                  type={salaryNegotiable ? "text" : "number"}
+                  value={salary}
+                  onChange={(e) => setSalary(e.target.value)}
+                  disabled={salaryNegotiable}
+                  className="w-full h-full focus:outline-none text-base"
+                  placeholder="Enter salary"
+                  required
+                />
+                <MdOutlineAttachMoney className="text-lg text-gray-500" />
+              </div>
+              <div className="flex items-center mt-2 text-sm text-gray-600">
+                <input
+                  type="checkbox"
+                  id="salaryNegotiable"
+                  checked={salaryNegotiable}
+                  onChange={() => {
+                    setSalaryNegotiable(!salaryNegotiable);
+                    setSalary("(Negotiable)");
+                  }}
+                  className="mr-2"
+                />
+                <label htmlFor="salaryNegotiable">Negotiable</label>
+              </div>
+            </div>
+
+            {/* Hiring Multiple Candidates */}
+            <div className="form-group md:col-span-1">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Hiring Multiple Candidates
+                <span className="ml-2 text-xs text-gray-500">(Optional)</span>
+              </label>
+              <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                <select
+                  value={hiringMultipleCandidates}
+                  onChange={(e) => setHiringMultipleCandidates(e.target.value)}
+                  className="w-full h-full bg-white focus:outline-none text-base"
+                >
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Website Title */}
+            <div className="form-group md:col-span-1">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Website Name
+                <span className="ml-2 text-xs text-gray-500">(Optional)</span>
+              </label>
+              <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                <input
+                  type="text"
+                  value={WebsiteTitle}
+                  onChange={(e) =>
+                    setWebsiteTitle(
+                      e.target.value.charAt(0).toUpperCase() +
+                        e.target.value.slice(1)
+                    )
+                  }
+                  className="w-full h-full focus:outline-none text-base"
+                  placeholder="Enter website name"
+                />
+                <BiLink className="text-lg text-gray-500" />
+              </div>
+            </div>
+
+            {/* Website URL */}
+            <div className="form-group md:col-span-1">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Website Link (URL)
+                <span className="ml-2 text-xs text-gray-500">(Optional)</span>
+              </label>
+              <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                <input
+                  type="text"
+                  value={WebsiteUrl}
+                  onChange={(e) => setWebsiteUrl(e.target.value)}
+                  className="w-full h-full focus:outline-none text-base"
+                  placeholder="Enter website URL"
+                />
+                <BiLink className="text-lg text-gray-500" />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-xl ">Company's Introduction</label>
-          <textarea
-            className="w-full border-2 border-black pl-2"
-            value={introduction}
-            onChange={(e) =>
-              setIntroduction(
-                e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
-              )
-            }
-            rows={7}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-xl ">Responsibilities</label>
-          <textarea
-            className="w-full border-2 border-black pl-2 "
-            value={responsibilities}
-            onChange={(e) =>
-              setResponsibilities(
-                e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
-              )
-            }
-            rows={7}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-xl ">Qualifications</label>
-          <textarea
-            className="w-full border-2 border-black pl-2 "
-            value={qualifications}
-            onChange={(e) =>
-              setQualifications(
-                e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
-              )
-            }
-            rows={7}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-col gap-2">
-            <label className="text-xl ">What We Offer</label>
-            <p className="flex gap-2 items-center">
-              <IoIosInformationCircleOutline /> Optional
-            </p>
+
+          {/* Longer text fields */}
+          <div className="mt-6 space-y-6">
+            {/* Company Introduction */}
+            <div className="form-group">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Company Introduction
+              </label>
+              <textarea
+                value={introduction}
+                onChange={(e) =>
+                  setIntroduction(
+                    e.target.value.charAt(0).toUpperCase() +
+                      e.target.value.slice(1)
+                  )
+                }
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                rows={4}
+                placeholder="Provide a brief introduction to your company"
+                required
+              />
+            </div>
+
+            {/* Responsibilities */}
+            <div className="form-group">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Responsibilities
+              </label>
+              <textarea
+                value={responsibilities}
+                onChange={(e) =>
+                  setResponsibilities(
+                    e.target.value.charAt(0).toUpperCase() +
+                      e.target.value.slice(1)
+                  )
+                }
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                rows={4}
+                placeholder="List the key responsibilities for this position"
+                required
+              />
+            </div>
+
+            {/* Qualifications */}
+            <div className="form-group">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Qualifications
+              </label>
+              <textarea
+                value={qualifications}
+                onChange={(e) =>
+                  setQualifications(
+                    e.target.value.charAt(0).toUpperCase() +
+                      e.target.value.slice(1)
+                  )
+                }
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                rows={4}
+                placeholder="List required qualifications and skills"
+                required
+              />
+            </div>
+
+            {/* What We Offer */}
+            <div className="form-group">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                What We Offer
+                <span className="ml-2 text-xs text-gray-500">(Optional)</span>
+              </label>
+              <textarea
+                value={offers}
+                onChange={(e) =>
+                  setOffers(
+                    e.target.value.charAt(0).toUpperCase() +
+                      e.target.value.slice(1)
+                  )
+                }
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                rows={4}
+                placeholder="Describe benefits, perks, and other offerings"
+              />
+            </div>
           </div>
-          <textarea
-            className="w-full border-2 border-black pl-2 "
-            value={offers}
-            onChange={(e) =>
-              setOffers(
-                e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
-              )
-            }
-            rows={7}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-xl ">Salary (Per year)</label>
-          <input
-            className="w-full border-2 border-black px-2 "
-            type={salaryNegotiable ? "text" : "number"}
-            value={salary}
-            onChange={(e) => setSalary(e.target.value)}
-            disabled={salaryNegotiable}
-          />
-          <div htmlFor="checkBox" className="text-sm  flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={salaryNegotiable}
-              onChange={() => {
-                setSalaryNegotiable(!salaryNegotiable);
-                setSalary("(Negotiable)");
-              }}
-            />
-            Negotiable
+
+          {/* Submit Button */}
+          <div className="pt-6">
+            <button
+              type="submit"
+              className="bg-sky-600 hover:bg-sky-700 transition-colors flex items-center justify-center gap-2 cursor-pointer text-base rounded-lg font-medium w-full text-white py-3"
+              disabled={loading}
+            >
+              {loading ? "Posting..." : "Post Job"}
+            </button>
           </div>
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-col gap-2">
-            <label className="text-xl ">Hiring Multiple Candidates?</label>
-            <p className="flex gap-2 items-center">
-              <IoIosInformationCircleOutline /> Optional
-            </p>
-          </div>
-          <select
-            className="w-full border-2 border-black px-2 "
-            value={hiringMultipleCandidates}
-            onChange={(e) => setHiringMultipleCandidates(e.target.value)}
-          >
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-          </select>
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-col gap-2">
-            <label className="text-xl ">Website Name</label>
-            <p className="flex gap-2 items-center">
-              <IoIosInformationCircleOutline /> Optional
-            </p>
-          </div>
-          <input
-            className="w-full border-2 border-black pl-2 "
-            type="text"
-            value={WebsiteTitle}
-            onChange={(e) =>
-              setWebsiteTitle(
-                e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
-              )
-            }
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-col gap-2">
-            <label className="text-xl ">Website Link (URL)</label>
-            <p className="flex gap-2 items-center">
-              <IoIosInformationCircleOutline /> Optional
-            </p>
-          </div>
-          <input
-            className="w-full border-2 border-black pl-2 "
-            type="text"
-            value={WebsiteUrl}
-            onChange={(e) => setWebsiteUrl(e.target.value)}
-          />
-        </div>
+        </form>
       </div>
-      <button
-        type="submit"
-        className="bg-sky-600 hover:bg-sky-700 text-xl w-full rounded-md hover:cursor-pointer text-center text-white md:px-2 px-1 py-2"
-        disabled={loading}
-      >
-        Post Job
-      </button>
-    </form>
+    </div>
   );
 };
 

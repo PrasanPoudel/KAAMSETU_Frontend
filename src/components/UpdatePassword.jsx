@@ -6,6 +6,7 @@ import {
 } from "../store/slices/updateProfileSlice";
 import { getUser } from "../store/slices/userSlice";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import { RiLockPasswordLine } from "react-icons/ri";
 import { toast } from "react-toastify";
 
 const UpdatePassword = () => {
@@ -21,9 +22,6 @@ const UpdatePassword = () => {
     );
   }, [user]);
 
-  if (isDemoAccount) {
-    console.log("It is a Demo Account");
-  }
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -38,7 +36,8 @@ const UpdatePassword = () => {
 
   const dispatch = useDispatch();
 
-  const handleUpdatePassword = () => {
+  const handleUpdatePassword = (e) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append("oldPassword", oldPassword);
     formData.append("newPassword", newPassword);
@@ -59,91 +58,141 @@ const UpdatePassword = () => {
   }, [dispatch, loading, error, isUpdated]);
 
   return (
-    <div className="flex flex-col w-full gap-4 md:w-[80%]">
-      {/* Current Password */}
-      <label className="text-xl ">Current Password</label>
-      <div className="flex rounded-md px-2 border-2 border-black items-center justify-between bg-white">
-        <input
-          type={showOldPassword ? "text" : "password"}
-          value={oldPassword}
-          onChange={(e) => setOldPassword(e.target.value)}
-          className="pl-2 w-full"
-        />
-        {showOldPassword ? (
-          <IoEyeOutline
-            className="text-4xl"
-            onClick={() => setShowOldPassword(!showOldPassword)}
-          />
-        ) : (
-          <IoEyeOffOutline
-            className="text-4xl"
-            onClick={() => setShowOldPassword(!showOldPassword)}
-          />
-        )}
-      </div>
-
-      {/* New Password */}
-      <label className="text-xl ">New Password</label>
-      <div className="flex rounded-md px-2 border-2 border-black items-center justify-between bg-white">
-        <input
-          type={showNewPassword ? "text" : "password"}
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          className="pl-2 w-full"
-        />
-        {showNewPassword ? (
-          <IoEyeOutline
-            className="text-4xl"
-            onClick={() => setShowNewPassword(!showNewPassword)}
-          />
-        ) : (
-          <IoEyeOffOutline
-            className="text-4xl"
-            onClick={() => setShowNewPassword(!showNewPassword)}
-          />
-        )}
-      </div>
-
-      {/* Confirm Password */}
-      <label className="text-xl ">Confirm Password</label>
-      <div className="flex rounded-md px-2 border-2 border-black items-center justify-between">
-        <input
-          type={showConfirmPassword ? "text" : "password"}
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className="pl-2 w-full"
-        />
-        {showConfirmPassword ? (
-          <IoEyeOutline
-            className="text-4xl"
-            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-          />
-        ) : (
-          <IoEyeOffOutline
-            className="text-4xl"
-            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-          />
-        )}
-      </div>
-
-      {!isDemoAccount ? (
-        <button
-          className=" text-xl rounded-md w-full hover:cursor-pointer text-center bg-sky-600 hover:bg-sky-700 text-white  md:px-2 px-1   py-2"
-          onClick={handleUpdatePassword}
-          disabled={loading}
-        >
+    <div className="max-w-2xl mx-auto w-full px-4 py-8">
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
           Update Password
-        </button>
-      ) : (
-        <div
-          className=" text-xl rounded-md w-full hover:cursor-pointer text-center bg-sky-600 hover:bg-sky-700 text-white  md:px-2 px-1   py-2"
-          onClick={() => {
-            toast.info("Demo Account Cannot Update Password");
-          }}
-        >
-          Update Password
-        </div>
-      )}
+        </h2>
+        <p className="text-gray-600 mb-8 text-center">
+          Change your password to keep your account secure
+        </p>
+
+        <form onSubmit={handleUpdatePassword} className="space-y-6">
+          {/* Current Password */}
+          <div className="form-group">
+            <label className="block text-gray-700 mb-2 font-medium text-sm">
+              Current Password
+            </label>
+            <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+              <div className="flex items-center w-full">
+                <RiLockPasswordLine className="text-lg text-gray-500 mr-2" />
+                <input
+                  type={showOldPassword ? "text" : "password"}
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                  className="w-full h-full focus:outline-none text-base py-3"
+                  placeholder="Enter your current password"
+                  required
+                />
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowOldPassword(!showOldPassword)}
+                className="focus:outline-none"
+              >
+                {showOldPassword ? (
+                  <IoEyeOutline className="text-lg text-gray-500 cursor-pointer" />
+                ) : (
+                  <IoEyeOffOutline className="text-lg text-gray-500 cursor-pointer" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* New Password */}
+          <div className="form-group">
+            <label className="block text-gray-700 mb-2 font-medium text-sm">
+              New Password
+            </label>
+            <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+              <div className="flex items-center w-full">
+                <RiLockPasswordLine className="text-lg text-gray-500 mr-2" />
+                <input
+                  type={showNewPassword ? "text" : "password"}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="w-full h-full focus:outline-none text-base py-3"
+                  placeholder="Enter your new password"
+                  required
+                />
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowNewPassword(!showNewPassword)}
+                className="focus:outline-none"
+              >
+                {showNewPassword ? (
+                  <IoEyeOutline className="text-lg text-gray-500 cursor-pointer" />
+                ) : (
+                  <IoEyeOffOutline className="text-lg text-gray-500 cursor-pointer" />
+                )}
+              </button>
+            </div>
+            <p className="text-xs text-gray-500 mt-1">
+              Password should be at least 8 characters long
+            </p>
+          </div>
+
+          {/* Confirm Password */}
+          <div className="form-group">
+            <label className="block text-gray-700 mb-2 font-medium text-sm">
+              Confirm Password
+            </label>
+            <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+              <div className="flex items-center w-full">
+                <RiLockPasswordLine className="text-lg text-gray-500 mr-2" />
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full h-full focus:outline-none text-base py-3"
+                  placeholder="Confirm your new password"
+                  required
+                />
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="focus:outline-none"
+              >
+                {showConfirmPassword ? (
+                  <IoEyeOutline className="text-lg text-gray-500 cursor-pointer" />
+                ) : (
+                  <IoEyeOffOutline className="text-lg text-gray-500 cursor-pointer" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <div className="pt-4">
+            {!isDemoAccount ? (
+              <button
+                type="submit"
+                className="bg-sky-600 hover:bg-sky-700 transition-colors flex items-center justify-center gap-2 cursor-pointer text-base rounded-lg font-medium w-full text-white py-3"
+                disabled={loading}
+              >
+                {loading ? "Updating..." : "Update Password"}
+              </button>
+            ) : (
+              <div className="space-y-2">
+                <button
+                  type="button"
+                  className="bg-gray-300 text-gray-600 cursor-not-allowed flex items-center justify-center gap-2 text-base rounded-lg font-medium w-full py-3"
+                  onClick={() => {
+                    toast.info("Demo Account Cannot Update Password");
+                  }}
+                >
+                  Demo Account (Cannot Update)
+                </button>
+                <p className="text-xs text-center text-red-500">
+                  Password updates are disabled for demo accounts
+                </p>
+              </div>
+            )}
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

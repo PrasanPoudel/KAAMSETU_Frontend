@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { clearAllUserErrors, register } from "../store/slices/userSlice";
 import { toast } from "react-toastify";
 import { FaRegUser } from "react-icons/fa";
@@ -11,10 +11,17 @@ import {
 } from "react-icons/md";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { TbUserPlus } from "react-icons/tb";
+import { FiUsers } from "react-icons/fi";
+import { GiSkills } from "react-icons/gi";
 import jobCategoryArray from "../data/jobCategoryArray";
 import cities from "../data/cities";
 import FileUploader from "../components/FileUploader";
 import ImageUploader from "../components/ImageUploader";
+import AutoSuggestion from "../components/AutoSuggestion";
+import KaamSetuLogo from "../images/KaamSetu.png";
+import SpinnerHome from "../components/SpinnerHome";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -90,419 +97,372 @@ const Register = () => {
       dispatch(clearAllUserErrors());
     }
   };
-  const [filteredSuggestionsForLocation, setFilteredSuggestionsForLocation] =
-    useState([]);
+
   const handleAddressChange = (e) => {
     const input =
       e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
     setAddress(input);
-
-    if (input.length > 0) {
-      const filtered = cities.filter(
-        (city) => city.toLowerCase().startsWith(input.toLowerCase()) // Ensure it starts with input
-      );
-      setFilteredSuggestionsForLocation(filtered);
-    } else {
-      setFilteredSuggestionsForLocation([]); // Hide suggestions when input is empty
-    }
   };
-  const [
-    filteredSuggestionsForFirstChoice,
-    setFilteredSuggestionsForFirstChoice,
-  ] = useState([]);
-  const [
-    filteredSuggestionsForSecondChoice,
-    setFilteredSuggestionsForSecondChoice,
-  ] = useState([]);
-  const [
-    filteredSuggestionsForThirdChoice,
-    setFilteredSuggestionsForThirdChoice,
-  ] = useState([]);
+
   const handleFirstChoiceChange = (e) => {
     const input =
       e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
     setFirstChoice(input);
-
-    if (input.length > 0) {
-      const filtered = jobCategoryArray.filter(
-        (job) => job.toLowerCase().startsWith(input.toLowerCase()) // Ensure it starts with input
-      );
-      setFilteredSuggestionsForFirstChoice(filtered);
-    } else {
-      setFilteredSuggestionsForFirstChoice([]); // Hide suggestions when input is empty
-    }
   };
+
   const handleSecondChoiceChange = (e) => {
     const input =
       e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
     setSecondChoice(input);
-
-    if (input.length > 0) {
-      const filtered = jobCategoryArray.filter(
-        (job) => job.toLowerCase().startsWith(input.toLowerCase()) // Ensure it starts with input
-      );
-      setFilteredSuggestionsForSecondChoice(filtered);
-    } else {
-      setFilteredSuggestionsForSecondChoice([]); // Hide suggestions when input is empty
-    }
   };
 
   const handleThirdChoiceChange = (e) => {
     const input =
       e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
     setThirdChoice(input);
-
-    if (input.length > 0) {
-      const filtered = jobCategoryArray.filter(
-        (job) => job.toLowerCase().startsWith(input.toLowerCase()) // Ensure it starts with input
-      );
-      setFilteredSuggestionsForThirdChoice(filtered);
-    } else {
-      setFilteredSuggestionsForThirdChoice([]); // Hide suggestions when input is empty
-    }
-  };
-  const handleAddressBlur = () => {
-    setTimeout(() => setFilteredSuggestionsForLocation([]), 200);
-  };
-  const handleFirstChoiceBlur = () => {
-    setTimeout(() => setFilteredSuggestionsForFirstChoice([]), 200);
   };
 
-  const handleSecondChoiceBlur = () => {
-    setTimeout(() => setFilteredSuggestionsForSecondChoice([]), 200);
-  };
-
-  const handleThirdChoiceBlur = () => {
-    setTimeout(() => setFilteredSuggestionsForThirdChoice([]), 200);
-  };
-
-  return (
-    <div className="lg:py-2 w-full">
-      <div className="flex flex-col justify-center items-start gap-2 w-full sm:w-[600px] md:w-[750px] lg:w-[55%]">
-        <h3 className="text-3xl ">Register A New Account</h3>
-        <div className="w-full">
-          <form
-            onSubmit={handleRegister}
-            className="flex flex-col gap-2 justify-center w-full items-start"
-          >
-            {step === 1 && (
-              <>
-                <label className="text-xl ">Register As</label>
-                <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
-                  <select
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    className="px-2 w-full bg-white"
-                  >
-                    <option value="" disabled>
-                      Please Select A Role
-                    </option>
-                    <option value="Employer">Employer</option>
-                    <option value="Job Seeker">Job Seeker</option>
-                  </select>
-                  <FaRegUser className="text-3xl" />
+  if (loading) {
+    return <SpinnerHome />;
+  } else {
+    return (
+      <div className="min-h-screen flex flex-col md:flex-row">
+        {/* Left panel - Brand image and information */}
+        <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-sky-600 to-sky-800 text-white p-10 flex-col justify-between">
+          <div className="flex flex-col">
+            <img
+              src={KaamSetuLogo}
+              alt="KaamSetu Logo"
+              className="w-32 h-32 object-contain mb-10 mix-blend-lighten"
+            />
+            <h1 className="text-4xl font-bold mb-4">Join KaamSetu</h1>
+            <p className="text-xl mb-6">
+              Start your professional journey with us
+            </p>
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4">
+                <div className="bg-white bg-opacity-20 p-2 rounded-full">
+                  <FiUsers className="text-white text-xl" />
                 </div>
-                <label className="text-xl ">Name</label>
-                <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) =>
-                      setName(
-                        e.target.value.charAt(0).toUpperCase() +
-                          e.target.value.slice(1)
-                      )
-                    }
-                    className="pl-2 w-full"
-                  />
-                  <HiOutlinePencilAlt className="text-4xl" />
-                </div>
-                <label className="text-xl ">Phone Number</label>
-                <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
-                  <input
-                    type="number"
-                    value={phone}
-                    onChange={(e) => {
-                      const phNumber = e.target.value;
-                      setPhone(phNumber);
-                      setIsValid(/^[0-9]{10}$/.test(phNumber));
-                    }}
-                    className="pl-2 w-full"
-                  />
-                  <MdOutlineContactPhone className="text-4xl" />
-                </div>
-                {!isValid && phone.length > 0 && (
-                  <p className="text-red-500 mt-[-10px] ml-2">
-                    Error: Invalid phone number
+                <div>
+                  <h3 className="font-medium">Join our community</h3>
+                  <p className="text-sm text-gray-100">
+                    Connect with employers and job seekers nationwide
                   </p>
-                )}
-                <label className="text-xl ">Address</label>
-                <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
-                  <div className="w-full flex items-center bg-white pl-2">
-                    <div className="relative w-full">
-                      <input
-                        onBlur={handleAddressBlur}
-                        type="text"
-                        value={address}
-                        onChange={handleAddressChange}
-                        onKeyDown={(e) => {
-                          if (e.key === "ArrowRight" || e.key === "Tab") {
-                            e.preventDefault();
-                            if (filteredSuggestionsForLocation.length > 0) {
-                              setAddress(filteredSuggestionsForLocation[0]);
-                              setFilteredSuggestionsForLocation([]);
-                            }
-                          }
-                        }}
-                        className="w-full placeholder:text-gray-500"
-                      />
-                      {filteredSuggestionsForLocation.length > 0 &&
-                        address.length > 0 && (
-                          <span className="absolute left-0 top-[12px]">
-                            {address}
-                            <span className="text-gray-500">
-                              {filteredSuggestionsForLocation[0].slice(
-                                address.length
-                              )}
-                            </span>
-                          </span>
-                        )}
-                    </div>
-                  </div>
-                  <MdOutlineLocationOn className="text-4xl" />
                 </div>
-              </>
-            )}
-            {step === 2 && (
-              <>
-                <label className="text-xl ">Email Address</label>
-                <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value.toLowerCase())}
-                    className="pl-2 w-full"
-                  />
-                  <MdOutlineMailOutline className="text-4xl" />
+              </div>
+              <div className="flex items-start space-x-4">
+                <div className="bg-white bg-opacity-20 p-2 rounded-full">
+                  <GiSkills className="text-white text-xl" />
                 </div>
-                <label className="text-xl ">Password</label>
-                <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="pl-2 w-full"
-                  />
-                  {showPassword ? (
-                    <IoEyeOutline
-                      className="text-4xl"
-                      onClick={() => setShowPassword(!showPassword)}
-                    />
-                  ) : (
-                    <IoEyeOffOutline
-                      className="text-4xl"
-                      onClick={() => setShowPassword(!showPassword)}
-                    />
-                  )}
+                <div>
+                  <h3 className="font-medium">Showcase your skills</h3>
+                  <p className="text-sm text-gray-100">
+                    Let employers discover your unique talents and expertise
+                  </p>
                 </div>
-              </>
-            )}
-            {step === 3 && (
-              <>
-                <div className="flex flex-col gap-4 w-full">
-                  <label className="text-xl ">Profile Picture</label>
-                  <ImageUploader onImageUpload={profilePictureHandler} />
-                </div>
-                {role === "Job Seeker" && (
-                  <>
-                    <div className="flex flex-col gap-4 w-full">
-                      <label className="text-xl ">Resume</label>
-                      <FileUploader onFileUpload={resumeHandler} />
-                    </div>
-                    <div className="flex flex-col gap-4 w-full justify-center">
-                      <p className="text-xl ">
-                        Job Choices{" "}
-                        <span>
-                          (Select Any 3 Job Category You Prefer To Do)
-                        </span>
-                      </p>
-                      <div className="flex flex-col gap-8">
-                        <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
-                          <div className="pl-2 w-full">
-                            <div className="relative w-full">
-                              <input
-                                onBlur={handleFirstChoiceBlur}
-                                type="text"
-                                value={firstChoice}
-                                onChange={handleFirstChoiceChange}
-                                onKeyDown={(e) => {
-                                  if (
-                                    e.key === "ArrowRight" ||
-                                    e.key === "Tab"
-                                  ) {
-                                    e.preventDefault();
-                                    if (
-                                      filteredSuggestionsForFirstChoice.length >
-                                      0
-                                    ) {
-                                      setFirstChoice(
-                                        filteredSuggestionsForFirstChoice[0]
-                                      );
-                                      setFilteredSuggestionsForFirstChoice([]);
-                                    }
-                                  }
-                                }}
-                                className="w-full outline-none bg-transparent text-black placeholder:text-gray-500"
-                              />
-                              {filteredSuggestionsForFirstChoice.length > 0 &&
-                                jobCategoryArray.length > 0 && (
-                                  <span className="absolute left-0 top-[12px]">
-                                    {firstChoice}
-                                    <span className="text-gray-500">
-                                      {filteredSuggestionsForFirstChoice[0].slice(
-                                        firstChoice.length
-                                      )}
-                                    </span>
-                                  </span>
-                                )}
-                            </div>
-                          </div>
-                          <p className="text-xl pl-2">1st</p>
-                        </div>
-
-                        <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
-                          <div className="pl-2 w-full">
-                            <div className="relative w-full">
-                              <input
-                                onBlur={handleSecondChoiceBlur}
-                                type="text"
-                                value={secondChoice}
-                                onChange={handleSecondChoiceChange}
-                                onKeyDown={(e) => {
-                                  if (
-                                    e.key === "ArrowRight" ||
-                                    e.key === "Tab"
-                                  ) {
-                                    e.preventDefault();
-                                    if (
-                                      filteredSuggestionsForSecondChoice.length >
-                                      0
-                                    ) {
-                                      setSecondChoice(
-                                        filteredSuggestionsForSecondChoice[0]
-                                      );
-                                      setFilteredSuggestionsForSecondChoice([]);
-                                    }
-                                  }
-                                }}
-                                className="w-full outline-none bg-transparent text-black placeholder:text-gray-500"
-                              />
-                              {filteredSuggestionsForSecondChoice.length > 0 &&
-                                jobCategoryArray.length > 0 && (
-                                  <span className="absolute left-0 top-[12px]">
-                                    {secondChoice}
-                                    <span className="text-gray-500">
-                                      {filteredSuggestionsForSecondChoice[0].slice(
-                                        secondChoice.length
-                                      )}
-                                    </span>
-                                  </span>
-                                )}
-                            </div>
-                          </div>
-                          <p className="text-xl pl-2">2nd</p>
-                        </div>
-
-                        <div className="flex w-full rounded-md border-2 border-black bg-white justify-between items-center px-2">
-                          <div className="pl-2 w-full">
-                            <div className="relative w-full">
-                              <input
-                                onBlur={handleThirdChoiceBlur}
-                                type="text"
-                                value={thirdChoice}
-                                onChange={handleThirdChoiceChange}
-                                onKeyDown={(e) => {
-                                  if (
-                                    e.key === "ArrowRight" ||
-                                    e.key === "Tab"
-                                  ) {
-                                    e.preventDefault();
-                                    if (
-                                      filteredSuggestionsForThirdChoice.length >
-                                      0
-                                    ) {
-                                      setThirdChoice(
-                                        filteredSuggestionsForThirdChoice[0]
-                                      );
-                                      setFilteredSuggestionsForThirdChoice([]);
-                                    }
-                                  }
-                                }}
-                                className="w-full outline-none bg-transparent text-black placeholder:text-gray-500"
-                              />
-                              {filteredSuggestionsForThirdChoice.length > 0 &&
-                                jobCategoryArray.length > 0 && (
-                                  <span className="absolute left-0 top-[12px]">
-                                    {thirdChoice}
-                                    <span className="text-gray-500">
-                                      {filteredSuggestionsForThirdChoice[0].slice(
-                                        thirdChoice.length
-                                      )}
-                                    </span>
-                                  </span>
-                                )}
-                            </div>
-                          </div>
-                          <p className="text-xl pl-2">3rd</p>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                )}
-                <button
-                  type="submit"
-                  className="mb-2 border-2 border-sky-600 text-sky-600 text-xl rounded-md w-full  hover:cursor-pointer text-center py-2"
-                  disabled={loading}
-                >
-                  Register
-                </button>
-              </>
-            )}
-          </form>
-          <div className="w-full flex justify-between items-center mt-2">
-            <button
-              onClick={prevStep}
-              className={`${
-                isDisabled
-                  ? "text-transparent bg-transparent"
-                  : "border-2 border-sky-600 text-sky-600 "
-              } text-xl  py-2 px-4 rounded-md cursor-pointer`}
-              disabled={isDisabled}
-            >
-              Back
-            </button>
-            {step < 3 && (
-              <button
-                onClick={nextStep}
-                className="text-xl text-white bg-sky-600 hover:bg-sky-700 py-2 px-4 rounded-md cursor-pointer"
-              >
-                Next
-              </button>
-            )}
+              </div>
+            </div>
           </div>
-          <p>
-            Already have an account ?
-            <span
-              onClick={() => navigateTo("/login")}
-              className="ml-2 hover:underline text-sky-600 text-xl rounded-md w-full hover:cursor-pointer text-center py-2 mt-2"
-            >
-              Login Now
-            </span>
+          <p className="text-sm text-gray-200">
+            © 2024 KaamSetu. All rights reserved.
           </p>
         </div>
+
+        {/* Right panel - Registration form */}
+        <div className="w-full md:w-1/2 flex items-center justify-center p-5 md:p-10 bg-gray-50 overflow-y-auto">
+          <div className="max-w-md w-full">
+            {/* Mobile logo */}
+            <div className="flex justify-center md:hidden mb-8">
+              <img
+                src={KaamSetuLogo}
+                alt="KaamSetu Logo"
+                className="h-20 w-auto object-contain"
+              />
+            </div>
+
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-gray-800">
+                Create Account
+              </h2>
+              <p className="text-gray-600 mt-2">Step {step} of 3</p>
+            </div>
+
+            <form onSubmit={handleRegister} className="space-y-4">
+              {step === 1 && (
+                <>
+                  <div className="form-group">
+                    <label className="block text-gray-700 mb-2 font-medium text-sm">
+                      Register As
+                    </label>
+                    <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                      <select
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
+                        className="w-full h-full bg-white focus:outline-none text-base"
+                        required
+                      >
+                        <option value="" disabled>
+                          Please Select A Role
+                        </option>
+                        <option value="Employer">Employer</option>
+                        <option value="Job Seeker">Job Seeker</option>
+                      </select>
+                      <FaRegUser className="text-lg text-gray-500" />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="block text-gray-700 mb-2 font-medium text-sm">
+                      Full Name
+                    </label>
+                    <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                      <input
+                        type="text"
+                        value={name}
+                        onChange={(e) =>
+                          setName(
+                            e.target.value.charAt(0).toUpperCase() +
+                              e.target.value.slice(1)
+                          )
+                        }
+                        className="w-full h-full focus:outline-none text-base"
+                        placeholder="Enter your full name"
+                        required
+                      />
+                      <HiOutlinePencilAlt className="text-lg text-gray-500" />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="block text-gray-700 mb-2 font-medium text-sm">
+                      Phone Number
+                    </label>
+                    <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                      <input
+                        type="number"
+                        value={phone}
+                        onChange={(e) => {
+                          const phNumber = e.target.value;
+                          setPhone(phNumber);
+                          setIsValid(/^[0-9]{10}$/.test(phNumber));
+                        }}
+                        className="w-full h-full focus:outline-none text-base"
+                        placeholder="Enter 10-digit phone number"
+                        required
+                      />
+                      <MdOutlineContactPhone className="text-lg text-gray-500" />
+                    </div>
+                    {!isValid && phone.length > 0 && (
+                      <p className="text-red-500 text-xs mt-1">
+                        Please enter a valid 10-digit phone number
+                      </p>
+                    )}
+                  </div>
+
+                  <AutoSuggestion
+                    label="Address"
+                    value={address}
+                    onChange={handleAddressChange}
+                    onSelect={(suggestion) => setAddress(suggestion)}
+                    suggestions={cities}
+                    placeholder="Enter your city"
+                    icon={<MdOutlineLocationOn />}
+                    required={true}
+                  />
+                </>
+              )}
+
+              {step === 2 && (
+                <>
+                  <div className="form-group">
+                    <label className="block text-gray-700 mb-2 font-medium text-sm">
+                      Email Address
+                    </label>
+                    <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                        className="w-full h-full focus:outline-none text-base"
+                        placeholder="Enter your email"
+                        required
+                      />
+                      <MdOutlineMailOutline className="text-lg text-gray-500" />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="block text-gray-700 mb-2 font-medium text-sm">
+                      Password
+                    </label>
+                    <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="w-full h-full focus:outline-none text-base"
+                        placeholder="Create a password"
+                        required
+                      />
+                      {showPassword ? (
+                        <IoEyeOutline
+                          className="text-lg text-gray-500 cursor-pointer"
+                          onClick={() => setShowPassword(!showPassword)}
+                        />
+                      ) : (
+                        <IoEyeOffOutline
+                          className="text-lg text-gray-500 cursor-pointer"
+                          onClick={() => setShowPassword(!showPassword)}
+                        />
+                      )}
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Password should be at least 8 characters
+                    </p>
+                  </div>
+                </>
+              )}
+
+              {step === 3 && (
+                <>
+                  <div className="form-group">
+                    <label className="block text-gray-700 mb-2 font-medium text-sm">
+                      {role === "Employer" ? "Company Logo" : "Profile Picture"}
+                    </label>
+                    <ImageUploader
+                      onImageUpload={profilePictureHandler}
+                      profilePicturePreview={profilePicture}
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      {role === "Employer"
+                        ? "Upload your company logo for better brand visibility"
+                        : "Add a professional profile photo"}
+                    </p>
+                  </div>
+
+                  {role === "Job Seeker" && (
+                    <>
+                      <div className="form-group mt-4">
+                        <label className="block text-gray-700 mb-2 font-medium text-sm">
+                          Resume
+                        </label>
+                        <FileUploader onFileUpload={resumeHandler} />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Upload your resume (PDF format)
+                        </p>
+                      </div>
+
+                      <div className="form-group mt-4">
+                        <p className="block text-gray-700 mb-2 font-medium text-sm">
+                          Job Preferences
+                          <span className="ml-1 font-normal text-xs text-gray-500">
+                            (Select 3 preferred categories)
+                          </span>
+                        </p>
+                        <div className="flex flex-col gap-3">
+                          <AutoSuggestion
+                            value={firstChoice}
+                            onChange={handleFirstChoiceChange}
+                            onSelect={(suggestion) =>
+                              setFirstChoice(suggestion)
+                            }
+                            suggestions={jobCategoryArray}
+                            placeholder="First job preference"
+                            icon={
+                              <span className="text-sm text-gray-500">1st</span>
+                            }
+                            required={true}
+                          />
+
+                          <AutoSuggestion
+                            value={secondChoice}
+                            onChange={handleSecondChoiceChange}
+                            onSelect={(suggestion) =>
+                              setSecondChoice(suggestion)
+                            }
+                            suggestions={jobCategoryArray}
+                            placeholder="Second job preference"
+                            icon={
+                              <span className="text-sm text-gray-500">2nd</span>
+                            }
+                            required={true}
+                          />
+
+                          <AutoSuggestion
+                            value={thirdChoice}
+                            onChange={handleThirdChoiceChange}
+                            onSelect={(suggestion) =>
+                              setThirdChoice(suggestion)
+                            }
+                            suggestions={jobCategoryArray}
+                            placeholder="Third job preference"
+                            icon={
+                              <span className="text-sm text-gray-500">3rd</span>
+                            }
+                            required={true}
+                          />
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="bg-sky-600 hover:bg-sky-700 transition-colors flex items-center justify-center gap-2 cursor-pointer text-base rounded-lg font-medium w-full text-white py-3 mt-6"
+                  >
+                    <TbUserPlus className="text-lg" />
+                    Create Account
+                  </button>
+                </>
+              )}
+
+              {step !== 3 && (
+                <div className="w-full flex justify-between items-center mt-6">
+                  <button
+                    type="button"
+                    onClick={prevStep}
+                    className={`${
+                      isDisabled
+                        ? "opacity-0 pointer-events-none"
+                        : "border border-gray-300 hover:bg-gray-100"
+                    } text-sm py-2 px-4 rounded-lg flex items-center gap-1 transition-colors text-gray-700`}
+                    disabled={isDisabled}
+                  >
+                    <BsArrowLeft /> Back
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={nextStep}
+                    className="text-sm bg-sky-600 hover:bg-sky-700 text-white py-2 px-4 rounded-lg cursor-pointer flex items-center gap-1 transition-colors"
+                  >
+                    Next <BsArrowRight />
+                  </button>
+                </div>
+              )}
+            </form>
+
+            <div className="relative flex py-4 items-center mt-4">
+              <div className="flex-grow border-t border-gray-300"></div>
+              <span className="flex-shrink mx-4 text-gray-600 text-sm">or</span>
+              <div className="flex-grow border-t border-gray-300"></div>
+            </div>
+
+            <p className="text-center text-gray-700 text-sm">
+              Already have an account?{" "}
+              <Link
+                to={"/login"}
+                className="text-sky-600 hover:underline font-medium"
+              >
+                Sign In
+              </Link>
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default Register;

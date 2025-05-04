@@ -12,6 +12,14 @@ import cities from "../data/cities";
 import ImageUploader from "./ImageUploader";
 import FileUploader from "./FileUploader";
 import ResumeViewer from "./ResumeViewer";
+import AutoSuggestion from "./AutoSuggestion";
+import { HiOutlineUser } from "react-icons/hi";
+import {
+  MdOutlineEmail,
+  MdOutlinePhone,
+  MdOutlineLocationOn,
+} from "react-icons/md";
+import { BsFillBookmarkCheckFill } from "react-icons/bs";
 
 const UpdateProfile = () => {
   useEffect(() => {
@@ -90,310 +98,244 @@ const UpdateProfile = () => {
   const resumeHandler = (file) => {
     setResume(file);
   };
-  const [filteredSuggestionsForLocation, setFilteredSuggestionsForLocation] =
-    useState([]);
-  const [
-    filteredSuggestionsForFirstChoice,
-    setFilteredSuggestionsForFirstChoice,
-  ] = useState([]);
-  const [
-    filteredSuggestionsForSecondChoice,
-    setFilteredSuggestionsForSecondChoice,
-  ] = useState([]);
-  const [
-    filteredSuggestionsForThirdChoice,
-    setFilteredSuggestionsForThirdChoice,
-  ] = useState([]);
+
   const handleAddressChange = (e) => {
     const input =
       e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
     setAddress(input);
-
-    if (input.length > 0) {
-      const filtered = cities.filter(
-        (city) => city.toLowerCase().startsWith(input.toLowerCase()) // Ensure it starts with input
-      );
-      setFilteredSuggestionsForLocation(filtered);
-    } else {
-      setFilteredSuggestionsForLocation([]); // Hide suggestions when input is empty
-    }
   };
+
   const handleFirstChoiceChange = (e) => {
     const input =
       e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
     setFirstChoice(input);
-
-    if (input.length > 0) {
-      const filtered = jobCategoryArray.filter(
-        (job) => job.toLowerCase().startsWith(input.toLowerCase()) // Ensure it starts with input
-      );
-      setFilteredSuggestionsForFirstChoice(filtered);
-    } else {
-      setFilteredSuggestionsForFirstChoice([]); // Hide suggestions when input is empty
-    }
   };
+
   const handleSecondChoiceChange = (e) => {
     const input =
       e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
     setSecondChoice(input);
-
-    if (input.length > 0) {
-      const filtered = jobCategoryArray.filter(
-        (job) => job.toLowerCase().startsWith(input.toLowerCase()) // Ensure it starts with input
-      );
-      setFilteredSuggestionsForSecondChoice(filtered);
-    } else {
-      setFilteredSuggestionsForSecondChoice([]); // Hide suggestions when input is empty
-    }
   };
 
   const handleThirdChoiceChange = (e) => {
     const input =
       e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
     setThirdChoice(input);
-
-    if (input.length > 0) {
-      const filtered = jobCategoryArray.filter(
-        (job) => job.toLowerCase().startsWith(input.toLowerCase()) // Ensure it starts with input
-      );
-      setFilteredSuggestionsForThirdChoice(filtered);
-    } else {
-      setFilteredSuggestionsForThirdChoice([]); // Hide suggestions when input is empty
-    }
-  };
-  const handleAddressBlur = () => {
-    setTimeout(() => setFilteredSuggestionsForLocation([]), 200);
-  };
-
-  const handleFirstChoiceBlur = () => {
-    setTimeout(() => setFilteredSuggestionsForFirstChoice([]), 200);
-  };
-
-  const handleSecondChoiceBlur = () => {
-    setTimeout(() => setFilteredSuggestionsForSecondChoice([]), 200);
-  };
-
-  const handleThirdChoiceBlur = () => {
-    setTimeout(() => setFilteredSuggestionsForThirdChoice([]), 200);
   };
 
   return (
-    <form
-      onSubmit={handleUpdateProfile}
-      className="grid gap-4 w-full md:w-[80%]"
-    >
-      <div className="flex flex-col gap-2">
-        <label className="text-xl ">Profile Picture</label>
-        <ImageUploader
-          onImageUpload={profilePictureHandler}
-          profilePicturePreview={profilePicture}
-        />
-        <p className="text-sm">*Click on profile picture to change</p>
-      </div>
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="flex flex-col gap-2">
-          <label className="text-xl ">Name</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full border-2 border-black pl-2 "
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-xl ">Email Address</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full border-2 border-black pl-2 "
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-xl ">Phone Number</label>
-          <input
-            type="number"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="w-full border-2 border-black pl-2 "
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-xl ">Address</label>
-          <div className="w-full border-2 border-black rounded-md flex items-center bg-white pl-2">
-            <div className="relative w-full">
-              <input
-                onBlur={handleAddressBlur}
-                type="text"
-                value={address}
-                onChange={handleAddressChange}
-                onKeyDown={(e) => {
-                  if (e.key === "ArrowRight" || e.key === "Tab") {
-                    e.preventDefault();
-                    if (filteredSuggestionsForLocation.length > 0) {
-                      setAddress(filteredSuggestionsForLocation[0]);
-                      setFilteredSuggestionsForLocation([]);
-                    }
-                  }
-                }}
-                className="w-full outline-none bg-transparent text-black placeholder:text-gray-500"
+    <div className="max-w-5xl mx-auto w-full px-4 py-8">
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+          Update Your Profile
+        </h2>
+        <p className="text-gray-600 mb-8 text-center">
+          Manage your profile information and preferences
+        </p>
+
+        <form onSubmit={handleUpdateProfile} className="space-y-6">
+          {/* Profile Picture */}
+          <div className="flex flex-col items-center mb-8">
+            <label className="block text-gray-700 mb-3 font-medium text-sm">
+              Profile Picture
+            </label>
+            <div className="w-32 h-32 mx-auto">
+              <ImageUploader
+                onImageUpload={profilePictureHandler}
+                profilePicturePreview={profilePicture}
               />
-              {filteredSuggestionsForLocation.length > 0 &&
-                address.length > 0 && (
-                  <span className="absolute left-0 top-[12px]">
-                    {address}
-                    <span className="text-gray-500">
-                      {filteredSuggestionsForLocation[0].slice(address.length)}
-                    </span>
-                  </span>
-                )}
             </div>
+            <p className="text-xs text-gray-500 mt-2">
+              Click on the image to update your profile picture
+            </p>
           </div>
-        </div>
-      </div>
-      {user && user.role === "Job Seeker" && (
-        <>
-          <div className="flex flex-col gap-2">
-            <label className="text-xl ">My Job Choices</label>
-            <div className="flex flex-col gap-2">
-              <div className="w-full border-2 border-black rounded-md flex items-center bg-white pl-2">
-                <div className="relative w-full">
-                  <input
-                    onBlur={handleFirstChoiceBlur}
-                    type="text"
-                    value={firstChoice}
-                    onChange={handleFirstChoiceChange}
-                    onKeyDown={(e) => {
-                      if (e.key === "ArrowRight" || e.key === "Tab") {
-                        e.preventDefault();
-                        if (filteredSuggestionsForFirstChoice.length > 0) {
-                          setFirstChoice(filteredSuggestionsForFirstChoice[0]);
-                          setFilteredSuggestionsForFirstChoice([]);
-                        }
-                      }
-                    }}
-                    className="w-full outline-none bg-transparent text-black placeholder:text-gray-500"
-                  />
-                  {filteredSuggestionsForFirstChoice.length > 0 &&
-                    jobCategoryArray.length > 0 && (
-                      <span className="absolute left-0 top-[12px]">
-                        {firstChoice}
-                        <span className="text-gray-500">
-                          {filteredSuggestionsForFirstChoice[0].slice(
-                            firstChoice.length
-                          )}
-                        </span>
-                      </span>
-                    )}
-                </div>
+
+          {/* Basic Information */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="form-group">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Full Name
+              </label>
+              <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full h-full focus:outline-none text-base"
+                  placeholder="Enter your full name"
+                  required
+                />
+                <HiOutlineUser className="text-lg text-gray-500" />
               </div>
-              <div className="w-full border-2 border-black rounded-md flex items-center bg-white pl-2">
-                <div className="relative w-full">
-                  <input
-                    onBlur={handleSecondChoiceBlur}
-                    type="text"
-                    value={secondChoice}
-                    onChange={handleSecondChoiceChange}
-                    onKeyDown={(e) => {
-                      if (e.key === "ArrowRight" || e.key === "Tab") {
-                        e.preventDefault();
-                        if (filteredSuggestionsForSecondChoice.length > 0) {
-                          setSecondChoice(
-                            filteredSuggestionsForSecondChoice[0]
-                          );
-                          setFilteredSuggestionsForSecondChoice([]);
-                        }
-                      }
-                    }}
-                    className="w-full outline-none bg-transparent text-black placeholder:text-gray-500"
-                  />
-                  {filteredSuggestionsForSecondChoice.length > 0 &&
-                    jobCategoryArray.length > 0 && (
-                      <span className="absolute left-0 top-[12px]">
-                        {secondChoice}
-                        <span className="text-gray-500">
-                          {filteredSuggestionsForSecondChoice[0].slice(
-                            secondChoice.length
-                          )}
-                        </span>
-                      </span>
-                    )}
-                </div>
+            </div>
+
+            <div className="form-group">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Email Address
+              </label>
+              <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full h-full focus:outline-none text-base"
+                  placeholder="Enter your email"
+                  required
+                />
+                <MdOutlineEmail className="text-lg text-gray-500" />
               </div>
-              <div className="w-full border-2 border-black rounded-md flex items-center bg-white pl-2">
-                <div className="relative w-full">
-                  <input
-                    onBlur={handleThirdChoiceBlur}
-                    type="text"
-                    value={thirdChoice}
-                    onChange={handleThirdChoiceChange}
-                    onKeyDown={(e) => {
-                      if (e.key === "ArrowRight" || e.key === "Tab") {
-                        e.preventDefault();
-                        if (filteredSuggestionsForThirdChoice.length > 0) {
-                          setThirdChoice(filteredSuggestionsForThirdChoice[0]);
-                          setFilteredSuggestionsForThirdChoice([]);
-                        }
-                      }
-                    }}
-                    className="w-full outline-none bg-transparent text-black placeholder:text-gray-500"
-                  />
-                  {filteredSuggestionsForThirdChoice.length > 0 &&
-                    jobCategoryArray.length > 0 && (
-                      <span className="absolute left-0 top-[12px]">
-                        {thirdChoice}
-                        <span className="text-gray-500">
-                          {filteredSuggestionsForThirdChoice[0].slice(
-                            thirdChoice.length
-                          )}
-                        </span>
-                      </span>
-                    )}
-                </div>
+            </div>
+
+            <div className="form-group">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Phone Number
+              </label>
+              <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                <input
+                  type="number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="w-full h-full focus:outline-none text-base"
+                  placeholder="Enter your phone number"
+                  required
+                />
+                <MdOutlinePhone className="text-lg text-gray-500" />
               </div>
+            </div>
+
+            <div className="form-group">
+              <label className="block text-gray-700 mb-2 font-medium text-sm">
+                Address (City)
+              </label>
+              <AutoSuggestion
+                value={address || ""}
+                onChange={handleAddressChange}
+                onSelect={(suggestion) => setAddress(suggestion)}
+                suggestions={cities}
+                placeholder="Enter your city"
+                icon={<MdOutlineLocationOn className="text-lg text-gray-500" />}
+                required
+              />
             </div>
           </div>
 
-          {user && user.resume && user.role === "Job Seeker" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-2">
-                <label className="text-xl ">Change Resume</label>
-                <FileUploader onFileUpload={resumeHandler} />
+          {/* Job Seeker Specific Fields */}
+          {user && user.role === "Job Seeker" && (
+            <>
+              <div className="mt-8 pt-6 border-t border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                  Job Preferences
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  Select up to three job categories that interest you the most
+                </p>
+
+                <div className="space-y-4">
+                  <AutoSuggestion
+                    value={firstChoice || ""}
+                    onChange={handleFirstChoiceChange}
+                    onSelect={(suggestion) => setFirstChoice(suggestion)}
+                    suggestions={jobCategoryArray}
+                    placeholder="First job preference"
+                    icon={
+                      <span className="text-sm font-medium text-sky-600">
+                        1st
+                      </span>
+                    }
+                    label="First Choice"
+                  />
+
+                  <AutoSuggestion
+                    value={secondChoice || ""}
+                    onChange={handleSecondChoiceChange}
+                    onSelect={(suggestion) => setSecondChoice(suggestion)}
+                    suggestions={jobCategoryArray}
+                    placeholder="Second job preference"
+                    icon={
+                      <span className="text-sm font-medium text-sky-600">
+                        2nd
+                      </span>
+                    }
+                    label="Second Choice"
+                  />
+
+                  <AutoSuggestion
+                    value={thirdChoice || ""}
+                    onChange={handleThirdChoiceChange}
+                    onSelect={(suggestion) => setThirdChoice(suggestion)}
+                    suggestions={jobCategoryArray}
+                    placeholder="Third job preference"
+                    icon={
+                      <span className="text-sm font-medium text-sky-600">
+                        3rd
+                      </span>
+                    }
+                    label="Third Choice"
+                  />
+                </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-xl ">Current Resume</label>
-                <ResumeViewer resume={resume} />
-                <Link
-                  to={resume}
-                  target="_blank"
-                  className="underline text-center text-white p-2 rounded-md bg-gray-500"
-                >
-                  Open File In New Tab
-                </Link>
-              </div>
-            </div>
+
+              {/* Resume Section */}
+              {user && user.resume && (
+                <div className="mt-8 pt-6 border-t border-gray-200">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                    Resume
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="form-group">
+                      <label className="block text-gray-700 mb-2 font-medium text-sm">
+                        Update Resume
+                      </label>
+                      <FileUploader onFileUpload={resumeHandler} />
+                      <p className="text-xs text-gray-500 mt-2">
+                        Upload a new PDF file to update your resume
+                      </p>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="block text-gray-700 mb-2 font-medium text-sm">
+                        Current Resume
+                      </label>
+                      <div className="mb-3">
+                        <ResumeViewer resume={resume} />
+                      </div>
+                      <Link
+                        to={resume}
+                        target="_blank"
+                        className="inline-block bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+                      >
+                        View Resume
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
           )}
-        </>
-      )}
-      {!isDemoAccount ? (
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-sky-600 hover:bg-sky-600 text-xl rounded-md w-full hover:cursor-pointer text-center text-white  md:px-2 px-1   py-2"
-        >
-          Update Profile
-        </button>
-      ) : (
-        <div
-          onClick={() => {
-            toast.info("Demo Account Isn't Allowed To Update Profile");
-          }}
-          className="bg-sky-600 hover:bg-sky-600 text-xl rounded-md w-full hover:cursor-pointer text-center text-white  md:px-2 px-1   py-2"
-        >
-          Update Profile
-        </div>
-      )}
-    </form>
+
+          {/* Submit Button */}
+          <div className="pt-6 mt-8">
+            <button
+              type="submit"
+              disabled={loading || isDemoAccount}
+              className={`flex items-center justify-center gap-2 cursor-pointer text-base rounded-lg font-medium w-full py-3 transition-colors ${
+                isDemoAccount
+                  ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                  : "bg-sky-600 hover:bg-sky-700 text-white"
+              }`}
+            >
+              <BsFillBookmarkCheckFill className="text-lg" />
+              {isDemoAccount ? "Demo Account (Cannot Update)" : "Save Changes"}
+            </button>
+            {isDemoAccount && (
+              <p className="text-xs text-center text-red-500 mt-2">
+                Demo accounts cannot be updated
+              </p>
+            )}
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 

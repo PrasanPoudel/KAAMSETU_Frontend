@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, NavLink } from "react-router-dom";
-import DropdownWithLinks from "./DropdownWithLinks";
+import DropdownWithLinks from "../DropdownWithLinks";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoClose, IoHomeOutline } from "react-icons/io5";
 import { LuLetterText } from "react-icons/lu";
 import { TfiWrite } from "react-icons/tfi";
 import { IoBriefcaseOutline } from "react-icons/io5";
-import KaamSetu from "../images/KaamSetu.png";
+import KaamSetu from "../../images/KaamSetu.png";
 import { IoIosLogIn, IoIosSearch} from "react-icons/io";
 
 const Navbar = () => {

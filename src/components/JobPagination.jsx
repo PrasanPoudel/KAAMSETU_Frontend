@@ -4,7 +4,7 @@ import JobCard from "./JobCard";
 import SkeletonUiForJobs from "./SkeletonUiForJobs";
 
 const JobsPagination = ({
-  jobs,
+  jobs = [],
   jobCategory,
   jobType,
   searchKeyword,
@@ -19,7 +19,7 @@ const JobsPagination = ({
   // Calculate the jobs to display based on currentPage
   const indexOfLastJob = (currentPage + 1) * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+  const currentJobs = jobs?.slice(indexOfFirstJob, indexOfLastJob) || [];
 
   // Handle page change
   const handlePageChange = (selectedPage) => {
@@ -63,6 +63,7 @@ const JobsPagination = ({
 
     return () => clearTimeout(timer); // Clear timeout if user types again
   }, []);
+
   return (
     <div className="w-full flex flex-col gap-5 pt-2">
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -77,14 +78,14 @@ const JobsPagination = ({
           />
         ))}
       </div>
-      {!jobs.length > 0 && (
+      {!(jobs?.length > 0) && (
         <div className="w-full">
           {isLoading ? (
             <SkeletonUiForJobs />
           ) : (
             <h1 className="text-center w-full">
               No {jobType}{" "}
-              {searchKeyword.length > 0 ? `"${searchKeyword}"` : ""} Job
+              {searchKeyword?.length > 0 ? `"${searchKeyword}"` : ""} Job
               Available {""} {jobCategory ? `on ${jobCategory} ` : ""}
               {""}
               {city ? `in ${city}` : ""} Right Now.
@@ -93,7 +94,7 @@ const JobsPagination = ({
         </div>
       )}
       {/* Pagination */}
-      {jobs.length > 16 ? (
+      {jobs?.length > 16 ? (
         <div className="flex justify-center">
           <ReactPaginate
             previousLabel={
@@ -103,7 +104,7 @@ const JobsPagination = ({
               <span className="text-sm text-center sm:text-xl">Next</span>
             }
             breakLabel={"..."}
-            pageCount={Math.ceil(jobs.length / jobsPerPage)}
+            pageCount={Math.ceil(jobs?.length / jobsPerPage) || 0}
             marginPagesDisplayed={marginPagesDisplayed}
             pageRangeDisplayed={pageRangeDisplayed}
             onPageChange={handlePageChange}

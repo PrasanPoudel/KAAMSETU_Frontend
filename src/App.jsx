@@ -11,10 +11,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./store/slices/userSlice";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Layout/Navbar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Footer from "./components/Footer";
+import Footer from "./components/Layout/Footer";
 import Home from "./pages/Home";
 import Spinner from "./components/Spinner";
 import SpinnerHome from "./components/SpinnerHome";
@@ -35,28 +35,15 @@ const ProtectedRoute = ({ children }) => {
   return !loading && isAuthenticated ? children : null;
 };
 
-const App = () => {
-  const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    dispatch(getUser()).catch((error) => {
-      console.error("Failed to fetch user data:", error);
-    });
-  }, [dispatch]);
-
-  if (loading) {
-    return <SpinnerHome />;
-  }
+// Component to conditionally render navbar based on current path
+const AppLayout = () => {
+  const location = useLocation();
+  const authRoutes = ["/login", "/register"];
+  const isAuthPage = authRoutes.includes(location.pathname);
 
   return (
-    <Router
-      future={{
-        v7_startTransition: true,
-        v7_relativeSplatPath: true,
-      }}
-    >
-      <Navbar />
+    <>
+      {!isAuthPage && <Navbar />}
       <Routes>
         <Route
           path="/"
@@ -108,18 +95,39 @@ const App = () => {
         />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/*"
-          element={
-              <NotFound />
-          }
-        />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
-      <Footer />
+      {!isAuthPage && <Footer />}
+    </>
+  );
+};
+
+const App = () => {
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(getUser()).catch((error) => {
+      console.error("Failed to fetch user data:", error);
+    });
+  }, [dispatch]);
+
+  if (loading) {
+    return <SpinnerHome />;
+  }
+
+  return (
+    <Router
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
+      <AppLayout />
       <ToastContainer
         position="top-right"
         theme="light"
-        style={{ width: 275 }}
+        style={{ width: 295 }}
       />
     </Router>
   );
