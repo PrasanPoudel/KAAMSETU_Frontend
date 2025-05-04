@@ -5,7 +5,7 @@ import { IoSendSharp } from "react-icons/io5";
 
 function SendMessage() {
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top of the page
+    window.scrollTo(0, 0);
   }, []);
 
   const [name, setName] = useState("");
@@ -17,11 +17,9 @@ function SendMessage() {
     e.preventDefault();
     setSubmitting(true);
 
-    // Simulate API call
     setTimeout(() => {
       setSubmitting(false);
       alert("Message sent successfully!");
-      // Clear form
       setName("");
       setEmail("");
       setMessage("");
@@ -40,7 +38,6 @@ function SendMessage() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Name Field */}
             <div className="form-group">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Your Name
@@ -58,7 +55,6 @@ function SendMessage() {
               </div>
             </div>
 
-            {/* Email Field */}
             <div className="form-group">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Email Address
@@ -77,7 +73,6 @@ function SendMessage() {
             </div>
           </div>
 
-          {/* Message Field */}
           <div className="form-group">
             <label className="block text-gray-700 mb-2 font-medium text-sm">
               Your Message
@@ -94,7 +89,6 @@ function SendMessage() {
             </div>
           </div>
 
-          {/* Submit Button */}
           <div className="pt-4">
             <button
               type="submit"

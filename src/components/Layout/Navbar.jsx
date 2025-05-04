@@ -8,7 +8,7 @@ import { LuLetterText } from "react-icons/lu";
 import { TfiWrite } from "react-icons/tfi";
 import { IoBriefcaseOutline } from "react-icons/io5";
 import KaamSetu from "../../images/KaamSetu.png";
-import { IoIosLogIn, IoIosSearch} from "react-icons/io";
+import { IoIosLogIn, IoIosSearch } from "react-icons/io";
 
 const Navbar = () => {
   const navigateTo = useNavigate();

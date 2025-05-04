@@ -23,7 +23,7 @@ import { BsFillBookmarkCheckFill } from "react-icons/bs";
 
 const UpdateProfile = () => {
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top of the page
+    window.scrollTo(0, 0);
   }, []);
 
   const { user } = useSelector((state) => state.user);
@@ -88,7 +88,7 @@ const UpdateProfile = () => {
     if (isUpdated) {
       toast.success("Profile Updated.");
       dispatch(clearAllUpdateProfileErrors());
-      window.scrollTo(0, 0); // Scroll to the top of the page
+      window.scrollTo(0, 0);
       dispatch(getUser());
     }
   }, [dispatch, loading, error, isUpdated, user]);
@@ -134,7 +134,6 @@ const UpdateProfile = () => {
         </p>
 
         <form onSubmit={handleUpdateProfile} className="space-y-6">
-          {/* Profile Picture */}
           <div className="flex flex-col items-center mb-8">
             <label className="block text-gray-700 mb-3 font-medium text-sm">
               Profile Picture
@@ -150,7 +149,6 @@ const UpdateProfile = () => {
             </p>
           </div>
 
-          {/* Basic Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="form-group">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
@@ -219,7 +217,6 @@ const UpdateProfile = () => {
             </div>
           </div>
 
-          {/* Job Seeker Specific Fields */}
           {user && user.role === "Job Seeker" && (
             <>
               <div className="mt-8 pt-6 border-t border-gray-200">
@@ -275,7 +272,6 @@ const UpdateProfile = () => {
                 </div>
               </div>
 
-              {/* Resume Section */}
               {user && user.resume && (
                 <div className="mt-8 pt-6 border-t border-gray-200">
                   <h3 className="text-xl font-semibold text-gray-800 mb-4">
@@ -313,7 +309,6 @@ const UpdateProfile = () => {
             </>
           )}
 
-          {/* Submit Button */}
           <div className="pt-6 mt-8">
             <button
               type="submit"

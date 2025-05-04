@@ -72,6 +72,12 @@ const userSlice = createSlice({
       state.user = {};
       state.error = action.payload;
     },
+    fetchUserSilentFailed(state) {
+      state.loading = false;
+      state.isAuthenticated = false;
+      state.user = {};
+      state.error = null;
+    },
     logoutSuccess(state, action) {
       state.isAuthenticated = false;
       state.user = {};
@@ -92,14 +98,10 @@ const userSlice = createSlice({
 export const register = (data) => async (dispatch) => {
   dispatch(userSlice.actions.registerRequest());
   try {
-    const response = await axios.post(
-      `${apiURL}/api/user/register`,
-      data,
-      {
-        withCredentials: true,
-        headers: { "Content-Type": "multipart/form-data" },
-      }
-    );
+    const response = await axios.post(`${apiURL}/api/user/register`, data, {
+      withCredentials: true,
+      headers: { "Content-Type": "multipart/form-data" },
+    });
     dispatch(userSlice.actions.registerSuccess(response.data));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
@@ -110,14 +112,10 @@ export const register = (data) => async (dispatch) => {
 export const login = (data) => async (dispatch) => {
   dispatch(userSlice.actions.loginRequest());
   try {
-    const response = await axios.post(
-      `${apiURL}/api/user/login`,
-      data,
-      {
-        withCredentials: true,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    const response = await axios.post(`${apiURL}/api/user/login`, data, {
+      withCredentials: true,
+      headers: { "Content-Type": "application/json" },
+    });
     dispatch(userSlice.actions.loginSuccess(response.data));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
@@ -128,26 +126,25 @@ export const login = (data) => async (dispatch) => {
 export const getUser = () => async (dispatch) => {
   dispatch(userSlice.actions.fetchUserRequest());
   try {
-    const response = await axios.get(
-      `${apiURL}/api/user/getuser`,
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.get(`${apiURL}/api/user/getuser`, {
+      withCredentials: true,
+    });
     dispatch(userSlice.actions.fetchUserSuccess(response.data.user));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
-    dispatch(userSlice.actions.fetchUserFailed(error.response.data.message));
+    if (error.response && error.response.data.message.includes("login")) {
+      dispatch(userSlice.actions.fetchUserSilentFailed());
+    } else {
+      dispatch(userSlice.actions.fetchUserFailed(error.response.data.message));
+    }
   }
 };
+
 export const logout = () => async (dispatch) => {
   try {
-    const response = await axios.get(
-      `${apiURL}/api/user/logout`,
-      {
-        withCredentials: true,
-      }
-    );
+    await axios.get(`${apiURL}/api/user/logout`, {
+      withCredentials: true,
+    });
     dispatch(userSlice.actions.logoutSuccess());
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {

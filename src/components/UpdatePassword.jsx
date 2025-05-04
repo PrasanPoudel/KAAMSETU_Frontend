@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 
 const UpdatePassword = () => {
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top of the page
+    window.scrollTo(0, 0);
   }, []);
 
   const { user } = useSelector((state) => state.user);
@@ -68,7 +68,6 @@ const UpdatePassword = () => {
         </p>
 
         <form onSubmit={handleUpdatePassword} className="space-y-6">
-          {/* Current Password */}
           <div className="form-group">
             <label className="block text-gray-700 mb-2 font-medium text-sm">
               Current Password
@@ -99,7 +98,6 @@ const UpdatePassword = () => {
             </div>
           </div>
 
-          {/* New Password */}
           <div className="form-group">
             <label className="block text-gray-700 mb-2 font-medium text-sm">
               New Password
@@ -133,7 +131,6 @@ const UpdatePassword = () => {
             </p>
           </div>
 
-          {/* Confirm Password */}
           <div className="form-group">
             <label className="block text-gray-700 mb-2 font-medium text-sm">
               Confirm Password
@@ -164,7 +161,6 @@ const UpdatePassword = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
           <div className="pt-4">
             {!isDemoAccount ? (
               <button

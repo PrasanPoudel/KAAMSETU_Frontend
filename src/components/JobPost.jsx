@@ -72,7 +72,7 @@ const JobPost = () => {
     }
     if (message) {
       toast.success(message);
-      window.scrollTo(0, 0); // Scroll to the top of the page
+      window.scrollTo(0, 0);
       dispatch(resetJobSlice());
       setTitle("");
       setJobType("Full Time");
@@ -115,7 +115,6 @@ const JobPost = () => {
 
         <form onSubmit={handlePostJob} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Company Logo */}
             <div className="form-group md:col-span-1">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Company Logo
@@ -123,7 +122,6 @@ const JobPost = () => {
               <ImageUploader onImageUpload={companyLogoHandler} />
             </div>
 
-            {/* Company Name */}
             <div className="form-group md:col-span-1">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Company Name
@@ -146,7 +144,6 @@ const JobPost = () => {
               </div>
             </div>
 
-            {/* Job Title */}
             <div className="form-group md:col-span-1">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Job Title
@@ -169,7 +166,6 @@ const JobPost = () => {
               </div>
             </div>
 
-            {/* Job Category */}
             <div className="form-group md:col-span-1">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Job Category
@@ -185,7 +181,6 @@ const JobPost = () => {
               />
             </div>
 
-            {/* Job Type */}
             <div className="form-group md:col-span-1">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Job Type
@@ -204,7 +199,6 @@ const JobPost = () => {
               </div>
             </div>
 
-            {/* Location */}
             <div className="form-group md:col-span-1">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Location (City)
@@ -220,7 +214,6 @@ const JobPost = () => {
               />
             </div>
 
-            {/* Salary */}
             <div className="form-group md:col-span-1">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Salary (Per year)
@@ -252,7 +245,6 @@ const JobPost = () => {
               </div>
             </div>
 
-            {/* Hiring Multiple Candidates */}
             <div className="form-group md:col-span-1">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Hiring Multiple Candidates
@@ -270,7 +262,6 @@ const JobPost = () => {
               </div>
             </div>
 
-            {/* Website Title */}
             <div className="form-group md:col-span-1">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Website Name
@@ -293,7 +284,6 @@ const JobPost = () => {
               </div>
             </div>
 
-            {/* Website URL */}
             <div className="form-group md:col-span-1">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Website Link (URL)
@@ -312,9 +302,7 @@ const JobPost = () => {
             </div>
           </div>
 
-          {/* Longer text fields */}
           <div className="mt-6 space-y-6">
-            {/* Company Introduction */}
             <div className="form-group">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Company Introduction
@@ -334,7 +322,6 @@ const JobPost = () => {
               />
             </div>
 
-            {/* Responsibilities */}
             <div className="form-group">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Responsibilities
@@ -354,7 +341,6 @@ const JobPost = () => {
               />
             </div>
 
-            {/* Qualifications */}
             <div className="form-group">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Qualifications
@@ -374,7 +360,6 @@ const JobPost = () => {
               />
             </div>
 
-            {/* What We Offer */}
             <div className="form-group">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 What We Offer
@@ -395,7 +380,6 @@ const JobPost = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
           <div className="pt-6">
             <button
               type="submit"

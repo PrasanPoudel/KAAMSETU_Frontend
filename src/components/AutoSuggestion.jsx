@@ -18,16 +18,13 @@ const AutoSuggestion = ({
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const inputRef = useRef(null);
 
-  // Handle input change
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
-    // Call parent onChange with the raw input value
     if (onChange) {
       onChange(e);
     }
 
-    // Filter suggestions based on input
     if (inputValue.length > 0 && suggestions.length > 0) {
       const filtered = suggestions.filter((item) =>
         item.toLowerCase().startsWith(inputValue.toLowerCase())
@@ -38,7 +35,6 @@ const AutoSuggestion = ({
     }
   };
 
-  // Handle suggestion selection
   const handleSuggestionSelect = (suggestion) => {
     if (onSelect) {
       onSelect(suggestion);
@@ -46,7 +42,6 @@ const AutoSuggestion = ({
     setFilteredSuggestions([]);
   };
 
-  // Handle keyboard navigation
   const handleKeyDown = (e) => {
     if (e.key === "ArrowRight" || e.key === "Tab") {
       if (filteredSuggestions.length > 0) {
@@ -58,7 +53,6 @@ const AutoSuggestion = ({
     }
   };
 
-  // Handle outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (inputRef.current && !inputRef.current.contains(event.target)) {
@@ -103,7 +97,6 @@ const AutoSuggestion = ({
             }`}
           />
 
-          {/* Current input with suggestion preview */}
           {filteredSuggestions.length > 0 && value && isFocused && (
             <div className="absolute top-0 left-0 pointer-events-none flex h-full items-center text-sm">
               <span className="invisible">{value}</span>

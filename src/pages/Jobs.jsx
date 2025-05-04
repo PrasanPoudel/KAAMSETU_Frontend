@@ -18,7 +18,7 @@ import AutoSuggestion from "../components/AutoSuggestion";
 
 const Jobs = () => {
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top of the page
+    window.scrollTo(0, 0);
   }, []);
 
   const [showFilters, setShowFilters] = useState(false);
@@ -29,7 +29,6 @@ const Jobs = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const dispatch = useDispatch();
 
-  // Lock body scroll when mobile filters are shown
   useEffect(() => {
     if (showFilters) {
       document.body.style.overflow = "hidden";
@@ -38,7 +37,6 @@ const Jobs = () => {
     }
   }, [showFilters]);
 
-  // Fetch jobs with debouncing
   useEffect(() => {
     const debouncer = setTimeout(() => {
       if (error) {
@@ -77,7 +75,6 @@ const Jobs = () => {
   return (
     <div className="bg-gray-50 min-h-screen pb-10">
       <div className="max-w-7xl mx-auto p-4">
-        {/* Page Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800">
             Find Your Perfect Job
@@ -87,7 +84,6 @@ const Jobs = () => {
           </p>
         </div>
 
-        {/* Mobile Search Bar */}
         <div className="lg:hidden mb-6">
           <div className="flex items-center bg-white rounded-lg border border-gray-300 shadow-sm px-3 py-1">
             <IoIosSearch className="text-gray-500 text-xl" />
@@ -127,7 +123,6 @@ const Jobs = () => {
           </div>
         </div>
 
-        {/* Mobile Fullscreen Filters */}
         <div
           className={`fixed inset-0 z-50 bg-white p-5 transition-transform duration-300 ease-in-out lg:hidden ${
             showFilters ? "translate-x-0" : "translate-x-full"
@@ -146,7 +141,6 @@ const Jobs = () => {
           </div>
 
           <div className="flex flex-col gap-5">
-            {/* Search Input (Mobile) */}
             <div className="form-group">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Search
@@ -169,7 +163,6 @@ const Jobs = () => {
               </div>
             </div>
 
-            {/* Location Input (Mobile) */}
             <AutoSuggestion
               value={city}
               onChange={handleCityChange}
@@ -181,7 +174,6 @@ const Jobs = () => {
               className="mb-0"
             />
 
-            {/* Job Category Input (Mobile) */}
             <AutoSuggestion
               value={jobCategory}
               onChange={handleJobCategoryChange}
@@ -193,7 +185,6 @@ const Jobs = () => {
               className="mb-0"
             />
 
-            {/* Job Type Selector (Mobile) */}
             <div className="form-group">
               <label className="block text-gray-700 mb-2 font-medium text-sm">
                 Job Type
@@ -212,7 +203,6 @@ const Jobs = () => {
               </div>
             </div>
 
-            {/* Apply and Clear Buttons */}
             <div className="flex gap-2 mt-4">
               <button
                 onClick={clearFilters}
@@ -233,14 +223,11 @@ const Jobs = () => {
           </div>
         </div>
 
-        {/* Desktop Search and Filters */}
         <div className="hidden lg:block mb-8">
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
-            {/* Desktop Filters Header */}
             <div className="bg-sky-50 border-b border-sky-100 px-5 py-2 flex justify-between items-center">
               <h3 className="text-xl font-medium">Find jobs by filters</h3>
 
-              {/* Clear Filters Button (Only shown when filters are active) */}
               {hasActiveFilters && (
                 <div className="flex justify-end">
                   <button
@@ -256,7 +243,6 @@ const Jobs = () => {
 
             <div className="p-5">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                {/* Search Input */}
                 <div className="form-group">
                   <label className="block text-gray-700 mb-2 font-medium text-sm">
                     Search Jobs
@@ -287,7 +273,6 @@ const Jobs = () => {
                   </div>
                 </div>
 
-                {/* Location Input (Desktop) */}
                 <div className="form-group">
                   <label className="block text-gray-700 mb-2 font-medium text-sm">
                     Location
@@ -304,7 +289,6 @@ const Jobs = () => {
                   />
                 </div>
 
-                {/* Job Category Input (Desktop) */}
                 <div className="form-group">
                   <label className="block text-gray-700 mb-2 font-medium text-sm">
                     Job Category
@@ -321,7 +305,6 @@ const Jobs = () => {
                   />
                 </div>
 
-                {/* Job Type Selector (Desktop) */}
                 <div className="form-group">
                   <label className="block text-gray-700 mb-2 font-medium text-sm">
                     Job Type
@@ -342,7 +325,6 @@ const Jobs = () => {
               </div>
             </div>
 
-            {/* Active Filters Display */}
             {hasActiveFilters && (
               <div className="bg-gray-50 border-t border-gray-200 px-5 py-3 flex flex-wrap gap-2">
                 <div className="text-sm text-gray-600 mr-2">
@@ -373,7 +355,6 @@ const Jobs = () => {
           </div>
         </div>
 
-        {/* Job Results Section */}
         <div className="bg-white rounded-lg shadow-md p-5">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-semibold text-gray-800">
@@ -392,7 +373,6 @@ const Jobs = () => {
             </h2>
           </div>
 
-          {/* Job Listings */}
           <JobsPagination
             jobs={jobs || []}
             jobCategory={jobCategory}
