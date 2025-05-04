@@ -16,7 +16,7 @@ const Login = () => {
   const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0); // Scroll to the top of the page
   }, []);
 
   const { isAuthenticated, error, loading } = useSelector(
@@ -43,8 +43,10 @@ const Login = () => {
     }
   }, [error, dispatch]);
 
+  // Determine where to redirect after login
   const from = location.state?.from?.pathname || "/";
 
+  // Navigate only when the user is authenticated
   useEffect(() => {
     if (isAuthenticated) {
       navigateTo(from, { replace: true });
@@ -55,7 +57,8 @@ const Login = () => {
     return <SpinnerHome />;
   } else {
     return (
-      <div className="min-h-screen flex flex-col md:flex-row">
+      <div className="min-h-screen flex flex-col md:flex-row rounded-lg shadow-lg overflow-hidden">
+        {/* Left panel - Brand image and information */}
         <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-sky-600 to-sky-800 text-white p-10 flex-col justify-between">
           <div className="flex flex-col">
             <img
@@ -90,13 +93,16 @@ const Login = () => {
               </div>
             </div>
           </div>
-          <p className="text-sm text-gray-200">
-            © 2024 KaamSetu. All rights reserved.
+          <p className="text-sm text-gray-200 mt-5">
+          &copy; CopyRight 2024 Kaamsetu. All Rights Reserved.
+
           </p>
         </div>
 
+        {/* Right panel - Login form */}
         <div className="w-full md:w-1/2 flex items-center justify-center p-5 md:p-10 bg-gray-50">
           <div className="max-w-md w-full">
+            {/* Mobile logo */}
             <div className="flex justify-center md:hidden mb-8">
               <img
                 src={KaamSetuLogo}
@@ -194,46 +200,39 @@ const Login = () => {
 
               <div className="relative flex py-4 items-center">
                 <div className="flex-grow border-t border-gray-300"></div>
-                <span className="flex-shrink mx-3 text-gray-600 text-sm">
-                  Don't have an account?
+                <span className="flex-shrink mx-4 text-gray-600 text-sm">
+                  or
                 </span>
                 <div className="flex-grow border-t border-gray-300"></div>
               </div>
 
-              <Link
-                to="/register"
-                className="bg-white hover:bg-gray-50 border-gray-300 border transition-colors flex items-center justify-center gap-2 cursor-pointer text-base rounded-lg font-medium w-full text-gray-700 py-3"
+              <button
+                type="button"
+                onClick={() => {
+                  if (role == "") {
+                    toast.info("Select user role for login");
+                  } else if (role && role == "Employer") {
+                    setEmail("employer@gmail.com");
+                    setPassword("password");
+                  } else if (role && role == "Job Seeker") {
+                    setEmail("jobseeker@gmail.com");
+                    setPassword("password");
+                  }
+                }}
+                className="border border-gray-300 hover:bg-gray-100 transition-colors text-gray-800 font-medium rounded-lg w-full py-3 cursor-pointer text-center text-base"
               >
-                <FaRegUser className="text-lg" />
-                Create an Account
-              </Link>
+                Try Demo Account
+              </button>
 
-              <div className="mt-6 space-y-2">
-                <div className="flex justify-center">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setRole("Employer");
-                      setEmail("demo.employer@kaamsetu.com");
-                      setPassword("demo1234");
-                    }}
-                    className="px-4 py-2 mx-2 text-xs font-medium bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
-                  >
-                    Demo Employer Login
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setRole("Job Seeker");
-                      setEmail("demo.jobseeker@kaamsetu.com");
-                      setPassword("demo1234");
-                    }}
-                    className="px-4 py-2 mx-2 text-xs font-medium bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
-                  >
-                    Demo Job Seeker Login
-                  </button>
-                </div>
-              </div>
+              <p className="text-center mt-6 text-gray-700 text-sm">
+                Don't have an account yet?{" "}
+                <Link
+                  to={"/register"}
+                  className="text-sky-600 hover:underline font-medium"
+                >
+                  Register Now
+                </Link>
+              </p>
             </form>
           </div>
         </div>

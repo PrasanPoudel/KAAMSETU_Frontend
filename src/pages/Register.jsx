@@ -27,13 +27,13 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0); // Scroll to the top of the page
   }, []);
 
   const [step, setStep] = useState(1);
   const [isDisabled, setIsDiabled] = useState(true);
   const nextStep = () => {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0); // Scroll to the top of the page
     setIsDiabled(false);
     setStep(step + 1);
   };
@@ -44,7 +44,7 @@ const Register = () => {
     if (step > 1) {
       setStep(step - 1);
     }
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0); // Scroll to the top of the page
   };
 
   const [role, setRole] = useState("");
@@ -126,7 +126,8 @@ const Register = () => {
     return <SpinnerHome />;
   } else {
     return (
-      <div className="min-h-screen flex flex-col md:flex-row">
+      <div className="min-h-screen flex flex-col md:flex-row rounded-lg shadow-lg overflow-hidden">
+        {/* Left panel - Brand image and information */}
         <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-sky-600 to-sky-800 text-white p-10 flex-col justify-between">
           <div className="flex flex-col">
             <img
@@ -163,13 +164,16 @@ const Register = () => {
               </div>
             </div>
           </div>
-          <p className="text-sm text-gray-200">
-            © 2024 KaamSetu. All rights reserved.
+          <p className="text-sm text-gray-200 mt-5">
+        &copy; CopyRight 2024 Kaamsetu. All Rights Reserved.
+
           </p>
         </div>
 
+        {/* Right panel - Registration form */}
         <div className="w-full md:w-1/2 flex items-center justify-center p-5 md:p-10 bg-gray-50 overflow-y-auto">
           <div className="max-w-md w-full">
+            {/* Mobile logo */}
             <div className="flex justify-center md:hidden mb-8">
               <img
                 src={KaamSetuLogo}
@@ -217,23 +221,61 @@ const Register = () => {
                       <input
                         type="text"
                         value={name}
-                        onChange={(e) => {
-                          setName(e.target.value);
-                          setIsValid(e.target.value.trim().length >= 3);
-                        }}
+                        onChange={(e) =>
+                          setName(
+                            e.target.value.charAt(0).toUpperCase() +
+                              e.target.value.slice(1)
+                          )
+                        }
                         className="w-full h-full focus:outline-none text-base"
                         placeholder="Enter your full name"
                         required
                       />
                       <HiOutlinePencilAlt className="text-lg text-gray-500" />
                     </div>
-                    {!isValid && (
+                  </div>
+
+                  <div className="form-group">
+                    <label className="block text-gray-700 mb-2 font-medium text-sm">
+                      Phone Number
+                    </label>
+                    <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+                      <input
+                        type="number"
+                        value={phone}
+                        onChange={(e) => {
+                          const phNumber = e.target.value;
+                          setPhone(phNumber);
+                          setIsValid(/^[0-9]{10}$/.test(phNumber));
+                        }}
+                        className="w-full h-full focus:outline-none text-base"
+                        placeholder="Enter 10-digit phone number"
+                        required
+                      />
+                      <MdOutlineContactPhone className="text-lg text-gray-500" />
+                    </div>
+                    {!isValid && phone.length > 0 && (
                       <p className="text-red-500 text-xs mt-1">
-                        Name must be at least 3 characters long
+                        Please enter a valid 10-digit phone number
                       </p>
                     )}
                   </div>
 
+                  <AutoSuggestion
+                    label="Address"
+                    value={address}
+                    onChange={handleAddressChange}
+                    onSelect={(suggestion) => setAddress(suggestion)}
+                    suggestions={cities}
+                    placeholder="Enter your city"
+                    icon={<MdOutlineLocationOn />}
+                    required={true}
+                  />
+                </>
+              )}
+
+              {step === 2 && (
+                <>
                   <div className="form-group">
                     <label className="block text-gray-700 mb-2 font-medium text-sm">
                       Email Address
@@ -253,44 +295,8 @@ const Register = () => {
 
                   <div className="form-group">
                     <label className="block text-gray-700 mb-2 font-medium text-sm">
-                      Phone Number
+                      Password
                     </label>
-                    <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
-                      <input
-                        type="number"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        className="w-full h-full focus:outline-none text-base"
-                        placeholder="Enter your phone number"
-                        required
-                      />
-                      <MdOutlineContactPhone className="text-lg text-gray-500" />
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <label className="block text-gray-700 mb-2 font-medium text-sm">
-                      Address (City)
-                    </label>
-                    <AutoSuggestion
-                      value={address}
-                      onChange={handleAddressChange}
-                      onSelect={(suggestion) => setAddress(suggestion)}
-                      suggestions={cities}
-                      placeholder="Enter your city"
-                      icon={
-                        <MdOutlineLocationOn className="text-lg text-gray-500" />
-                      }
-                      required={true}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <div className="flex justify-between mb-2">
-                      <label className="block text-gray-700 font-medium text-sm">
-                        Password
-                      </label>
-                    </div>
                     <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
                       <input
                         type={showPassword ? "text" : "password"}
@@ -313,159 +319,146 @@ const Register = () => {
                       )}
                     </div>
                     <p className="text-xs text-gray-500 mt-1">
-                      Password should be at least 8 characters long
+                      Password should be at least 8 characters
                     </p>
-                  </div>
-
-                  <div className="pt-4">
-                    <button
-                      type="button"
-                      className="bg-sky-600 hover:bg-sky-700 transition-colors flex items-center justify-center gap-2 cursor-pointer text-base rounded-lg font-medium w-full text-white py-3"
-                      onClick={nextStep}
-                    >
-                      Next Step <BsArrowRight className="text-lg" />
-                    </button>
-                  </div>
-                </>
-              )}
-
-              {step === 2 && (
-                <>
-                  <div className="form-group">
-                    <label className="block text-gray-700 mb-2 font-medium text-sm">
-                      Profile Picture
-                    </label>
-                    <ImageUploader onImageUpload={profilePictureHandler} />
-                  </div>
-
-                  {role === "Job Seeker" && (
-                    <div className="form-group mt-6">
-                      <label className="block text-gray-700 mb-2 font-medium text-sm">
-                        Upload Resume (PDF)
-                      </label>
-                      <FileUploader onFileUpload={resumeHandler} />
-                    </div>
-                  )}
-
-                  <div className="flex justify-between pt-4">
-                    <button
-                      type="button"
-                      className="bg-gray-200 hover:bg-gray-300 transition-colors flex items-center justify-center gap-2 cursor-pointer text-base rounded-lg font-medium px-4 py-2 text-gray-800"
-                      onClick={prevStep}
-                    >
-                      <BsArrowLeft className="text-lg" /> Back
-                    </button>
-                    <button
-                      type="button"
-                      className="bg-sky-600 hover:bg-sky-700 transition-colors flex items-center justify-center gap-2 cursor-pointer text-base rounded-lg font-medium px-4 py-2 text-white"
-                      onClick={nextStep}
-                    >
-                      Next Step <BsArrowRight className="text-lg" />
-                    </button>
                   </div>
                 </>
               )}
 
               {step === 3 && (
                 <>
-                  {role === "Job Seeker" && (
-                    <div className="space-y-4">
-                      <p className="text-sm text-gray-600 mb-2">
-                        Select your top three job preferences to help us
-                        recommend the best opportunities for you.
-                      </p>
-
-                      <AutoSuggestion
-                        label="First Job Preference"
-                        value={firstChoice}
-                        onChange={handleFirstChoiceChange}
-                        onSelect={(suggestion) => setFirstChoice(suggestion)}
-                        suggestions={jobCategoryArray}
-                        placeholder="Enter your first job preference"
-                        icon={
-                          <span className="text-sm font-medium text-sky-600">
-                            1st
-                          </span>
-                        }
-                        required={true}
-                      />
-
-                      <AutoSuggestion
-                        label="Second Job Preference"
-                        value={secondChoice}
-                        onChange={handleSecondChoiceChange}
-                        onSelect={(suggestion) => setSecondChoice(suggestion)}
-                        suggestions={jobCategoryArray}
-                        placeholder="Enter your second job preference"
-                        icon={
-                          <span className="text-sm font-medium text-sky-600">
-                            2nd
-                          </span>
-                        }
-                        required={true}
-                      />
-
-                      <AutoSuggestion
-                        label="Third Job Preference"
-                        value={thirdChoice}
-                        onChange={handleThirdChoiceChange}
-                        onSelect={(suggestion) => setThirdChoice(suggestion)}
-                        suggestions={jobCategoryArray}
-                        placeholder="Enter your third job preference"
-                        icon={
-                          <span className="text-sm font-medium text-sky-600">
-                            3rd
-                          </span>
-                        }
-                        required={true}
-                      />
-                    </div>
-                  )}
-
-                  {role === "Employer" && (
-                    <div className="p-4 bg-sky-50 border border-sky-100 rounded-lg">
-                      <h3 className="font-medium text-sky-700 mb-2">
-                        Ready to Find Talent
-                      </h3>
-                      <p className="text-sm text-gray-600">
-                        Complete your registration to start posting jobs and
-                        finding the perfect candidates for your organization.
-                      </p>
-                    </div>
-                  )}
-
-                  <div className="flex justify-between pt-4">
-                    <button
-                      type="button"
-                      className="bg-gray-200 hover:bg-gray-300 transition-colors flex items-center justify-center gap-2 cursor-pointer text-base rounded-lg font-medium px-4 py-2 text-gray-800"
-                      onClick={prevStep}
-                    >
-                      <BsArrowLeft className="text-lg" /> Back
-                    </button>
-                    <button
-                      type="submit"
-                      className="bg-sky-600 hover:bg-sky-700 transition-colors flex items-center justify-center gap-2 cursor-pointer text-base rounded-lg font-medium px-4 py-2 text-white"
-                      disabled={loading}
-                    >
-                      <TbUserPlus className="text-lg" />
-                      {loading ? "Creating..." : "Create Account"}
-                    </button>
+                  <div className="form-group">
+                    <label className="block text-gray-700 mb-2 font-medium text-sm">
+                      {role === "Employer" ? "Company Logo" : "Profile Picture"}
+                    </label>
+                    <ImageUploader
+                      onImageUpload={profilePictureHandler}
+                      profilePicturePreview={profilePicture}
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      {role === "Employer"
+                        ? "Upload your company logo for better brand visibility"
+                        : "Add a professional profile photo"}
+                    </p>
                   </div>
+
+                  {role === "Job Seeker" && (
+                    <>
+                      <div className="form-group mt-4">
+                        <label className="block text-gray-700 mb-2 font-medium text-sm">
+                          Resume
+                        </label>
+                        <FileUploader onFileUpload={resumeHandler} />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Upload your resume (PDF format)
+                        </p>
+                      </div>
+
+                      <div className="form-group mt-4">
+                        <p className="block text-gray-700 mb-2 font-medium text-sm">
+                          Job Preferences
+                          <span className="ml-1 font-normal text-xs text-gray-500">
+                            (Select 3 preferred categories)
+                          </span>
+                        </p>
+                        <div className="flex flex-col gap-3">
+                          <AutoSuggestion
+                            value={firstChoice}
+                            onChange={handleFirstChoiceChange}
+                            onSelect={(suggestion) =>
+                              setFirstChoice(suggestion)
+                            }
+                            suggestions={jobCategoryArray}
+                            placeholder="First job preference"
+                            icon={
+                              <span className="text-sm text-gray-500">1st</span>
+                            }
+                            required={true}
+                          />
+
+                          <AutoSuggestion
+                            value={secondChoice}
+                            onChange={handleSecondChoiceChange}
+                            onSelect={(suggestion) =>
+                              setSecondChoice(suggestion)
+                            }
+                            suggestions={jobCategoryArray}
+                            placeholder="Second job preference"
+                            icon={
+                              <span className="text-sm text-gray-500">2nd</span>
+                            }
+                            required={true}
+                          />
+
+                          <AutoSuggestion
+                            value={thirdChoice}
+                            onChange={handleThirdChoiceChange}
+                            onSelect={(suggestion) =>
+                              setThirdChoice(suggestion)
+                            }
+                            suggestions={jobCategoryArray}
+                            placeholder="Third job preference"
+                            icon={
+                              <span className="text-sm text-gray-500">3rd</span>
+                            }
+                            required={true}
+                          />
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="bg-sky-600 hover:bg-sky-700 transition-colors flex items-center justify-center gap-2 cursor-pointer text-base rounded-lg font-medium w-full text-white py-3 mt-6"
+                  >
+                    <TbUserPlus className="text-lg" />
+                    Create Account
+                  </button>
                 </>
               )}
 
-              <div className="pt-4 text-center">
-                <p className="text-sm text-gray-600">
-                  Already have an account?{" "}
-                  <Link
-                    to="/login"
-                    className="text-sky-600 hover:underline font-medium"
+              {step !== 3 && (
+                <div className="w-full flex justify-between items-center mt-6">
+                  <button
+                    type="button"
+                    onClick={prevStep}
+                    className={`${
+                      isDisabled
+                        ? "opacity-0 pointer-events-none"
+                        : "border border-gray-300 hover:bg-gray-100"
+                    } text-sm py-2 px-4 rounded-lg flex items-center gap-1 transition-colors text-gray-700`}
+                    disabled={isDisabled}
                   >
-                    Sign In
-                  </Link>
-                </p>
-              </div>
+                    <BsArrowLeft /> Back
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={nextStep}
+                    className="text-sm bg-sky-600 hover:bg-sky-700 text-white py-2 px-4 rounded-lg cursor-pointer flex items-center gap-1 transition-colors"
+                  >
+                    Next <BsArrowRight />
+                  </button>
+                </div>
+              )}
             </form>
+
+            <div className="relative flex py-4 items-center mt-4">
+              <div className="flex-grow border-t border-gray-300"></div>
+              <span className="flex-shrink mx-4 text-gray-600 text-sm">or</span>
+              <div className="flex-grow border-t border-gray-300"></div>
+            </div>
+
+            <p className="text-center text-gray-700 text-sm">
+              Already have an account?{" "}
+              <Link
+                to={"/login"}
+                className="text-sky-600 hover:underline font-medium"
+              >
+                Sign In
+              </Link>
+            </p>
           </div>
         </div>
       </div>

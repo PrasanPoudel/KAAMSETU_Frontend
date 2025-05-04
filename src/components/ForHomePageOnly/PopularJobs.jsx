@@ -103,7 +103,7 @@ const PopularJobs = () => {
                 loading="lazy"
               />
               <h3 className="text-xl mt-2 px-5 text-justify font-medium">{job.headline}</h3>
-              <p className="text-justify px-5">{job.description}</p>
+              <p className="text-justify px-5 text-gray-500">{job.description}</p>
             </div>
           ))}
         </Carousel>

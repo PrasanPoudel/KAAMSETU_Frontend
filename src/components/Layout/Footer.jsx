@@ -99,7 +99,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="flex  pb-5 text-gray-500 justify-center w-full text-center">
-        &copy; CopyRight 2024. All Rights Reserved By Prasan Poudel.
+        &copy; CopyRight 2024 Kaamsetu. All Rights Reserved.
       </div>
     </div>
   );
