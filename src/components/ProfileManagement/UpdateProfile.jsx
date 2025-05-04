@@ -3,16 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   clearAllUpdateProfileErrors,
   updateProfile,
-} from "../store/slices/updateProfileSlice";
+} from "../../store/slices/updateProfileSlice";
 import { toast } from "react-toastify";
-import { getUser } from "../store/slices/userSlice";
+import { getUser } from "../../store/slices/userSlice";
 import { Link } from "react-router-dom";
-import jobCategoryArray from "../data/jobCategoryArray";
-import cities from "../data/cities";
-import ImageUploader from "./ImageUploader";
-import FileUploader from "./FileUploader";
-import ResumeViewer from "./ResumeViewer";
-import AutoSuggestion from "./AutoSuggestion";
+import jobCategoryArray from "../../data/jobCategoryArray";
+import cities from "../../data/cities";
+import ImageUploader from "../ImageUploader";
+import FileUploader from "../FileUploader";
+import ResumeViewer from "../ResumeViewer";
+import AutoSuggestion from "../AutoSuggestion";
 import { HiOutlineUser } from "react-icons/hi";
 import {
   MdOutlineEmail,

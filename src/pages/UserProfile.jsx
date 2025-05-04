@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import UpdateProfile from "../components/UpdateProfile";
-import UpdatePassword from "../components/UpdatePassword";
+import UpdateProfile from "../components/ProfileManagement/UpdateProfile";
+import UpdatePassword from "../components/ProfileManagement/UpdatePassword";
 import MyJobs from "../components/MyJobs";
 import JobPost from "../components/JobPost";
 import Applications from "../components/Applications";

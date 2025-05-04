@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   clearAllUpdateProfileErrors,
   updatePassword,
-} from "../store/slices/updateProfileSlice";
-import { getUser } from "../store/slices/userSlice";
+} from "../../store/slices/updateProfileSlice";
+import { getUser } from "../../store/slices/userSlice";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { toast } from "react-toastify";
@@ -69,10 +69,10 @@ const UpdatePassword = () => {
 
         <form onSubmit={handleUpdatePassword} className="space-y-6">
           <div className="form-group">
-            <label className="block text-gray-700 mb-2 font-medium text-sm">
+            <label className=" text-gray-700 mb-2 font-medium text-sm">
               Current Password
             </label>
-            <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+            <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center  focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
               <div className="flex items-center w-full">
                 <RiLockPasswordLine className="text-lg text-gray-500 mr-2" />
                 <input
@@ -99,10 +99,10 @@ const UpdatePassword = () => {
           </div>
 
           <div className="form-group">
-            <label className="block text-gray-700 mb-2 font-medium text-sm">
+            <label className="text-gray-700 mb-2 font-medium text-sm">
               New Password
             </label>
-            <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+            <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center  focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
               <div className="flex items-center w-full">
                 <RiLockPasswordLine className="text-lg text-gray-500 mr-2" />
                 <input
@@ -132,10 +132,10 @@ const UpdatePassword = () => {
           </div>
 
           <div className="form-group">
-            <label className="block text-gray-700 mb-2 font-medium text-sm">
+            <label className="text-gray-700 mb-2 font-medium text-sm">
               Confirm Password
             </label>
-            <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center h-12 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
+            <div className="flex px-3 border border-gray-300 bg-white rounded-lg justify-between items-center  focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-sky-500 transition-all">
               <div className="flex items-center w-full">
                 <RiLockPasswordLine className="text-lg text-gray-500 mr-2" />
                 <input
