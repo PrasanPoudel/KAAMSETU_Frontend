@@ -102,8 +102,10 @@ const PopularJobs = () => {
                 className="h-[220px] aspect-video"
                 loading="lazy"
               />
-              <h3 className="text-xl mt-2 px-5 text-justify font-medium">{job.headline}</h3>
-              <p className="text-justify px-5 text-gray-500">{job.description}</p>
+              <h3 className="text-xl mt-2 px-5 text-left font-medium">
+                {job.headline}
+              </h3>
+              <p className="text-left px-5 text-gray-500">{job.description}</p>
             </div>
           ))}
         </Carousel>

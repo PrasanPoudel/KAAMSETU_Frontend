@@ -93,7 +93,7 @@ const JobCard = ({
               <h3 className="text-sky-600 text-sm font-semibold">
                 {element?.companyName}
               </h3>
-              <h2 className="font-medium  md:text-xl">{element.title}</h2>
+              <h2 className="font-medium  md:text-md">{element.title}</h2>
             </div>
           </div>
           <div className="grid grid-cols-2 mt-5 gap-2 items-center justify-between">
@@ -145,7 +145,7 @@ const JobCard = ({
               <h3 className="text-sky-600 text-sm font-semibold">
                 {element?.companyName}
               </h3>
-              <h2 className="font-medium  md:text-xl">{element.title}</h2>
+              <h2 className="font-medium  md:text-md">{element.title}</h2>
             </div>
           </div>
           <div className="grid grid-cols-2 mt-5 gap-2 items-center justify-between">
@@ -176,28 +176,28 @@ const JobCard = ({
       {(expanded || expandedJobId === element._id) && (
         <div className="flex flex-col gap-5 pl-2">
           <div className="flex flex-col gap-2">
-            <label className="text-xl font-medium text-sky-600">
+            <label className="text-md font-medium text-sky-600">
               Job Category
             </label>
-            <p className="  text-gray-500">{element.jobCategory}</p>
-            <label className="text-xl font-medium text-sky-600">
+            <p className="  text-gray-500 text-sm">{element.jobCategory}</p>
+            <label className="text-md font-medium text-sky-600">
               Employer Id
             </label>
-            <p className="  text-gray-500">{element.postedBy}</p>
+            <p className="  text-gray-500 text-sm">{element.postedBy}</p>
           </div>
 
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
-              <label className="text-xl font-medium text-sky-600">
+              <label className="text-md font-medium text-sky-600">
                 Company's Introduction
               </label>
-              <p className="text-gray-500 text-justify">
+              <p className="text-gray-500 text-sm text-left">
                 {element?.introduction}
               </p>
             </div>
             {element?.qualifications && (
               <div className="flex flex-col gap-2">
-                <label className="text-xl font-medium text-sky-600">
+                <label className="text-md font-medium text-sky-600">
                   Qualifications
                 </label>
                 <ul className="list-disc pl-5 text-gray-500">
@@ -206,7 +206,7 @@ const JobCard = ({
                     .map((qualification) => qualification.trim()) // Remove extra spaces
                     .filter((qualification) => qualification.length > 0) // Remove empty items
                     .map((qualification, index) => (
-                      <li key={index} className="text-justify">
+                      <li key={index} className="text-left text-sm">
                         {qualification}
                       </li> // Display as a list item
                     ))}
@@ -215,7 +215,7 @@ const JobCard = ({
             )}
             {element.responsibilities && (
               <div className="flex flex-col gap-2">
-                <label className="text-xl font-medium text-sky-600">
+                <label className="text-md font-medium text-sky-600">
                   Responsibilities
                 </label>
                 <ul className="list-disc pl-5 text-gray-500">
@@ -224,7 +224,7 @@ const JobCard = ({
                     .map((responsibility) => responsibility.trim()) // Remove extra spaces
                     .filter((responsibility) => responsibility.length > 0) // Remove empty items
                     .map((responsibility, index) => (
-                      <li key={index} className="text-justify">
+                      <li key={index} className="text-left text-sm">
                         {responsibility}
                       </li> // Display as a list item
                     ))}
@@ -233,7 +233,7 @@ const JobCard = ({
             )}
             {element.offers && (
               <div className="flex flex-col gap-2">
-                <label className="text-xl font-medium text-sky-600">
+                <label className="text-md font-medium text-sky-600">
                   Offering
                 </label>
                 <ul className="list-disc pl-5 text-gray-500">
@@ -242,7 +242,7 @@ const JobCard = ({
                     .map((offer) => offer.trim()) // Remove extra spaces
                     .filter((offer) => offer.length > 0) // Remove empty items
                     .map((offer, index) => (
-                      <li key={index} className="text-justify">
+                      <li key={index} className="text-left text-sm">
                         {offer}
                       </li> // Display as a list item
                     ))}
@@ -253,28 +253,17 @@ const JobCard = ({
           <div className="mt-5 flex flex-col md:flex-row justify-end gap-4">
             {enableDeleteJob && (
               <button
-                className="bg-red-500 hover:bg-red-600 text-xl flex justify-center items-center text-white  md:px-2 px-1   py-2  rounded-md transition-all duration-300"
+                className="bg-red-500 hover:bg-red-600 text-md flex justify-center items-center text-white  md:px-2 px-1   py-2  rounded-md transition-all duration-300"
                 onClick={() => handleDeleteJob(element._id)}
               >
                 Delete Job
               </button>
             )}
             {enableApplyApplication && (
-              <>
-                {isAuthenticated && user.role === "Employer" && (
-                  <button
-                    className="rounded-md w-full md:w-[200px] text-xl bg-gray-500 hover:cursor-pointer text-white md:px-2 px-1 py-3 "
-                    onClick={() => {
-                      toast.info("Employer cannot apply for jobs.");
-                    }}
-                  >
-                    Apply
-                  </button>
-                )}
                 <form>
                   {isAuthenticated && user.role === "Job Seeker" && (
                     <button
-                      className="rounded-md w-full md:w-[200px] text-xl bg-sky-600 hover:bg-sky-700 hover:cursor-pointer text-white md:px-2 px-1 py-3 "
+                      className="rounded-md w-full md:w-[200px] text-md bg-sky-600 hover:bg-sky-700 hover:cursor-pointer text-white md:px-2 px-1 py-3 "
                       onClick={handlePostApplication}
                       disabled={loading}
                     >
@@ -282,12 +271,11 @@ const JobCard = ({
                     </button>
                   )}
                 </form>
-              </>
             )}
             {!expanded && (
               <>
                 <button
-                  className="flex text-xl items-center border-2 border-black rounded-md gap-2 justify-center transition-all duration-300 md:px-2 px-1 py-2"
+                  className="flex text-md items-center border-2 border-black rounded-md gap-2 justify-center transition-all duration-300 md:px-2 px-1 py-2"
                   onClick={() => toggleExpand(element._id)}
                   aria-label={
                     expandedJobId === element._id ? "Hide Details" : ""

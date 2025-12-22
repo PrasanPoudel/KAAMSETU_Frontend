@@ -171,7 +171,7 @@ const Register = () => {
         </div>
 
         {/* Right panel - Registration form */}
-        <div className="w-full md:w-1/2 flex items-center justify-center p-5 md:p-10 bg-gray-50 overflow-y-auto">
+        <div className="w-full md:w-1/2 flex items-center justify-center p-2 sm:p-5 md:p-10 bg-gray-50 overflow-y-auto">
           <div className="max-w-md w-full">
             {/* Mobile logo */}
             <div className="flex justify-center md:hidden mb-8">

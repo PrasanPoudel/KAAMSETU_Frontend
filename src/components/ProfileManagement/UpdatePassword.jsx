@@ -58,8 +58,8 @@ const UpdatePassword = () => {
   }, [dispatch, loading, error, isUpdated]);
 
   return (
-    <div className="max-w-2xl mx-auto w-full px-4 py-8">
-      <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="max-w-2xl mx-auto w-full px-1 sm:px-4 py-8">
+      <div className="bg-white rounded-lg shadow-md px-2 sm:p-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
           Update Password
         </h2>

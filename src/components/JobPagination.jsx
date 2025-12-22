@@ -66,7 +66,7 @@ const JobsPagination = ({
 
   return (
     <div className="w-full flex flex-col gap-5 pt-2">
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      <div className="min-w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {currentJobs.map((element) => (
           <JobCard
             element={element}

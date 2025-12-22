@@ -87,7 +87,7 @@ const Faqs = () => {
                 } transition-colors duration-300`}
                 aria-expanded={openIndex === index}
               >
-                <span className="font-medium text-lg pr-4">{faq.question}</span>
+                <span className="font-medium text-md pr-4">{faq.question}</span>
                 <span
                   className={`text-2xl flex items-center justify-center w-8 h-8 rounded-full ${
                     openIndex === index
@@ -109,7 +109,7 @@ const Faqs = () => {
                     className="overflow-hidden"
                   >
                     <div className="p-5 md:p-6 text-gray-500 leading-relaxed border-t border-gray-100">
-                      <p className="text-justify">{faq.answer}</p>
+                      <p className="text-left text-sm">{faq.answer}</p>
                     </div>
                   </motion.div>
                 )}

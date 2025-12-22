@@ -8,7 +8,6 @@ import Faqs from "../components/ForHomePageOnly/Faqs";
 import WhyChooseUs from "../components/ForHomePageOnly/WhyChooseUs";
 import TrustedCompanies from "../components/ForHomePageOnly/TrustedCompanies";
 import Stats from "../components/ForHomePageOnly/Stats";
-import Testimonial from "../components/ForHomePageOnly/Testimonial";
 
 const Home = () => {
   useEffect(() => {
@@ -27,7 +26,6 @@ const Home = () => {
       </Suspense>
       <WhyChooseUs/>
       <TrustedCompanies />
-      <Testimonial/>
       <Faqs />
     </>
   );

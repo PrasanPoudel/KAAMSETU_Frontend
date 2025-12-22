@@ -27,8 +27,8 @@ function SendMessage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto w-full px-4 py-8">
-      <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="max-w-3xl mx-auto w-full px-2 sm:px-4 py-8">
+      <div className="bg-white rounded-lg shadow-md p-2 sm:p-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">
           Contact Us
         </h2>

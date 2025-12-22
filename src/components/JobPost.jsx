@@ -104,8 +104,8 @@ const JobPost = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto w-full px-4 py-8">
-      <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="max-w-5xl mx-auto w-full px-1 sm:px-4 py-8">
+      <div className="bg-white rounded-lg shadow-md p-2 sm:p-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
           Post a New Job
         </h2>
