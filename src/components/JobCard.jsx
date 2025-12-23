@@ -23,42 +23,48 @@ const JobCard = ({
   expanded,
 }) => {
   const dispatch = useDispatch();
-  const handleDeleteJob = (id) => {
-    dispatch(deleteJob(id));
-  };
-
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const { loading, error, message } = useSelector(
     (state) => state.applications
   );
+
+  const handleDeleteJob = (id) => {
+    dispatch(deleteJob(id));
+  };
+
   const jobId = element._id;
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [phone, setPhone] = useState(user.phone);
-  const [address, setAddress] = useState(user.address);
-  const [resume, setResume] = useState((user.resume && user.resume.url) || "");
+  const [name] = useState(user.name);
+  const [email] = useState(user.email);
+  const [phone] = useState(user.phone);
+  const [address] = useState(user.address);
+  const [resume] = useState((user.resume && user.resume.url) || "");
+
   const handlePostApplication = (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("phone", phone);
-    formData.append("address", address);
-    if (resume) {
-      formData.append("resume", resume);
+    if (!resume) {
+      toast.error("Resume is required. Add resume in your profile");
+      return;
     }
-    dispatch(postApplication(formData, jobId));
-
-    if (error) {
-      toast.info(error);
-      dispatch(clearAllApplicationErrors());
-    }
-
+    const data = {
+      name,
+      email,
+      phone,
+      address,
+      resume,
+    };
     if (message) {
       toast.success(message);
+      dispatch(clearAllApplicationErrors());
       dispatch(resetApplicationSlice());
     }
+    if (error) {
+      toast.error(error);
+      dispatch(clearAllApplicationErrors());
+      dispatch(resetApplicationSlice());
+    }
+    dispatch(postApplication(data, jobId));
   };
+
   return (
     <div
       className={` ${
@@ -250,27 +256,61 @@ const JobCard = ({
               </div>
             )}
           </div>
-          <div className="mt-5 flex flex-col md:flex-row justify-end gap-4">
+          <div className="mt-5 flex flex-col md:flex-row justify-end gap-2">
             {enableDeleteJob && (
               <button
-                className="bg-red-500 hover:bg-red-600 text-md flex justify-center items-center text-white  md:px-2 px-1   py-2  rounded-md transition-all duration-300"
+                className="bg-red-500 hover:bg-red-600 text-md flex justify-center md:w-[200px] items-center min-w-[100px]  text-white  md:px-2 px-1  py-2  rounded-md transition-all duration-300"
                 onClick={() => handleDeleteJob(element._id)}
               >
                 Delete Job
               </button>
             )}
             {enableApplyApplication && (
-                <form>
-                  {isAuthenticated && user.role === "Job Seeker" && (
-                    <button
-                      className="rounded-md w-full md:w-[200px] text-md bg-sky-600 hover:bg-sky-700 hover:cursor-pointer text-white md:px-2 px-1 py-3 "
-                      onClick={handlePostApplication}
-                      disabled={loading}
-                    >
-                      Apply
-                    </button>
-                  )}
-                </form>
+              <>
+                {isAuthenticated && user.role === "Job Seeker" && (
+                  <button
+                    type="submit"
+                    onClick={handlePostApplication}
+                    disabled={loading}
+                    className={`rounded-md w-full md:w-[200px] min-w-[100px] text-md px-1 md:px-2 py-2
+    flex items-center justify-center transition-all duration-300
+    ${
+      loading
+        ? "bg-gray-400 cursor-not-allowed text-white"
+        : "bg-sky-600 hover:bg-sky-700 text-white"
+    }
+  `}
+                  >
+                    {loading ? (
+                      <>
+                        <svg
+                          className="animate-spin h-5 w-5 mr-2 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                          />
+                        </svg>
+                        Applying...
+                      </>
+                    ) : (
+                      "Apply"
+                    )}
+                  </button>
+                )}
+              </>
             )}
             {!expanded && (
               <>

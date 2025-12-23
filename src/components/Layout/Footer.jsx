@@ -52,11 +52,6 @@ const Footer = () => {
                   Find Jobs
                 </Link>
               </li>
-              <li>
-                <Link to={"/sendmessage"} className="underline">
-                  Send Message
-                </Link>
-              </li>
             </ul>
           </div>
         )}

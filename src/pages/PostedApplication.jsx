@@ -9,7 +9,7 @@ import { fetchSingleJob } from "../store/slices/jobSlice";
 import JobCard from "../components/JobCard";
 import { useParams } from "react-router-dom";
 
-const PostApplication = () => {
+const PostedApplication = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -47,4 +47,4 @@ const PostApplication = () => {
   );
 };
 
-export default PostApplication;
+export default PostedApplication;

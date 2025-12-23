@@ -70,6 +70,7 @@ const applicationSlice = createSlice({
 
     clearAllErrors(state, action) {
       state.error = null;
+      state.message = null;
       state.applications = state.applications;
     },
     resetApplicationSlice(state, action) {
@@ -135,15 +136,12 @@ export const postApplication = (data, jobId) => async (dispatch) => {
     const response = await axios.post(
       `${apiURL}/api/application/post/${jobId}`,
       data,
-      {
-        withCredentials: true,
-        headers: { "Content-Type": "multipart/form-data" },
-      }
+      { withCredentials: true }
     );
+    dispatch(applicationSlice.actions.clearAllErrors());
     dispatch(
       applicationSlice.actions.successForPostApplication(response.data.message)
     );
-    dispatch(applicationSlice.actions.clearAllErrors());
   } catch (error) {
     dispatch(
       applicationSlice.actions.failureForPostApplication(
@@ -160,13 +158,14 @@ export const deleteApplication = (id) => async (dispatch) => {
       `${apiURL}/api/application/delete/${id}`,
       { withCredentials: true }
     );
+    dispatch(applicationSlice.actions.clearAllErrors());
     dispatch(
       applicationSlice.actions.successForDeleteApplication(
         response.data.message
       )
     );
-    dispatch(clearAllApplicationErrors());
   } catch (error) {
+    dispatch(applicationSlice.actions.clearAllErrors());
     dispatch(
       applicationSlice.actions.failureForDeleteApplication(
         error.response.data.message

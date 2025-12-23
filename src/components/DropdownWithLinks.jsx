@@ -6,8 +6,9 @@ import { Link } from "react-router-dom";
 import { IoMdExit } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
-import { FaRegMessage } from "react-icons/fa6";
 import { TbLockPassword } from "react-icons/tb";
+import { LuCrown } from "react-icons/lu";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import unknownProfile from "../images/unknown.png";
 
 const DropdownWithLinks = ({ user }) => {
@@ -75,7 +76,7 @@ const DropdownWithLinks = ({ user }) => {
       <div className="flex items-center justify-center p-1 hover:bg-gray-200 mr-[-5px] rounded-full">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="bg-white rounded-full w-[40px] h-[40px]"
+          className="bg-white rounded-full w-[45px] h-[45px] overflow-hidden"
         >
           {user.profilePicture ? (
             <img
@@ -97,21 +98,21 @@ const DropdownWithLinks = ({ user }) => {
           <div className="fixed z-30 top-0 right-0 h-[100vh] overflow-y-auto w-[100%] bg-opacity-50 bg-black">
             <div
               ref={dropdownRef}
-              className="flex flex-col pb-5 fixed md:top-[110px]  md:right-[100px] h-full md:h-auto w-full md:w-[400px] bg-white rounded-md  px-2  border-2"
+              className="flex flex-col pb-2 fixed md:top-[100px]  md:right-[75px] h-full md:h-auto w-full md:w-[500px] bg-white rounded-md px-2 border-2"
             >
               <div className="flex justify-end">
                 <IoClose
-                  className="text-4xl mr-2 mt-5 mb-5"
+                  className="text-4xl text-red-500 border-2 rounded-[50%] border-red-500 mr-2 mt-5 mb-5 hover:scale-110"
                   onClick={() => setIsOpen(!isOpen)}
                 />
               </div>
-              <div className="flex flex-col justify-center items-center py-1 gap-1">
-                <div className="w-[75px] h-[75px]">
+              <div className="flex items-center gap-4 border-b-2 pb-4">
+                <div className="flex items-center w-[85px] h-[85px] overflow-hidden">
                   {user.profilePicture ? (
                     <img
                       src={user.profilePicture.url}
                       alt="user image"
-                      className="rounded-full object-cover hover:bg-gray-200"
+                      className="rounded-lg object-cover hover:bg-gray-200"
                       loading="lazy"
                     />
                   ) : (
@@ -123,15 +124,25 @@ const DropdownWithLinks = ({ user }) => {
                     />
                   )}
                 </div>
-                <p className="break-words  text-xl">
-                  <span>Hi,</span> {user.name} !
-                </p>
-                <p className="break-words underline text-sm text-center">
-                  {user.email}
-                </p>
-                <p className="text-sm">{user.role}</p>
+                <div className="flex flex-col justify-center">
+                  <p className="break-words  text-xl">
+                    {user?.premiumUser && (
+                      <div className="text-sm sm:text-xl flex gap-2 items-center">
+                        <LuCrown  className="text-2xl"/>
+                        Premium User
+                        <IoMdCheckmarkCircleOutline className="text-xl text-green-500" />
+                      </div>
+                    )}
+                  </p>
+                  <p className="break-words  text-md sm:text-xl">
+                    <span>Hi,</span> {user.name} !
+                  </p>
+                  <p className="text-sm">( {user.role} )</p>
+                  <p className="break-words underline text-sm text-gray-600">{user.email}</p>
+                </div>
               </div>
-              <div className="flex flex-col pt-5">
+
+              <div className="flex flex-col py-5">
                 <Link
                   to={"/UserProfile/Update Profile"}
                   onClick={() => setIsOpen(!isOpen)}
@@ -146,14 +157,6 @@ const DropdownWithLinks = ({ user }) => {
                 >
                   <TbLockPassword className="text-xl" /> Update Password
                 </Link>
-                <Link
-                  to="/sendmessage"
-                  onClick={() => setIsOpen(!isOpen)}
-                  className="flex  gap-2 items-center p-2 cursor-pointer hover:bg-sky-700 rounded-md  hover:text-white"
-                >
-                  <FaRegMessage className="text-xl"/> Send Message
-                </Link>
-
                 <div
                   onClick={() => {
                     setIsOpen(!isOpen);

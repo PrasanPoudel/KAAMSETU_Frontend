@@ -15,6 +15,9 @@ const Applications = () => {
   );
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchEmployerApplications());
+  }, [dispatch]);
 
   useEffect(() => {
     if (error) {
@@ -25,11 +28,11 @@ const Applications = () => {
       toast.success(message);
       dispatch(resetApplicationSlice());
     }
-    dispatch(fetchEmployerApplications());
   }, [dispatch, error, message]);
 
-  const handleDeleteApplication = (id) => {
-    dispatch(deleteApplication(id));
+  const handleDeleteApplication = async (id) => {
+    await dispatch(deleteApplication(id));
+    dispatch(fetchEmployerApplications());
   };
 
   return (
@@ -45,8 +48,7 @@ const Applications = () => {
               {" "}
               {applications.length}{" "}
             </span>
-            {applications.length > 1 ? "peoples" : "person"} have applied for
-            jobs posted by you
+            {applications.length} applications received for jobs posted by you
           </p>
           <div className="overflow-auto p-2 max-w-full">
             <table className="w-full border-collapse overflow-hidden rounded-md">

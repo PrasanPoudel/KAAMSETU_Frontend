@@ -7,7 +7,11 @@ import {
   FaUserCheck,
   FaBriefcase,
 } from "react-icons/fa";
+import { LuCrown } from "react-icons/lu";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const features = [
   {
@@ -42,10 +46,11 @@ const jobCategories = [
 ];
 
 const Hero = () => {
+  const { user } = useSelector((state) => state.user);
   return (
     <header className="py-10 md:py-5 overflow-hidden bg-gradient-to-b from-sky-50 to-white">
       <div className="max-w-7xl mx-auto px-2 sm:px-5 lg:px-8 relative">
-        {/* Background Elements */}
+        
         <div className="absolute top-0 right-0 w-64 h-64 bg-sky-100 rounded-full opacity-30 blur-3xl -z-10 transform translate-x-1/2 -translate-y-1/2"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-100 rounded-full opacity-20 blur-3xl -z-10 transform -translate-x-1/2 translate-y-1/2"></div>
 
@@ -73,12 +78,23 @@ const Hero = () => {
               >
                 Explore Jobs
               </Link>
-              <Link
-                to={"/sendmessage"}
-                className="bg-white text-xl text-sky-600 border-2 border-sky-600 px-5 py-2 rounded-md font-medium text-center hover:bg-sky-50 transition-all hover:-translate-y-1 duration-300"
-              >
-                Talk to Us
-              </Link>
+              {user?.premiumUser ? (
+                <div className="text-2xl font-[500] flex gap-2 items-center justify-center">
+                  <LuCrown  className="text-4xl"/>
+                  Premium User
+                  <IoMdCheckmarkCircleOutline className="text-xl text-green-500" />
+                </div>
+              ) : (
+                <Link
+                  to={"/subscribe"}
+                  className="bg-white text-sky-600 border-2 border-sky-600 px-5 py-2 rounded-md font-medium text-center hover:bg-sky-50 transition-all hover:-translate-y-1 duration-300"
+                >
+                  <div className="text-xl flex gap-2 items-center">
+                    <LuCrown />
+                    Subscribe
+                  </div>
+                </Link>
+              )}
             </div>
 
             {/* Features */}
@@ -120,7 +136,9 @@ const Hero = () => {
                     <FaUserCheck />
                   </div>
                   <div>
-                    <div className="text-xs text-gray-500">Hired Job Seekers</div>
+                    <div className="text-xs text-gray-500">
+                      Hired Job Seekers
+                    </div>
                     <div className="font-medium ">250+</div>
                   </div>
                 </div>

@@ -16,11 +16,10 @@ const MyApplications = () => {
   );
 
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(fetchJobSeekerApplications());
   }, [dispatch]);
-
+  
   useEffect(() => {
     if (error) {
       toast.error(error);
@@ -28,13 +27,14 @@ const MyApplications = () => {
     }
     if (message) {
       toast.success(message);
-      dispatch(resetApplicationSlice());
       dispatch(fetchJobSeekerApplications());
+      dispatch(resetApplicationSlice());
     }
-  }, [dispatch, error, message]);
+  }, [error, message, dispatch]);
 
-  const handleDeleteApplication = (id) => {
-    dispatch(deleteApplication(id));
+  const handleDeleteApplication = async (id) => {
+    await dispatch(deleteApplication(id));
+    dispatch(fetchJobSeekerApplications());
   };
 
   return (
@@ -103,7 +103,7 @@ const MyApplications = () => {
                         <Link
                           to={
                             element.jobSeekerInfo &&
-                            element.jobSeekerInfo.resume.url
+                            element.jobSeekerInfo.resume
                           }
                           className="text-white text-sm underline"
                           target="_blank"

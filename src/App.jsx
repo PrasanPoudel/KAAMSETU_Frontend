@@ -19,10 +19,10 @@ import Home from "./pages/Home";
 import Spinner from "./components/Spinner";
 import SpinnerHome from "./components/SpinnerHome";
 import NotFound from "./pages/NotFound";
+import Subscribe from "./pages/Subscribe";
 const UserProfile = lazy(() => import("./pages/UserProfile"));
 const Jobs = lazy(() => import("./pages/Jobs"));
-const PostApplication = lazy(() => import("./pages/PostApplication"));
-const SendMessage = lazy(() => import("./pages/SendMessage"));
+const PostedApplication = lazy(() => import("./pages/PostedApplication"));
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useSelector((state) => state.user);
@@ -63,16 +63,7 @@ const AppLayout = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/sendmessage"
-          element={
-            <ProtectedRoute>
-              <Suspense fallback={<Spinner />}>
-                <SendMessage />
-              </Suspense>
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/subscribe" element={<Subscribe />} />
         <Route
           path="/UserProfile/:activeComponent"
           element={
@@ -88,7 +79,7 @@ const AppLayout = () => {
           element={
             <ProtectedRoute>
               <Suspense fallback={<Spinner />}>
-                <PostApplication />
+                <PostedApplication />
               </Suspense>
             </ProtectedRoute>
           }
